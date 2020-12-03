@@ -24,3 +24,16 @@ create-react-app project-name
 create-react-app
 umi：https://umijs.org/
 dva：https://dvajs.com/
+
+* 如何执行eject暴露命令？
+作用：把create-react-app隐藏的配置文件暴露出来
+```
+git init
+git add --all
+git commit -m 'first commit'
+yarn eject
+```
+
+* 修改webpack的配置时，有两种方法
+1、直接在/config 或 /scripts 中去改
+2、自已封装配置文件来改（建议使用第2种办法）,改了什么自己知道
