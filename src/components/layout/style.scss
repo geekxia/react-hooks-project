@@ -40,6 +40,7 @@
     left: 150px;
     right: 0;
     padding: 15px;
+    background-color:white;
   }
   .qf-main {
     position: absolute;
@@ -62,6 +63,15 @@
       padding-bottom: 100px;
       // height: 100%;
       min-width: 750px;
+      .f-top{
+        padding: 10px;
+        .f-bd{
+          color: #aaa;
+          font-size: 14px;
+        }
+
+      }
+      
     }
   }
 }
