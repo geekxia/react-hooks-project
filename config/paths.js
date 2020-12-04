@@ -21,7 +21,6 @@ const publicUrlOrPath = getPublicUrlOrPath(
   process.env.PUBLIC_URL
 );
 
-const qfConfig = require('../react.config')
 
 const moduleFileExtensions = [
   'web.mjs',
@@ -54,8 +53,8 @@ const resolveModule = (resolveFn, filePath) => {
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('dist'),
   appPublic: resolveApp('public'),
+  appBuild: resolveApp('dist'),
   appHtml: resolveApp('public/index.html'),
   appIndexJs: resolveModule(resolveApp, 'src/main'),
   appPackageJson: resolveApp('package.json'),
@@ -67,7 +66,7 @@ module.exports = {
   proxySetup: resolveApp('src/setupProxy.js'),
   appNodeModules: resolveApp('node_modules'),
   swSrc: resolveModule(resolveApp, 'src/service-worker'),
-  publicUrlOrPath: qfConfig.publicPath || ''
+  publicUrlOrPath
 };
 
 

@@ -1,9 +1,20 @@
+import { HashRouter } from 'react-router-dom'
+import { Layout } from '@/components'
+
+// react-redux
+import { Provider } from 'react-redux'
+import store from '@/store'
 
 function App() {
   return (
-    <div className="app">
-      <h1>hello 2009</h1>
-    </div>
+    <HashRouter>
+      <Provider store={store}>
+        <div className="app">
+          <Layout />
+        </div>
+      </Provider>
+    </HashRouter>
+
   );
 }
 
