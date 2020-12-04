@@ -42,7 +42,7 @@ yarn eject
 
 # Git
 
-* 初始化配置
+## 初始化配置
 ```
 git config --global user.name "John Doe"
 git config --global user.email johndoe@example.com
@@ -50,7 +50,7 @@ git config --global user.email johndoe@example.com
   - 把配置好的邮箱发给领导，让领导把你加入到项目组中。
   - 然后在GitLab中就可以看到领导给你的这个项目。
 
-* 如何需要做初始提交（一般用不到）
+## 如何需要做初始提交（一般用不到）
 ```
 git init
 git add README.md
@@ -59,7 +59,7 @@ git remote add origin https://gitee.com/summer2020/xxxxxx.git
 git push -u origin master
 ```
 
-* 第一次拉取公司的代码
+## 第一次拉取公司的代码
 ```
 git clone https://gitee.com/summer2020/qf-minimap.git
 git branch --list   在项目根目录中，查看所有分支
@@ -68,14 +68,14 @@ git checkout xhf  切换到自己的分支
 ```
   - 然后你想干啥就干啥，写你的代码。
 
-* 当我们想提交代码时
+## 当我们想提交代码时
 ```
 git add .
 git commit -m '修复了bug'
 git push origin xia
 ```
 
-* 当需要把 abc 分支合并到 xia 分支时，怎么做？
+## 当需要把 abc 分支合并到 xia 分支时，怎么做？
 ```
 git add .
 git commit -m '准备合并分支'   每次checkout之前都要把当前分支中的代码提交到本地仓库，避免代码丢失
