@@ -14,7 +14,7 @@ export default [ // eslint-disable-line
     children: [
       {
         id: 1111,
-        text: '学习Redux',
+        text: '学习Redux哟',
         path: '/',
         component: ReduxStudy
       }
