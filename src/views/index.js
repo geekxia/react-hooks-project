@@ -5,8 +5,7 @@ import {
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 
-
-export default [ // eslint-disable-line
+export default [
   {
     id: 11,
     text: '概况管理',
