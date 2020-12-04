@@ -31,7 +31,7 @@ module.exports = {
             javascriptEnabled: true,
             // 自定义antd主题
             modifyVars: {
-              "primary-color": "#00ff00"
+              // "primary-color": "#00ff00"
             }
           }
         }}
