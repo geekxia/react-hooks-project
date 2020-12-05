@@ -69,7 +69,20 @@
           color: #aaa;
           font-size: 14px;
         }
+        div{
+          .f-jd{
+            color:red;
+            display: flex;
+            width: 100%;
+            &>span{
+              display: block;
+              flex: 1;
+              width: 200px;
+            }
+          }
 
+        }
+        
       }
       
     }

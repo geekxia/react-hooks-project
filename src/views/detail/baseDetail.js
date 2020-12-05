@@ -1,5 +1,7 @@
 import { Table } from 'antd';
-
+import { useEffect } from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import action from '@/store/actions'
 const columns = [
   {
     title: 'Name',
@@ -31,48 +33,27 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    chinese: 98,
-    math: 60,
-    english: 70,
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    chinese: 98,
-    math: 66,
-    english: 89,
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    chinese: 98,
-    math: 90,
-    english: 70,
-  },
-  {
-    key: '4',
-    name: 'Jim Red',
-    chinese: 88,
-    math: 99,
-    english: 89,
-  },
-];
+
+
 function onChange(pagination, filters, sorter, extra) {
     console.log('params', pagination, filters, sorter, extra);
   }
 
 const BaseDetail=props=>{
+    const dispatch=useDispatch()
+    const list=useSelector(store=>store.detail.list)
+    // console.log(list)
+    useEffect(()=>{
+        dispatch(action.detailList())
+        return undefined
+    },[])
     return(
         <div className="f-top">
             <div>
                 <p className="f-bd">首页/详情页/基础详情页</p>
             </div>
             <div>
-            <Table columns={columns} dataSource={data} onChange={onChange} />
+                <Table columns={columns} dataSource={list} onChange={onChange} />
             </div>
         </div>
     )
