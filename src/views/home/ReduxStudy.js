@@ -92,9 +92,7 @@ export default props => {
             <span>{ele.name}</span>
           </div>
         ))
-
       }
-
     </div>
   )
 }
