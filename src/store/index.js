@@ -14,9 +14,15 @@ import thunk from 'redux-thunk'
 import study from './modules/study'
 import music from './modules/music'
 
+//xxl的状态管理
+import xxlReducer from './modules/xxl-modules/xxlReducer'
+import xxlProject from './modules/xxl-modules/xxlProject'
+
 export default createStore(combineReducers({
   study,
-  music
+  music,
+  xxlReducer,
+  xxlProject
 }), applyMiddleware(thunk))
 
 // 如何使用redux？

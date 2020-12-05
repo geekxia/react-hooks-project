@@ -5,6 +5,7 @@ import {
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const Xxl =loadable(()=>import('./xxl/Xxl'))
+const RenderXxl = loadable(()=>import("./xxl/renderXxl"))
 
 export default [
   {
@@ -27,10 +28,16 @@ export default [
     children: [
       {
         id: 2020120501,
-        text: 'xxl简介',
+        text: '基础表单',
         path: '/xxl',
         component: Xxl
+      },{
+        id: 2020120502,
+        text: '渲染基础表单',
+        path: '/formmsg',
+        component: RenderXxl
       }
+      
     ]
   }
 ]
