@@ -1,0 +1,28 @@
+#root {
+    font-size: 14px;
+    .qf-main {
+        background: #dbe4e4;
+        &>div {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #ffffff;    
+            .R1>div{
+                margin-right: 10px;
+                cursor: pointer;
+                color: silver;
+            }
+            .R1 .on{
+                color: black;
+            }
+            .R2{
+                font-size: 25px;
+                font-weight:bold ;
+                margin: 10px 0;
+            }
+            form{
+                margin-top:40px;
+            }
+        }
+    }
+}

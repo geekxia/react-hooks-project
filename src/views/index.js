@@ -4,7 +4,7 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
-const jichuBiaoDan = loadable(()=>import('./pages/jichuBiaoDan'))
+const jiChuBiaoDan = loadable(()=>import('./pages/BiaoDanYe/jiChuBiaoDan'))
 
 
 export default [ // eslint-disable-line
@@ -29,8 +29,8 @@ export default [ // eslint-disable-line
       {
         id: 1111,
         text: '基础表单',
-        path: '/jichubiaodan',
-        component: jichuBiaoDan
+        path: '/biao',
+        component: jiChuBiaoDan
       }
     ]
   }
