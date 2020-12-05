@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from "react"
 import scss from "./style.scss"
-import { Row, Col,Form, Input, DatePicker } from 'antd';
+import { Row, Col,Form, Input, DatePicker,InputNumber } from 'antd';
 const { RangePicker } = DatePicker;
 export default props=>{
     let [oo,setoo]=useState("on")
@@ -11,6 +11,34 @@ export default props=>{
     const rangeConfig = {
         rules: [{ type: 'array', required: true, message: 'Please select time!' }],
       };
+
+      function validatePrimeNumber(number) {
+        if (number < 10) {
+          return {
+            validateStatus: 'success',
+            errorMsg: null,
+          };
+        }
+        return {
+          validateStatus: 'error',
+          errorMsg: 'The prime between 0 and 0 is 10!',
+        };
+      }
+      
+      
+        const [number, setNumber] = useState({
+          value: 1,
+        });
+      
+      
+        const onNumberChange = value => {
+          setNumber({
+            ...validatePrimeNumber(value),
+            value,
+          });
+        };    
+
+
 
     return (
         <div>
@@ -32,7 +60,6 @@ export default props=>{
                     wrapperCol={{span:7}}
                     labelCol={{span:8}}
                     name="basic"
-                    initialValues={{ remember: true }}
                     >
                     <Form.Item
                         label="标题"
@@ -41,10 +68,19 @@ export default props=>{
                     >
                         <Input  placeholder="input placeholder" />
                     </Form.Item>
-
-                    <Form.Item   name="range-time-picker" label="RangePicker[showTime]" {...rangeConfig}>
+                    <Form.Item   name="range-time-picker" label="起止日期" {...rangeConfig}>
                          <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
                      </Form.Item>
+                     <Form.Item name={['user', 'introduction']} label="目标描述" size="large">
+                        <Input.TextArea />
+                    </Form.Item>
+                    <Form.Item
+                        label="权重"
+                        validateStatus={number.validateStatus}
+                        help={number.errorMsg }
+                    >
+                        <InputNumber min={0} max={100} value={number.value} onChange={onNumberChange} />%
+                    </Form.Item>
 
             </Form>
         </div>
