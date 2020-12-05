@@ -4,11 +4,13 @@
 
 const CHANGE_MSG = 'CHANGE_MSG'
 const ADD_FOO_COUNT = 'ADD_FOO_COUNT'
+const FAN='FAN'
 
 const AJAX_MUSIC_LIST = 'AJAX_MUSIC_LIST'
 
 export default {
   CHANGE_MSG,
   ADD_FOO_COUNT,
-  AJAX_MUSIC_LIST
+  AJAX_MUSIC_LIST,
+  FAN
 }

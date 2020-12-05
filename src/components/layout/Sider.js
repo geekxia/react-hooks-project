@@ -15,7 +15,7 @@ export default props=>{
     // exact=true，当url和NavLink.to 完全相等时才高亮
     // exact=flase，当url和NavLink.to 相似就高亮
     return routes.map(ele=>(
-      <SubMenu key={ele.id} title={ele.text} icon={ele.icon}>
+      <SubMenu key={ele.id} title={ele.text} icon={ele.icon} >
         {
           ele.children && ele.children.map(ele=>(
             <Menu.Item key={ele.id}>

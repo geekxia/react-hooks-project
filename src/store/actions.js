@@ -15,6 +15,12 @@ function addFooCountAction(payload) {
     payload
   }
 }
+function fanLoading(payload){
+  return {
+    type:type.FAN,
+    payload
+  }
+}
 
 // 页面中要使用 QQ 音乐列表？数据从后端来，要状态管理工具里来
 // 状态管理工具有这个QQ音乐列表？没有，我定义，怎么定义？
@@ -28,6 +34,7 @@ function addFooCountAction(payload) {
 // redux不支持异步数据
 function musicListAction(params) {
   return function(dispatch) {
+    dispatch(fanLoading(true))
     fetchQqMusic(params).then(res=>{
       console.log('-----', res)
       // 这才是真正地把后端数据，发送到store中
@@ -35,6 +42,7 @@ function musicListAction(params) {
         type: type.AJAX_MUSIC_LIST,
         payload: res.song.list
       })
+      dispatch(fanLoading(false))
     })
   }
 }
@@ -42,5 +50,6 @@ function musicListAction(params) {
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  fanLoading
 }
