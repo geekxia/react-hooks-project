@@ -1,0 +1,20 @@
+.qf-adv{
+    h1{
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .site-card-wrapper{
+        // background-color: #ececec;
+        // padding: 30px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        h1{
+            text-align: center;
+            padding-bottom: 10px;
+        }
+        .ant-card-body{
+            padding: 10px;
+            font-size: 12px;
+        }
+    }
+}

@@ -1,4 +1,5 @@
 import React from 'react'
+import img from '@/utils/img'
 
 import routes from '@/views'
 import { NavLink } from 'react-router-dom'
@@ -6,7 +7,7 @@ import { NavLink } from 'react-router-dom'
 import { Menu } from 'antd'
 const { SubMenu } = Menu
 
-console.log('routes', routes)
+// console.log('routes', routes)
 
 export default props=>{
 
@@ -34,7 +35,7 @@ export default props=>{
 
   return (
     <div className='qf-sider'>
-
+      <img src = {img.logo} />
     <Menu
       mode="inline"
       theme="dark"

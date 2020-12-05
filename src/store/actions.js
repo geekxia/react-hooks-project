@@ -29,7 +29,7 @@ function addFooCountAction(payload) {
 function musicListAction(params) {
   return function(dispatch) {
     fetchQqMusic(params).then(res=>{
-      console.log('-----', res)
+      // console.log('-----', res)
       // 这才是真正地把后端数据，发送到store中
       dispatch({
         type: type.AJAX_MUSIC_LIST,
@@ -39,8 +39,14 @@ function musicListAction(params) {
   }
 }
 
+//销量统计
+const advAnalyze = ()=>{
+  return {type:type.ADV_ANALYZE}
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  advAnalyze
 }
