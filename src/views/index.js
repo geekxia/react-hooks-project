@@ -4,6 +4,7 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+const Xxl =loadable(()=>import('./xxl/Xxl'))
 
 export default [
   {
@@ -16,6 +17,19 @@ export default [
         text: '学习Redux哟',
         path: '/',
         component: ReduxStudy
+      }
+    ]
+  },
+  {
+    id: 20201205,
+    text: '小溪流文件',
+    icon: <DotChartOutlined />,
+    children: [
+      {
+        id: 2020120501,
+        text: 'xxl简介',
+        path: '/xxl',
+        component: Xxl
       }
     ]
   }
