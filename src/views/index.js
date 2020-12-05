@@ -1,6 +1,8 @@
 import loadable from '@loadable/component'
-import {
-  DotChartOutlined
+import React from "react"
+import {  
+  DotChartOutlined,
+  FormOutlined
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
@@ -24,7 +26,7 @@ export default [ // eslint-disable-line
   {
     id: 12,
     text: '表单页',
-    icon: <DotChartOutlined />,
+    icon: <FormOutlined />,
     children: [
       {
         id: 1111,
