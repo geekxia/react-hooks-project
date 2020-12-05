@@ -1,9 +1,10 @@
 import loadable from '@loadable/component'
 import {
-  DotChartOutlined
+  DotChartOutlined, MehOutlined
 } from '@ant-design/icons'
 
-const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+const ReduxStudy = loadable(() => import('./home/ReduxStudy'))
+const QiangStudy = loadable(() => import('./qiang/qiangqiang'))
 
 export default [
   {
@@ -16,6 +17,19 @@ export default [
         text: '学习Redux哟',
         path: '/',
         component: ReduxStudy
+      }
+    ]
+  },
+  {
+    id: 57,
+    text: '2009qiang',
+    icon: <MehOutlined />,
+    children: [
+      {
+        id: 5701,
+        text: '占位置',
+        path: '/qiang',
+        component: QiangStudy
       }
     ]
   }
