@@ -4,6 +4,8 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+const ShawnLearn = loadable(()=>import('./home/ShawnLearn'))
+
 
 export default [
   {
@@ -16,6 +18,19 @@ export default [
         text: '学习Redux哟',
         path: '/',
         component: ReduxStudy
+      }
+    ]
+  },
+  {
+    id: 12,
+    text: 'Shawn',
+    icon: <DotChartOutlined />,
+    children: [
+      {
+        id: 1211,
+        text: 'learn more',
+        path: '/shawnlearn',
+        component: ShawnLearn
       }
     ]
   }
