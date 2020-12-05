@@ -1,0 +1,15 @@
+.zty-form{
+    .text-tip{
+        text-align:right;
+        padding-right: 5px;
+    }
+    .ant-picker{
+        width:100%;
+    }
+    .small-tip{
+        color: rgba(0,0,0,.45);
+    }
+    &>div{
+        margin-top: 25px;
+    }
+}
