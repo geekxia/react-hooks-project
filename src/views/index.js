@@ -6,6 +6,7 @@ import {
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const Loading =loadable(()=>import('./loading/Loading'))
+const AdvancedForm=loadable(()=>import('./form/AdvancedForm'))
 
 export default [
   {
@@ -23,13 +24,25 @@ export default [
   },
   {
     id:12,
-    text:'加载页面',
+    text:'余——加载页面',
     children:[
       {
         id:1201,
         text:'余——加载',
         path:'/load',
         component:Loading
+      }
+    ]
+  },
+  {
+    id:13,
+    text:'余——表单',
+    children:[
+      {
+        id:1301,
+        text:'余——高级表单',
+        path:'/form',
+        component:AdvancedForm
       }
     ]
   }
