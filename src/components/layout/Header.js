@@ -1,10 +1,20 @@
 import React from 'react'
 
 import {
+  connect,
+  useSelector
+} from 'react-redux'
+
+import {
   useHistory,
   // withRouter
 } from 'react-router-dom'
 
+import { Breadcrumb } from 'antd';
+import routes from '@/views'
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+
+    
 // 问题：没有被Route组件直接包裹的React组件中，是没有路由API的。
 // 那该怎么办？
 // 在类组件中，只能使用 withRouter 来解决问题。
@@ -19,12 +29,34 @@ import {
 
 
 export default props => {
-  const history = useHistory()
-  console.log('---header props', props)
-  console.log('---header history', history)
+  const pathName = useSelector(store=>store.gtitle.pathName)
+  let hash = document.location.hash.slice(1)
+  // console.log('---header props', props)
+  // console.log('---header history', history)
+  const list = routes.filter(ele=>{
+    return ele.children.some(ele=>{
+      return ele.path === hash 
+    })
+  })
+  const a = list[0].children.filter(ele=>{
+    return ele.text == pathName
+  })
+  console.log('一级菜单:', a);
+  const path = '#'+list[0].children[0].path 
+  console.log('pathName:', path);
   return (
     <div className='qf-header'>
-      header
+      
+      <Breadcrumb>
+        <Breadcrumb.Item href="">
+          <HomeOutlined />
+        </Breadcrumb.Item>
+        <Breadcrumb.Item href={path}>
+        <UserOutlined />
+          <span>{list[0].text}</span>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>{a.length===0?"":a[0].text}</Breadcrumb.Item>
+      </Breadcrumb>
     </div>
   )
 }

@@ -1,7 +1,8 @@
 import type from '../actionTypes'
 
 const initState = {
-  list: []
+  list: [],
+  musicName:''
 }
 
 export default (state=initState, action) => {
@@ -9,6 +10,9 @@ export default (state=initState, action) => {
   switch (action.type) {
     case type.AJAX_MUSIC_LIST:
       newState.list = action.payload
+      break
+    case type.CHANGE_MUSIC:
+      newState.musicName = action.payload
       break
     default:
   }

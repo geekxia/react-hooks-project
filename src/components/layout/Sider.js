@@ -8,8 +8,23 @@ const { SubMenu } = Menu
 
 console.log('routes', routes)
 
+import {
+  connect,
+  useDispatch,
+  useSelector
+} from 'react-redux'
+import action from '@/store/actions'
+
 export default props=>{
 
+  const pathName = useSelector(store=>store.gtitle.pathName)
+  // pathName = pathName.push(routes)
+  console.log('pathName:', pathName);
+  const dispatch = useDispatch()
+  const getTitle = (e)=>{
+    console.log(e)
+    dispatch(action.getTitleName(e.target.innerText))
+  }
   // 用于生成菜单
   const createNavLink = ()=>{
     // exact=true，当url和NavLink.to 完全相等时才高亮
@@ -22,6 +37,7 @@ export default props=>{
               <NavLink
                 to={ele.path}
                 exact={!ele.notExact}
+                onClick={(e)=>getTitle(e)}
               >
                 {ele.text}
               </NavLink>
@@ -34,7 +50,7 @@ export default props=>{
 
   return (
     <div className='qf-sider'>
-
+      
     <Menu
       mode="inline"
       theme="dark"

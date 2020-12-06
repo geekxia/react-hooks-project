@@ -52,7 +52,7 @@ export default props => {
   const msg = useSelector(store=>store.study.msg)
   const count = useSelector(store=>store.study.foo.count)
   const list = useSelector(store=>store.music.list)
-
+  const singer = useSelector(store=>store.music.musicName)
   const dispatch = useDispatch() // 派发，派发的是actions
   const changeMsg = ()=>{
     // 我现在Home组件中，我想改变store中的msg
@@ -69,21 +69,31 @@ export default props => {
       let arr = ele.split('=')
       params[arr[0]] = arr[1]
     })
-    params.w = decodeURI(params.w)
+    params.w = singer
 
     dispatch(action.musicListAction(params))
     return undefined
-  }, [])
+  }, [singer])
+  const confirmName = (e) => {
+    if(e.keyCode === 13){
+        dispatch(action.changeMusicAction(e.target.value))
+    }
+}
   return (
     <div>
-      <h1>首页</h1>
+      <h1>欢迎来到后台管理</h1>
       <hr/>
       <h1>{msg}</h1>
       <button onClick={()=>changeMsg()}>我要改变msg</button>
       <hr/>
       <h1>{count}</h1>
       <button onClick={()=>dispatch(action.addFooCountAction(500))}>我要改变count</button>
-      <hr/>
+      <hr />
+      <input 
+          type="text" 
+          onKeyUp={(e) => confirmName(e)}
+          placeholder="请输入您喜欢的歌手"
+      />
       {
         list.map(ele=>(
           <div key={ele.id}>

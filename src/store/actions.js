@@ -39,8 +39,24 @@ function musicListAction(params) {
   }
 }
 
+function getTitleName(payload) {
+  return {
+    type: type.PATH_TITLE,
+    payload
+  }
+}
+
+function changeMusicAction(payload) {
+  return {
+      type: type.CHANGE_MUSIC,
+      payload
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  getTitleName,
+  changeMusicAction
 }
