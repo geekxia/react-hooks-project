@@ -30,14 +30,14 @@ let initState = {
       address: 'Sidney No. 1 Lake Park',
     }
   ],
-  data1:[
+  data1:
     {
       key: 4,
       name: 'John Brown',
       age: 32,
       address: 'New York No. 1 Lake Park',
     } 
-  ]
+  
 }
 export default (state=initState, action) => {
   // 第一步，接收store给的信号（干什么、数据）
@@ -49,7 +49,6 @@ export default (state=initState, action) => {
   // let newState = Object.assign()
   
   let newState = JSON.parse(JSON.stringify(state))
-  // console.log(newState.data1.map(ele=>ele.key)-0+1)
   switch (action.type) {
     case type.CHANGE_MSG:
       newState.msg = action.payload
@@ -63,11 +62,10 @@ export default (state=initState, action) => {
       case type.DELETE:
       newState.data=JSON.parse(JSON.stringify(newState.data))
       newState.data=newState.data.filter(ele=>ele.key!=action.payload)
-      newState.data=newState.data
       break
     case type.HANDLEADD:
-      newState.data.map(ele=>ele.key+Math.random(1))
-      newState.data=[...newState.data,...newState.data1]
+      newState.data1.key+=1
+      newState.data=[...newState.data,newState.data1]
       break
     default:
       return state

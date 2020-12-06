@@ -13,7 +13,9 @@ import {
     TimePicker,
     Table ,
     Space ,
-    Popconfirm
+    Popconfirm,
+    Form,
+    Button
 } from 'antd';
 const { Option } = Select
 
@@ -21,8 +23,12 @@ import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
 
 export default props=>{
+    const [form] = Form.useForm();
     const dispatch = useDispatch()
     let data = useSelector(store=>store.study.data)
+    const onFinish = (values) => {
+        console.log(values);
+    };
     const columns=[
         {
             title: 'Name',
@@ -70,11 +76,14 @@ export default props=>{
         return <TimePicker onChange={onChange} />;
       }
     return (
-        <div>
+        <div style={{'background':'transparent'}}>
+            <div style={{'background':'white','padding':10+'px','marginBottom':20+'px'}}>
             <h1>首页/表单/高级表单</h1>
             <h1>高级表单</h1>
             <h3>高级表单常见于一次性输入和提交大批量数据的场景。</h3>
-            <div style={{'paddingBottom':100+'px'}}>
+            </div>
+            <Form  form={form} name="control-hooks" onFinish={onFinish}>
+            <div style={{'paddingBottom':100+'px','background':'white','padding':10+'px'}}>
                 <Row>
                     <Col span={8}>仓库管理</Col>
                 </Row><br/>
@@ -85,7 +94,9 @@ export default props=>{
                 </Row>
                 <Row>
                     <Col span={5} >
+                        <Form.Item rules={[{required: true}]}>
                         <Input placeholder="请输入仓库名称" />
+                        </Form.Item>
                     </Col>
                     <Col span={6} offset={3}>
                         <Input addonBefore="http://" addonAfter=".com" defaultValue="mysite" />
@@ -136,7 +147,7 @@ export default props=>{
             
             
 
-            <div style={{'paddingBottom':100+'px'}}>
+            <div style={{'paddingBottom':100+'px','background':'white','padding':10+'px','marginBottom':20+'px'}}>
                 <Row>
                     <Col span={8}>任务管理</Col>
                 </Row><br/>
@@ -194,14 +205,24 @@ export default props=>{
                 </Row><br/>
             </div>
             
-
-            <Row style={{'borderBottom':1+'px'}}>任务管理</Row>
-            <Table columns={columns} dataSource={data} />
-            <Row>
-                <Col span={24} className='col' onClick={()=>dispatch(action.handleAdd(0))}>
-                    新增成员
-                </Col>
-            </Row>
+            <div style={{'paddingBottom':100+'px','background':'white','padding':10+'px'}}>
+                <Row style={{'borderBottom':1+'px'}}>成员管理</Row>
+                <Table columns={columns} dataSource={data} />
+                <Row>
+                    <Col span={24} className='col' onClick={()=>dispatch(action.handleAdd(0))}>
+                        新增成员
+                    </Col>
+                </Row>
+                
+            </div>
+            
+            <div className='Form_buttom'>
+                <Button type="primary" htmlType="submit">
+                    提交
+                </Button>
+            </div>
+            
+            </Form>
         </div>
     )
 }
