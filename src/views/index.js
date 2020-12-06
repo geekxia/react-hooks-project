@@ -4,7 +4,10 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
-
+const Login = loadable(()=>import('./User/Login'))
+const Detail = loadable(()=>import('./User/Details'))
+const YourMsg = loadable(()=>import('./User/YourMsg'))
+const RegistrationForm = loadable(()=>import('./User/Register'))
 export default [
   {
     id: 11,
@@ -18,5 +21,36 @@ export default [
         component: ReduxStudy
       }
     ]
-  }
+  },
+  {
+    id: 12,
+    text: '个人中心',
+    icon: <DotChartOutlined />,
+    children: [
+      {
+        id: 1210,
+        text: '轮播图',
+        path: '/detail',
+        component: Detail
+      },
+      {
+        id: 1211,
+        text: '登录跳转看轮播图',
+        path: '/login',
+        component: Login
+      },
+      {
+        id: 1231,
+        text: '个人信息设置',
+        path: '/yourMsg',
+        component: YourMsg
+      },
+      {
+        id: 1232,
+        text: '请先注册',
+        path: '/register',
+        component: RegistrationForm
+      },
+    ]
+  },
 ]
