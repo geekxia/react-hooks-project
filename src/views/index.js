@@ -1,11 +1,11 @@
 import loadable from '@loadable/component'
 import {
-  DotChartOutlined
+  DotChartOutlined,
+ApartmentOutlined
 } from '@ant-design/icons'
 
-const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
-
-
+const Home = loadable(()=>import('./home/Home'))
+const Mqh = loadable(()=>import('./mqh/Mqh'))
 export default [ // eslint-disable-line
   {
     id: 11,
@@ -16,8 +16,22 @@ export default [ // eslint-disable-line
         id: 1111,
         text: '学习Redux哟',
         path: '/',
-        component: ReduxStudy
-      }
+        component: Home
+      },
+    ]
+  },
+  {
+    id: 22,
+    text: '数据分析',
+    icon: <ApartmentOutlined />,
+    children: [
+      {
+        id: 1111,
+        text: '前端开发之数据分析',
+        path: '/mqh',
+        component: Mqh
+      },
+      
     ]
   }
 ]
