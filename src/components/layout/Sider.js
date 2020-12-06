@@ -9,6 +9,7 @@ const { SubMenu } = Menu
 console.log('routes', routes)
 
 export default props=>{
+  const img = 'https://preview.pro.ant.design/static/logo.f0355d39.svg'
 
   // 用于生成菜单
   const createNavLink = ()=>{
@@ -34,7 +35,10 @@ export default props=>{
 
   return (
     <div className='qf-sider'>
-
+      <div className='qf-img'>
+        <img src={img} alt='/' />
+        <h1>Ant Design Pro</h1>
+      </div>
     <Menu
       mode="inline"
       theme="dark"

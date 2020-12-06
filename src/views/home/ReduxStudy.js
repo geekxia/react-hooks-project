@@ -11,7 +11,7 @@ import action from '@/store/actions'
 // connect(fn1, fn2)()
 
 function mapStateToProps(store) {
-  return {
+  return { 
     msg: store.msg
   }
 }
