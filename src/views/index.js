@@ -31,7 +31,7 @@ export default [ // eslint-disable-line
       {
         id: 1111,
         text: '基础表单',
-        path: '/biao',
+        path: '/basic-form',
         component: jiChuBiaoDan
       }
     ]

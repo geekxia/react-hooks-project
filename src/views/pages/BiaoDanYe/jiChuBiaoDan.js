@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import {useSelector,useDispatch} from "react-redux"
+import action from "@/store/actions"
 import scss from "./style.scss";
 import {
   Row,
@@ -50,6 +52,16 @@ export default (props) => {
   const handleChange = (selectedItems) => {
     SETselectedItems(selectedItems);
   };
+  //提交到store,后端
+  const list=useSelector(store=>store.jichuform.list)
+  const dispatch=useDispatch()
+  const onFinish = values => {
+    dispatch(action.addJiChuBiaoDan(values))
+    console.log('Received values of form: ', values);
+  };
+  useEffect(()=>{
+    return undefined
+  },[])
 
   return (
     <div>
@@ -69,31 +81,35 @@ export default (props) => {
         </Col>
       </Row>
 
-      <Form wrapperCol={{ span: 7 }} labelCol={{ span: 8 }} name="basic">
+      <Form wrapperCol={{ span: 7 }} labelCol={{ span: 8 }} name="basic" onFinish={onFinish}>
         <Form.Item
           label="标题"
-          name="username"
+          name="biaoti"
           rules={[{ required: true, message: "Please input your username!" }]}
         >
           <Input placeholder="input placeholder" />
         </Form.Item>
+
         <Form.Item name="range-time-picker" label="起止日期" {...rangeConfig}>
           <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" />
         </Form.Item>
+
         <Form.Item
-          name={["user", "introduction"]}
+          name= {"miaoshu"}
           label="目标描述"
           size="large"
         >
           <Input.TextArea />
         </Form.Item>
+
         <Form.Item
-          name={["user", "introduction"]}
+          name= {"biaozhun"}
           label="衡量标准"
           size="large"
         >
           <Input.TextArea />
         </Form.Item>
+
         <Form.Item
           label="权重"
           validateStatus={number.validateStatus}
@@ -107,19 +123,21 @@ export default (props) => {
           />
           %
         </Form.Item>
+
         <Form.Item
-          name={["user", "Radio"]}
+          name={"Radio"}
           label="目标公开"
           size="large"
         >
           <Radio.Group name="Radio" defaultValue={1}>
-            <Radio value={1}>目标公开</Radio>
-            <Radio value={2}>不公开</Radio>
-            <Radio value={3}>部分公开</Radio>
+            <Radio value={"目标公开"}>目标公开</Radio>
+            <Radio value={"不公开"}>不公开</Radio>
+            <Radio value={"部分公开"}>部分公开</Radio>
           </Radio.Group>
         </Form.Item>
 
         <Form.Item
+          name={"gongkai"}
           label="公开给"
         >
           <Select
@@ -136,7 +154,8 @@ export default (props) => {
             ))}
           </Select>
         </Form.Item>
-        <Form.Item >
+
+        <Form.Item  >
             <Row justify="center">
                 <Col push={20}>
                   <Button type="primary" htmlType="submit" >

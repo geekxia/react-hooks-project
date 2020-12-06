@@ -16,6 +16,13 @@ function addFooCountAction(payload) {
   }
 }
 
+function addJiChuBiaoDan(payload) {
+  return {
+    type: type.Add_JiChuBiaoDan,
+    payload
+  }
+}
+
 // 页面中要使用 QQ 音乐列表？数据从后端来，要状态管理工具里来
 // 状态管理工具有这个QQ音乐列表？没有，我定义，怎么定义？
 // 在子reducer中定义完成，在根store中合并
@@ -42,5 +49,6 @@ function musicListAction(params) {
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  addJiChuBiaoDan
 }
