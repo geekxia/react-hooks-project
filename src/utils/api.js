@@ -8,6 +8,7 @@ export function fetchQqMusic(params) {
   })
 }
 
+
 export default {
   fetchQqMusic
 }

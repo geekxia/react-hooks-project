@@ -13,8 +13,7 @@ process.on('unhandledRejection', err => {
 
 // Ensure environment variables are read.
 require('../config/env');
-const qfConfig = require('../react.config')
-
+const MyConfig=require('../react.config')
 
 const fs = require('fs');
 const chalk = require('react-dev-utils/chalk');
@@ -37,8 +36,6 @@ const getClientEnvironment = require('../config/env');
 const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
 const env = getClientEnvironment(paths.publicUrlOrPath.slice(0, -1));
-// const env = getClientEnvironment(paths.appPublic);
-
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
@@ -48,7 +45,7 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 }
 
 // Tools like Cloud9 rely on this.
-const DEFAULT_PORT = parseInt(process.env.PORT, 10) || qfConfig.port || 3000;
+const DEFAULT_PORT = parseInt(process.env.PORT, 10) || MyConfig.port || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
 
 if (process.env.HOST) {

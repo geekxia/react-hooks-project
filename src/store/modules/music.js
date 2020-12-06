@@ -1,16 +1,15 @@
-import type from '../actionTypes'
-
-const initState = {
-  list: []
+import {MUSIC_LIST} from '../actions'
+let initState={
+    list:[]
 }
 
-export default (state=initState, action) => {
-  let newState = JSON.parse(JSON.stringify(state))
-  switch (action.type) {
-    case type.AJAX_MUSIC_LIST:
-      newState.list = action.payload
-      break
-    default:
-  }
-  return newState
+export default function reducer(state=initState,action){
+    let newState=JSON.parse(JSON.stringify(state))
+    switch(action.type){
+        case MUSIC_LIST:
+            newState.list=action.payload
+            break
+        default:
+    }
+    return newState
 }

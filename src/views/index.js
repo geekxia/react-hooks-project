@@ -1,22 +1,36 @@
 import loadable from '@loadable/component'
 import {
-  DotChartOutlined
+    DotChartOutlined
 } from '@ant-design/icons'
 
-const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+const Home = loadable(()=>import('./home/Home'))
+const User = loadable(()=>import('./user/User'))
 
-export default [
-  {
+
+export default [ // eslint-disable-line
+    {
     id: 11,
     text: '概况管理',
     icon: <DotChartOutlined />,
     children: [
-      {
+        {
         id: 1111,
-        text: '学习Redux哟',
+        text: '学习Redux',
         path: '/',
-        component: ReduxStudy
-      }
+        component: Home
+        }
     ]
-  }
+    },
+    {
+    id: 22,
+    text: '个人页',
+    children: [
+        {
+        id: 2211,
+        text: '个人中心',
+        path: '/user',
+        component: User
+        }
+    ]
+    }
 ]

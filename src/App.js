@@ -1,11 +1,10 @@
-import { HashRouter } from 'react-router-dom'
-import { Layout } from '@/components'
+import {HashRouter} from 'react-router-dom'
 
-// react-redux
-import { Provider } from 'react-redux'
+import {Provider} from 'react-redux'
+import {Layout} from '@/components'
 import store from '@/store'
-
 function App() {
+  console.log('app store',store.msg)
   return (
     <HashRouter>
       <Provider store={store}>
@@ -14,7 +13,7 @@ function App() {
         </div>
       </Provider>
     </HashRouter>
-
+    
   );
 }
 
