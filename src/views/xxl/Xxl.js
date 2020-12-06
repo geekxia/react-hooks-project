@@ -1,4 +1,4 @@
-import React,{ useState }  from 'react'
+import React,{ useState ,useEffect}  from 'react'
 import { useSelector, useDispatch} from 'react-redux'
 import {
   Form,
@@ -8,7 +8,8 @@ import {
   DatePicker,
   InputNumber,
   Space,
-  Tooltip
+  Tooltip,
+  Table 
 } from 'antd';
 import { InfoCircleOutlined, } from '@ant-design/icons';
 import action from '@/store/actions'
@@ -16,16 +17,26 @@ const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
 export default props=>{
-    // console.log(props)
     const [componentSize, setComponentSize] = useState('default');
-    const proArr = useSelector(store=>(store.xxlProject.proArr))
+    let proArr = useSelector(store=>(store.xxlProject.proArr))
     const [myTitle,setMyTitle] = useState('')
     const [myTarget,setMytarget] = useState("")
     const [myStandard,setMyStandard] = useState("")
     const dispatch = useDispatch()
-
-    
-
+    const columns = [
+        {
+          title: '标题',
+          dataIndex: 'myTitle',
+        },
+        {
+          title: '目标描述',
+          dataIndex: 'myTarget',
+        },
+        {
+          title: '衡量标准',
+          dataIndex: 'myStandard',
+        },
+    ];
     const onFormLayoutChange = ({ size }) => {
         setComponentSize(size);
     };
@@ -43,7 +54,7 @@ export default props=>{
     }
     const onSubmitMsg = ()=>{
         let obj = {}
-        obj.id = Date.now()
+        obj.key = Date.now()
         obj.myTitle=myTitle
         obj.myTarget=myTarget
         obj.myStandard=myStandard
@@ -122,17 +133,7 @@ export default props=>{
             </Form>
             <hr/>
             <h2>展示项目资料：</h2>
-            {
-                proArr.map(ele=>(
-                    <div key={ele.id}>
-                        <span>{ele.myTitle}</span>
-                        <span>-------</span>
-                        <span>{ele.myTarget}</span>
-                        <span>-------</span>
-                        <span>{ele.myStandard}</span>
-                    </div>
-                ))
-            }
+            <Table columns={columns} dataSource={proArr} size="middle" />
         </div>
     )
 }
