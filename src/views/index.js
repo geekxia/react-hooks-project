@@ -4,7 +4,7 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
-
+const Good=loadable(()=>import('./good/GoodaddList'))
 export default [
   {
     id: 11,
@@ -18,5 +18,22 @@ export default [
         component: ReduxStudy
       }
     ]
-  }
+  },
+  {
+    id: 1410,
+    text: '商品栏',
+    path: 'good',
+    children:[{
+      id: 1411,
+      text: '商品新增',
+      path: '/good',
+     
+      component: Good
+
+    }
+     
+    ]
+    
+  },
+
 ]

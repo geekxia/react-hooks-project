@@ -1,100 +1,74 @@
-import React, { useEffect } from 'react'
-
-import {
-  connect,
-  useSelector,
-  useDispatch
-} from 'react-redux'
-
-import action from '@/store/actions'
-
-// connect(fn1, fn2)()
-
-function mapStateToProps(store) {
-  return {
-    msg: store.msg
-  }
-}
-function mapDispatchToProps(store) {
-  return {}
-}
-
-
-// 第1种写法：使用 connect() + 函数式组件
-// export default connect(mapStateToProps, mapDispatchToProps)(props => {
-//   console.log('home props', props)
-//   return(
-//     <div>
-//       <h1>首页</h1>
-//       <hr/>
-//       <h1>{props.msg}</h1>
-//     </div>
-//   )
-// })
-
-// 第2种写法：使用 connect() + 类组件
-// class Home extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <h1>首页</h1>
-//         <hr/>
-//         <h1>{this.props.msg}</h1>
-//       </div>
-//     )
-//   }
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(Home)
-
-
-// 第3种写法，使用 hooks + 函数式组件
-export default props => {
-  const msg = useSelector(store=>store.study.msg)
-  const count = useSelector(store=>store.study.foo.count)
-  const list = useSelector(store=>store.music.list)
-
-  const dispatch = useDispatch() // 派发，派发的是actions
-  const changeMsg = ()=>{
-    // 我现在Home组件中，我想改变store中的msg
-    // 触发一个actions，让它到store，再交给reducer
-    // reducer是真正修改msg的地方，修改成功后返回store
-    // 我Home自动更新
-    dispatch(action.changeMsgAction('hello 2011'))
-  }
-
-  useEffect(()=>{
-    const str = 'ct=24&qqmusic_ver=1298&new_json=1&remoteplace=txt.yqq.song&searchid=61453023483879617&t=0&aggr=1&cr=1&catZhida=1&lossless=0&flag_qc=0&p=1&n=10&w=%E5%BC%A0%E6%9D%B0&g_tk_new_20200303=921856724&g_tk=921856724&loginUin=448914712&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0'
-    const params = {}
-    str.split('&').map(ele=>{
-      let arr = ele.split('=')
-      params[arr[0]] = arr[1]
-    })
-    params.w = decodeURI(params.w)
-
-    dispatch(action.musicListAction(params))
-    return undefined
-  }, [])
+import { Form, Input, InputNumber, Button } from 'antd';
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+const validateMessages = {
+  required: '${label} is required!',
+  types: {
+    email: '${label} is not a valid email!',
+    number: '${label} is not a valid number!',
+  },
+  number: {
+    range: '${label} must be between ${min} and ${max}',
+  },
+};
+export default props=>{
+  const onFinish = (values) => {
+    console.log(values);
+  };
   return (
-    <div>
-      <h1>首页</h1>
-      <hr/>
-      <h1>{msg}</h1>
-      <button onClick={()=>changeMsg()}>我要改变msg</button>
-      <hr/>
-      <h1>{count}</h1>
-      <button onClick={()=>dispatch(action.addFooCountAction(500))}>我要改变count</button>
-      <hr/>
-      {
-        list.map(ele=>(
-          <div key={ele.id}>
-            <span>{ele.id}</span>
-            <span>---</span>
-            <span>{ele.name}</span>
-          </div>
-        ))
-
-      }
-
-    </div>
-  )
-}
+    <Form {...layout} name="nest-messages" onFinish={onFinish} validateMessages={validateMessages}>
+      <Form.Item
+        name={['user', 'name']}
+        label="Name"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name={['user', 'email']}
+        label="Email"
+        rules={[
+          {
+            type: 'email',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name={['user', 'age']}
+        label="Age"
+        rules={[
+          {
+            type: 'number',
+            min: 0,
+            max: 99,
+          },
+        ]}
+      >
+        <InputNumber />
+      </Form.Item>
+      <Form.Item name={['user', 'website']} label="Website">
+        <Input />
+      </Form.Item>
+      <Form.Item name={['user', 'introduction']} label="Introduction">
+        <Input.TextArea />
+      </Form.Item>
+      <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+        <Button type="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};

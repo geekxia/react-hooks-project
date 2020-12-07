@@ -1,54 +1,117 @@
-import React from 'react'
+import { useState } from 'react'
 
-import routes from '@/views'
 import {
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom'
+  Form,
+  Input,
+  Tooltip,
+  Cascader,
+  Select,
+  Row,
+  Col,
+  Checkbox,
+  Button,
+  AutoComplete
+} from 'antd'
 
-export default props=>{
+import { QuestionCircleOutlined } from '@ant-design/icons';
+const { Option } = Select
+const { TextArea } = Input
+const AutoCompleteOption = AutoComplete.Option;
 
-  // 生成路由匹配规则，当url和Route.path匹配成功，显示当前配对成功的Route.component
-  // 凡是被 Route 组件直接包裹的React组件中，其props上都路由相关的API
-  const createRoutes = ()=>{
-    let res = []
-    // 这是递归方法
-    const recursionRoute = arr => {
-      arr.map(ele=>{
-        res.push(
-          <Route
-            key={ele.id}
-            path={ele.path}
-            component={ele.component}
-            exact
-          />
-        )
-        if(ele.children) recursionRoute(ele.children)
-        return undefined
-      })
-    }
-    routes.map(ele=>{
-      if(ele.children) {
-        // 调用递归方法，生成 Route 数组
-        recursionRoute(ele.children)
-      }
-      return undefined
-    })
-    return res
+const formItemLayout = {
+  labelCol: {
+    sm: {
+      span: 4,
+    },
+  },
+  wrapperCol: {
+    sm: {
+      span: 16,
+    },
+  },
+}
+const tailFormItemLayout = {
+  wrapperCol: {
+    sm: {
+      span: 16,
+      offset: 4,
+    },
+  }
+}
+
+export default props => {
+  const [autoCompleteResult, setAutoCompleteResult] = useState([])
+
+  // 获取Form的实例
+  const [form] = Form.useForm()
+
+  // 表单提交
+  const onFinish = values => {
+    console.log('values', values);
   }
 
-  return (
-    <div className='qf-main'>
-      {/*
-        作用：用于把 Route数组组件包裹起来，当Url变化时从上到下进行匹配，匹配成功即终止
-        当Route数组被包裹起来，建议给 Route都加上exact属性。
-        在生成 Route 数组时，其外层不能包裹任何其实HTML节点，它的直接父组件只能是 Switch
-      */}
-      <Switch>
-        { createRoutes() }
-        <Redirect from='/*' to='/' />
-      </Switch>
+  return(
+    <div>
+      <h1>商品新增</h1>
+      <Form
+        style={{margin:'25px 0'}}
+        {...formItemLayout}
+        form={form}
+        name="register"
+        onFinish={onFinish}
+        initialValues={{
+          residence: ['zhejiang', 'hangzhou', 'xihu'],
+          prefix: '86',
+        }}
+        scrollToFirstError
+      >
+        <Form.Item
+          name="name"
+          label="商品名称"
+          rules={[
+            { required: true, message: '商品名称是必填!',},
+            { max: 10, message: '商品名称不能超过10个字' },
+            { min: 2, message: '商品名称不能少于两个字' }
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="desc"
+          label="商品描述"
+          rules={[
+            { required: true, message: '商品描述是必填!',},
+            { max: 30, message: '商品描述不能超过10个字' },
+            { min: 10, message: '商品描述不能少于两个字' }
+          ]}
+        >
+          <TextArea rows={4} />
+        </Form.Item>
+
+        <Form.Item
+          name="cate"
+          label="选择品类"
+          rules={[
+            { required: true, message: '商品描述是必填!' }
+          ]}
+        >
+          <Select
+            style={{ width: 200 }}
+            placeholder="选择一个品类"
+          >
+            <Option key='1' value="jack">Jack</Option>
+            <Option key='2' value="lucy">Lucy</Option>
+            <Option key='3' value="tom">Tom</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item {...tailFormItemLayout}>
+          <Button type="primary" htmlType="submit">
+            提交
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   )
 }
