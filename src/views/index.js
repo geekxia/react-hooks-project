@@ -2,7 +2,7 @@ import loadable from '@loadable/component'
 import {
   DotChartOutlined,
   DribbbleOutlined,
-  AlipayOutlined
+  AppleOutlined
 } from '@ant-design/icons'
 
 const TestRedux = loadable(()=>import('./home/TestRedux'))
@@ -13,7 +13,8 @@ const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./list/ListHome"))
 
-const AddGood = loadable(()=>import('./wyk/AddGood'))
+const GoodAdd = loadable(()=>import('./wyk/GoodAdd'))
+const AllGoodList = loadable(()=>import('./wyk/AllGoodList'))
 
 
 export default [
@@ -73,13 +74,19 @@ export default [
   {
     id:34,
     text:'wyk列表',
-    icon:<AlipayOutlined />,
+    icon:<AppleOutlined />,
     children:[
       {
         id:3401,
         text:'新增商品',
         path:'/wyk/addGood',
-        component:AddGood
+        component:GoodAdd
+      },
+      {
+        id:3402,
+        text:'商品列表',
+        path:'/wyk/AllGoodList',
+        component:AllGoodList
       }
     ]
   }
