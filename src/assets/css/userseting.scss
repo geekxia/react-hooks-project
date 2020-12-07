@@ -1,0 +1,26 @@
+.qf-userset {
+  display: flex;
+  min-width: 750px;
+  .qf-userset-aside {
+    width: 200px;
+    height: 100%;
+    background: pink;
+  }
+  .qf-userset-main {
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    background: skyblue;
+    display: flex;
+    .qf-userset-main-left {
+      background: #ccc;
+      height: 100%;
+      width: 100%;
+    }
+    .qf-userset-main-right {
+      background: #3dccc0;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
