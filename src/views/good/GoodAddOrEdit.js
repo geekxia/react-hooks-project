@@ -100,9 +100,9 @@ export default props => {
             style={{ width: 200 }}
             placeholder="选择一个品类"
           >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            <Option key='1' value="jack">Jack</Option>
+            <Option key='2' value="lucy">Lucy</Option>
+            <Option key='3' value="tom">Tom</Option>
           </Select>
         </Form.Item>
 
