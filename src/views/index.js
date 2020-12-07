@@ -12,6 +12,8 @@ const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./huhui/ListHome"))
 const FormHome = loadable(()=>import("./huhui/FormHome"))
+const HuhClass = loadable(()=>import("./huhui/HuhClass"))
+const HuhAddorEdit = loadable(()=>import("./huhui/HuhAddorEdit"))
 
 
 export default [
@@ -71,6 +73,20 @@ export default [
         text:"分步表单",
         path:"/huform",
         component:FormHome
+      },
+      {
+        id:1313,
+        text:"课堂练习",
+        path:"/hucontact",
+        component:HuhClass,
+        children:[
+          {
+            id:131311,
+            text:"商品新增",
+            path:"/hucontact/gooduptate",
+            component:HuhAddorEdit
+          }
+        ]
       }
     ]
   }

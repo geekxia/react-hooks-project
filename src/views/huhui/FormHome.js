@@ -101,7 +101,7 @@ const FormHome = (props)=>{
                     </Button>
                     )}
                     {current === steps.length - 1 && (
-                    <Button type="primary" onClick={() => message.success('Processing complete!')}>
+                    <Button type="primary" onClick={() => message.success('提交成功!')}>
                         提交
                     </Button>
                     )}
