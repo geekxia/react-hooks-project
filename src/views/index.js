@@ -1,8 +1,10 @@
 import loadable from '@loadable/component'
 import {
   DotChartOutlined,
-  DribbbleOutlined
+  DribbbleOutlined,
+  RadarChartOutlined
 } from '@ant-design/icons'
+import { List } from 'antd/lib/form/Form'
 
 const TestRedux = loadable(()=>import('./home/TestRedux'))
 const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
@@ -11,7 +13,7 @@ const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./list/ListHome"))
-
+const YjbGood = loadable(()=>import("./yjb/good/YjbGood"))
 
 export default [
   {
@@ -55,15 +57,28 @@ export default [
     ]
   },
   {
-    id: 12,
+    id: 13,
     text:"胡辉列表",
     icon:<DribbbleOutlined />,
     children :[
       {
-        id:1211,
+        id:1311,
         text:"查询表格",
         path:"/hulist",
         component:ListHome
+      }
+    ]
+  },
+  {
+    id:14,
+    text:"易剑波列表",
+    icon:<RadarChartOutlined />,
+    children:[
+      {
+        id:1411,
+        text:"表格查询",
+        path:"/bolist",
+        component:YjbGood
       }
     ]
   }
