@@ -1,7 +1,8 @@
 import loadable from '@loadable/component'
 import {
   DotChartOutlined,
-  DribbbleOutlined
+  DribbbleOutlined,
+  GiftOutlined
 } from '@ant-design/icons'
 
 const TestRedux = loadable(()=>import('./home/TestRedux'))
@@ -11,6 +12,10 @@ const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./list/ListHome"))
+
+const GoodQtpList = loadable(()=>import("./qtp/GoodQtpList"))
+
+const GoodQtpUpdate = loadable(()=>import('./qtp/GoodQtpUpdate'))
 
 
 export default [
@@ -64,6 +69,27 @@ export default [
         text:"查询表格",
         path:"/hulist",
         component:ListHome
+      }
+    ]
+  },
+  {
+    id: 14,
+    text:"鹏鹏小店",
+    icon: <GiftOutlined />,
+    children: [
+      {
+        id: 1233,
+        text:"小店商品",
+        path:'/qtp/list',
+        component:GoodQtpList,
+        children: [
+          {
+            id: 112222,
+            text: '商品添加与编辑',
+            path: '/qtp/update',
+            component: GoodQtpUpdate
+          }
+        ]
       }
     ]
   }

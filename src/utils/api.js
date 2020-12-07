@@ -8,6 +8,15 @@ export function fetchQqMusic(params) {
   })
 }
 
+export function fetchGoodQtp(data) {
+  return axios({
+    url: '/api/v1/good/addOrEdit',
+    method: 'POST',
+    data
+  })
+}
+
 export default {
-  fetchQqMusic
+  fetchQqMusic,
+  fetchGoodQtp
 }
