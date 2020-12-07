@@ -10,7 +10,8 @@ const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
 const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
-const ListHome = loadable(()=>import("./list/ListHome"))
+const ListHome = loadable(()=>import("./huhui/ListHome"))
+const FormHome = loadable(()=>import("./huhui/FormHome"))
 
 
 export default [
@@ -60,10 +61,16 @@ export default [
     icon:<DribbbleOutlined />,
     children :[
       {
-        id:1211,
+        id:1311,
         text:"查询表格",
         path:"/hulist",
         component:ListHome
+      },
+      {
+        id:1312,
+        text:"分步表单",
+        path:"/huform",
+        component:FormHome
       }
     ]
   }
