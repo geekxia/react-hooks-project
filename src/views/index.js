@@ -4,19 +4,14 @@ import {
   DribbbleOutlined
 } from '@ant-design/icons'
 
-<<<<<<< HEAD
 const TestRedux = loadable(()=>import('./home/TestRedux'))
 const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
 
 const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
-
-
-=======
-const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const ListHome = loadable(()=>import("./list/ListHome"))
->>>>>>> e21096810e65b5295f5d9b23be0dd1db10e8332f
+
 
 export default [
   {
