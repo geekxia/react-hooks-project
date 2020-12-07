@@ -5,6 +5,8 @@ import {
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const FoodList = loadable(()=>import('./ttfood/FoodList'))
+const AddGoods = loadable(()=>import('./ttshop/AddGood'))
+const TtGoodList = loadable(()=>import('./ttshop/TtGoodList'))
 
 export default [
   {
@@ -22,7 +24,7 @@ export default [
   },
   {
     id: 12,
-    text: '美食专栏',
+    text: '涛涛美食',
     icon: <DotChartOutlined />,
     children: [
       {
@@ -35,13 +37,20 @@ export default [
   },
   {
     id: 13,
-    text: 'tt小店',
+    text: '涛涛小店',
     icon: <DotChartOutlined />,
     children: [
       {
         id: 1311,
+        text: '商品列表',
+        path: '/ttgood',
+        component: TtGoodList
+      },
+      {
+        id: 1312,
         text: '新增商品',
-        path: '/ttgood'
+        path: '/ttgood/add',
+        component: AddGoods
       }
     ]
   }

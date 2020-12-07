@@ -1,7 +1,8 @@
 import type from './actionTypes'
 import { 
   fetchQqMusic,
-  fetchFoodList 
+  fetchFoodList,
+  fetchGoodList 
 } from '@/utils/api'
 
 // action 生成器
@@ -56,8 +57,20 @@ function foodListAction(params) {
 
 function foodNameAction(payload) {
   return {
-      type: type.AJAX_FOOD_NAME,
-      payload
+    type: type.AJAX_FOOD_NAME,
+    payload
+  }
+}
+
+function goodListAction(params) {
+  return function(dispatch) {
+    fetchGoodList(params).then(res=>{
+      console.log('fetchGoodList',res);
+      dispatch({
+        type: type.TT_GOOD_LIST,
+        payload: res
+      })
+    })
   }
 }
 
@@ -66,5 +79,6 @@ export default {
   addFooCountAction,
   musicListAction,
   foodListAction,
-  foodNameAction
+  foodNameAction,
+  goodListAction
 }

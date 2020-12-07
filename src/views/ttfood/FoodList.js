@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Table, Tag, Space, Image, Input  } from 'antd';
 
@@ -15,6 +15,10 @@ import action from '@/store/actions'
 export default props => {
     const foodList = useSelector(store=>store.food.foodList)
     const foodName = useSelector(store=>store.food.foodName)
+
+    let [size,setSize] = useState(4)
+    let [page,setPage] = useState(1)
+
     console.log(foodList);
     const dispatch = useDispatch()
     useEffect(()=>{
@@ -53,7 +57,7 @@ export default props => {
           title: '特色',
           dataIndex: 'tag',
           key: 'tag',
-          width: '150px'
+          width: '250px'
         },
         {
           title: '用餐人数',
@@ -86,8 +90,14 @@ export default props => {
                     dataSource={foodList} 
                     columns={columns} 
                     rowKey={record => record.id} 
-                    ellipsis = {true}
-                    pagination={{ pageSize: 4 }}
+                    pagination={{ 
+                        showSizeChanger: true,
+                        defaultCurrent: page,
+                        pageSizeOptions: [2,4,5,10],
+                        defaultPageSize: size,
+                        // onChange: page=>setPage(page),
+                        onShowSizeChange: (page,size)=>(setSize(size))
+                    }}
                 />
             </div>
         </div>
