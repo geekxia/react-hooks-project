@@ -13,8 +13,31 @@ const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./list/ListHome"))
 
+const AddShow = loadable(()=>import("./Jerry/show/AddShow"))
+const ListShow = loadable(()=>import("./Jerry/show/ListShow"))
+
+
 
 export default [
+  {
+    id: 9000,
+    text:"IMJERRY",
+    icon:<WarningOutlined />,
+    children:[
+      {id: 9001,
+      text:"AddShow",
+      path:'/AddShow',
+      icon:<WarningOutlined />,
+      component:AddShow,
+      },
+      {id: 9002,
+        text:"ListShow",
+        path:'/ListShow',
+        icon:<WarningOutlined />,
+        component:ListShow,
+      },
+    ]
+  },
   {
     id: 11,
     text: '概况管理',
@@ -44,14 +67,12 @@ export default [
         text: '商品列表',
         path: '/good/list',
         component: GoodList,
-        children: [
-          {
-            id: 121010,
-            text: '商品新增与编辑',
-            path: '/good/update',
-            component: GoodAddOrEdit
-          }
-        ]
+      },
+      {
+        id: 121010,
+        text: '商品新增与编辑',
+        path: '/good/update',
+        component: GoodAddOrEdit
       }
     ]
   },
@@ -68,9 +89,5 @@ export default [
       }
     ]
   },
-  {
-    id: 9000,
-    text:"IMJERRY",
-    icon:<WarningOutlined />,
-  }
+  
 ]
