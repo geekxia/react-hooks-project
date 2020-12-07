@@ -10,8 +10,18 @@ import {
   Col,
   Checkbox,
   Button,
-  AutoComplete
+  AutoComplete,
+  InputNumber,
+  Upload,
+  Switch
 } from 'antd'
+
+import {
+  QfUploadIcon
+} from '@/components'
+
+import img from '@/utils/img'
+import { fetchGoodOrEdit } from '@/utils/api'
 
 import { QuestionCircleOutlined } from '@ant-design/icons';
 const { Option } = Select
@@ -41,13 +51,27 @@ const tailFormItemLayout = {
 
 export default props => {
   const [autoCompleteResult, setAutoCompleteResult] = useState([])
+  let [imageUrl, setImageUrl] = useState('')
 
   // 获取Form的实例
   const [form] = Form.useForm()
 
+  // 图片上传成功
+  const imgSuccess = e => {
+    console.log('图片上传成功', e)
+    if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
+      setImageUrl(e.fileList[0].response.data.url)
+    }
+  }
+
   // 表单提交
   const onFinish = values => {
-    console.log('values', values);
+    values.img = imageUrl
+    console.log('values 提交接口', values)
+    fetchGoodOrEdit(values).then(()=>{
+      // 跳转到列表页
+      props.history.replace('/good/list')
+    })
   }
 
   return(
@@ -90,6 +114,16 @@ export default props => {
         </Form.Item>
 
         <Form.Item
+          name="price"
+          label="商品价格"
+          rules={[
+            { required: true, message: '商品描述是必填!',}
+          ]}
+        >
+          <InputNumber min={0} />
+        </Form.Item>
+
+        <Form.Item
           name="cate"
           label="选择品类"
           rules={[
@@ -100,11 +134,44 @@ export default props => {
             style={{ width: 200 }}
             placeholder="选择一个品类"
           >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
+            <Option key='1' value="jack">Jack</Option>
+            <Option key='2' value="lucy">Lucy</Option>
+            <Option key='3' value="tom">Tom</Option>
           </Select>
         </Form.Item>
+
+        <Form.Item
+          label='商品图片'
+          rules={[
+            { required: true, message: '商品图片是必填!' }
+          ]}
+        >
+          <Upload
+            name="file"
+            action={img.uploadUrl}
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            onChange={imgSuccess}
+          >
+            {
+              imageUrl ?
+              <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} />
+              : <QfUploadIcon />
+            }
+          </Upload>
+        </Form.Item>
+
+        <Form.Item
+          name='hot'
+          label='是否热销'
+          valuePropName='checked'
+        >
+          <Switch />
+        </Form.Item>
+
+
+
 
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
