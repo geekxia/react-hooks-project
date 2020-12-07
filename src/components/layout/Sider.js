@@ -6,7 +6,6 @@ import { NavLink } from 'react-router-dom'
 import { Menu } from 'antd'
 const { SubMenu } = Menu
 
-console.log('routes', routes)
 
 export default props=>{
 

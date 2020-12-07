@@ -10,10 +10,15 @@ import {
   Col,
   Checkbox,
   Button,
-  AutoComplete
+  AutoComplete,
+  Switch,
+  Upload ,
+  InputNumber
 } from 'antd'
-
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import img from "@/utils/img"
+import {PlusOutlined} from "@/components/"
+import { fetchGoodOrEdit } from '@/utils/api'
 const { Option } = Select
 const { TextArea } = Input
 const AutoCompleteOption = AutoComplete.Option;
@@ -39,6 +44,7 @@ const tailFormItemLayout = {
   }
 }
 
+
 export default props => {
   const [autoCompleteResult, setAutoCompleteResult] = useState([])
 
@@ -48,6 +54,20 @@ export default props => {
   // 表单提交
   const onFinish = values => {
     console.log('values', values);
+    values.img = imageUrl
+    fetchGoodOrEdit(values).then(res=>{
+      props.history.replace("/good/list")
+    })
+
+  }
+
+  //图片上传成功回调
+  let [imageUrl,setimageUrl]=useState("")
+   const  imgSuccess=(e)=>{
+     console.log(e)
+    if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
+      setimageUrl(e.fileList[0].response.data.url)
+    }
   }
 
   return(
@@ -83,7 +103,7 @@ export default props => {
           rules={[
             { required: true, message: '商品描述是必填!',},
             { max: 30, message: '商品描述不能超过10个字' },
-            { min: 10, message: '商品描述不能少于两个字' }
+            { min: 5, message: '商品描述不能少于两个字' }
           ]}
         >
           <TextArea rows={4} />
@@ -105,6 +125,44 @@ export default props => {
             <Option value="tom">Tom</Option>
           </Select>
         </Form.Item>
+
+        <Form.Item
+           name="hot"
+          label="是否热销"
+          valuePropName="checked"
+        >
+          <Switch />
+        </Form.Item>
+
+        <Form.Item
+          name="price"
+          label="商品价格"
+          rules={[
+            { required: true, message: '商品描述是必填!',}
+          ]}
+        >
+          <InputNumber min={0} />
+        </Form.Item>
+
+        <Form.Item
+           label="图片上传"
+           rules={[
+            { required: true, message: '商品图片是必填!' }
+          ]}
+        >
+            <Upload
+              name="file"
+              listType="picture-card"
+              className="avatar-uploader"
+              showUploadList={false}
+              action={img.imgURL}
+              onChange={imgSuccess}
+            >
+              {imageUrl ? <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} /> : <PlusOutlined />}
+          </Upload>
+        </Form.Item> 
+
+
 
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
