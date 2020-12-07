@@ -90,3 +90,4 @@ git add .
 git commit -m '分支合并完成'
 git push origin xia
 ```
+## 管理权限

@@ -52,7 +52,7 @@ export default props => {
   const msg = useSelector(store=>store.study.msg)
   const count = useSelector(store=>store.study.foo.count)
   const list = useSelector(store=>store.music.list)
-
+  
   const dispatch = useDispatch() // 派发，派发的是actions
   const changeMsg = ()=>{
     // 我现在Home组件中，我想改变store中的msg
