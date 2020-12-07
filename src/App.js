@@ -5,7 +5,7 @@ import { Layout } from '@/components'
 import { Provider } from 'react-redux'
 import store from '@/store'
 
-function App() { 
+function App() {
   return (
     <HashRouter>
       <Provider store={store}>

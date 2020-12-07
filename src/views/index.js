@@ -1,37 +1,57 @@
 import loadable from '@loadable/component'
 import {
   DotChartOutlined,
-ApartmentOutlined
+  DribbbleOutlined,
+  NodeIndexOutlined
 } from '@ant-design/icons'
 
-const Home = loadable(()=>import('./home/Home'))
-const Mqh = loadable(()=>import('./mqh/Mqh'))
-export default [ // eslint-disable-line
+const TestRedux = loadable(()=>import('./home/TestRedux'))
+const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
+
+const GoodList = loadable(()=>import('./mqh/GoodList'))
+const GoodAddOrEdit = loadable(()=>import('./mqh/GoodAddOrEdit'))
+
+
+
+export default [
   {
     id: 11,
     text: '概况管理',
     icon: <DotChartOutlined />,
     children: [
       {
-        id: 1111,
-        text: '学习Redux哟',
+        id: 1110,
+        text: 'TestRedux',
         path: '/',
-        component: Home
+        component: TestRedux
       },
+      {
+        id: 1111,
+        text: 'TestReduxHook',
+        path: '/redux/hook',
+        component: TestReduxHook
+      }
     ]
   },
   {
-    id: 22,
-    text: '数据分析',
-    icon: <ApartmentOutlined />,
+    id: 12,
+    text: '清华商品',
+    icon:   <NodeIndexOutlined/>,
     children: [
       {
-        id: 1111,
-        text: '前端开发之数据分析',
-        path: '/mqh',
-        component: Mqh
-      },
-      
+        id: 1210,
+        text: '商品列表',
+        path: '/mqh/list',
+        component: GoodList,
+        children: [
+          {
+            id: 121010,
+            text: '商品新增与编辑',
+            path: '/mqh/update',
+            component: GoodAddOrEdit
+          }
+        ]
+      }
     ]
-  }
+  },
 ]
