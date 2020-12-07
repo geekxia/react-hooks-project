@@ -42,13 +42,6 @@ export default props=>{
             align: 'center',
 
         },
-        {
-            title: '专辑',
-            dataIndex: 'time_public',
-            key: 'time_public',
-            align: 'center',
-
-        },
         
     ];
     const changevalue=(e)=>{
