@@ -4,6 +4,7 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+const Number = loadable(()=>import('./px-number/Number'))
 
 export default [
   {
@@ -16,6 +17,19 @@ export default [
         text: '学习Redux哟',
         path: '/',
         component: ReduxStudy
+      }
+    ]
+  },
+  {
+    id:2211,
+    text:'潘曦号码归属地',
+    icon: <DotChartOutlined />,
+    children: [
+      {
+        id:221101,
+        text:"归属地查询",
+        path:'/testdemo',
+        component:Number
       }
     ]
   }
