@@ -9,9 +9,12 @@ const AJAX_MUSIC_LIST = 'AJAX_MUSIC_LIST'
 
 const ADD_PRO = "ADD_PRO"
 
+const XXL_GET_SHOP = "XXL_GET_SHOP"
+
 export default {
   CHANGE_MSG,
   ADD_FOO_COUNT,
   AJAX_MUSIC_LIST,
-  ADD_PRO
+  ADD_PRO,
+  XXL_GET_SHOP
 }

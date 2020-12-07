@@ -6,6 +6,8 @@ import {
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const Xxl =loadable(()=>import('./xxl/Xxl'))
 const RenderXxl = loadable(()=>import("./xxl/renderXxl"))
+const xxlAddShop = loadable(()=>import("./xxl/xxlAddShop"))
+const xxlshopList = loadable(()=>import("./xxl/xxlshopList"))
 
 export default [
   {
@@ -36,6 +38,16 @@ export default [
         text: '渲染基础表单',
         path: '/formmsg',
         component: RenderXxl
+      },{
+        id: 2020120503,
+        text: '新增商品',
+        path: '/xxladd',
+        component: xxlAddShop
+      },{
+        id: 2020120504,
+        text: '商品列表',
+        path: '/xxlshop',
+        component: xxlshopList
       }
       
     ]

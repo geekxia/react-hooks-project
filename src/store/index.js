@@ -17,12 +17,14 @@ import music from './modules/music'
 //xxl的状态管理
 import xxlReducer from './modules/xxl-modules/xxlReducer'
 import xxlProject from './modules/xxl-modules/xxlProject'
+import xxlgetshop from './modules/xxl-modules/goods/xxlgetshop'
 
 export default createStore(combineReducers({
   study,
   music,
   xxlReducer,
-  xxlProject
+  xxlProject,
+  xxlgetshop
 }), applyMiddleware(thunk))
 
 // 如何使用redux？

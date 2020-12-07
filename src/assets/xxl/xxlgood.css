@@ -1,0 +1,10 @@
+.xxl-good .ant-image {
+  display: block;
+  margin: 0 auto;
+}
+
+.xxl-good .ant-image .ant-image-img {
+  display: block;
+  width: 80px;
+  margin: 0 auto;
+}

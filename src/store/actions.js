@@ -1,5 +1,6 @@
 import type from './actionTypes'
 import { fetchQqMusic } from '@/utils/api'
+import api from "@/utils/api"
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -23,6 +24,16 @@ function addPro(payload) {
     payload
   }
 }
+function xxlGetShop(params){
+  return dispatch =>{
+    api.fetchXxlGetShop(params).then(res=>{
+      console.log("-------------",res)
+      dispatch({type:type.XXL_GET_SHOP,payload:res})
+    })
+  }
+}
+
+
 
 // 页面中要使用 QQ 音乐列表？数据从后端来，要状态管理工具里来
 // 状态管理工具有这个QQ音乐列表？没有，我定义，怎么定义？
@@ -51,5 +62,6 @@ export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
-  addPro
+  addPro,
+  xxlGetShop
 }
