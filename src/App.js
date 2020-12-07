@@ -1,5 +1,10 @@
 import { HashRouter } from 'react-router-dom'
 import { Layout } from '@/components'
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+import locale from 'antd/lib/locale/zh_CN';
+import { ConfigProvider,DatePicker }from 'antd'
+
 
 // react-redux
 import { Provider } from 'react-redux'
@@ -9,9 +14,12 @@ function App() {
   return (
     <HashRouter>
       <Provider store={store}>
-        <div className="app">
-          <Layout />
-        </div>
+        <ConfigProvider locale={locale}>
+          <DatePicker defaultValue={moment('YYYY-MM-DD')} />
+           <div className="app">
+            <Layout />
+           </div>
+        </ConfigProvider>
       </Provider>
     </HashRouter>
 
