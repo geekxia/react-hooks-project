@@ -1,7 +1,6 @@
 import loadable from '@loadable/component'
 import {
   DotChartOutlined,
-  DribbbleOutlined,
   WifiOutlined
 } from '@ant-design/icons'
 
@@ -11,12 +10,10 @@ const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
 const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
-const ListHome = loadable(()=>import("./list/ListHome"))
 
 const YLQHomePage = loadable(()=>import("./ylq/YLQHomePage"))
-
-
-
+const YLQHomePageGoodList = loadable(()=>import("./ylq/YLQHomePageGoodList"))
+const YLQNewAddPage = loadable(()=>import("./ylq/YLQNewAddPage"))
 
 export default [
   {
@@ -60,19 +57,6 @@ export default [
     ]
   },
   {
-    id: 13,
-    text:"胡辉列表",
-    icon:<DribbbleOutlined />,
-    children :[
-      {
-        id:1211,
-        text:"查询表格",
-        path:"/hulist",
-        component:ListHome
-      }
-    ]
-  },
-  {
     id: 999,
     text:"YLQ模块",
     icon:<WifiOutlined />,
@@ -82,7 +66,21 @@ export default [
         text:"个人中心",
         path:"/ylq/homepage",
         component:YLQHomePage
-      }
+      },
+      {
+        id:99911,
+        text:"商品列表",
+        path:"/ylq/homepage/goodlist",
+        component:YLQHomePageGoodList,
+        children:[
+          {
+            id:9991110,
+            path:"/ylq/homepage/goodlist/newaddpage",
+            component:YLQNewAddPage
+          }
+        ]
+      },
+
     ]
   }
 ]
