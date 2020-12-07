@@ -39,8 +39,22 @@ function musicListAction(params) {
   }
 }
 
+function numberListAction(params) {
+  return function(dispatch) {
+    fetchQqMusic(params).then(res=>{
+      console.log('-----', res)
+      // 这才是真正地把后端数据，发送到store中
+      dispatch({
+        type: type.AJAX_PhoneState_LEST,
+        payload: res.list
+      })
+    })
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  numberListAction
 }
