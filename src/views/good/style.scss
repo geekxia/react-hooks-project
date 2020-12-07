@@ -1,0 +1,11 @@
+.qf-good-list {
+  .gl-good {
+    text-align: center;
+    &>img {
+      display: block;
+      height: 80px;
+      width: 80px;
+      margin: 0 auto;
+    }
+  }
+}
