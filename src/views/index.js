@@ -63,12 +63,12 @@ export default [
   },
 
   {
-    id: 12,
+    id: 13,
     text: 'Apple管理',
     icon: <AppleFilled />,
     children: [
       {
-        id: 1210,
+        id: 1310,
         text: 'Apple iphone12',
         path: '/apple',
         component: Apple
@@ -76,18 +76,18 @@ export default [
     ]
   },
   {
-    id: 13,
+    id: 14,
     text: 'JDT列表',
     icon: <GithubOutlined />,
     children: [
       {
-        id: 1310,
+        id: 1410,
         text: '商品添加',
         path: '/add',
         component: Add
       },
       {
-        id: 1311,
+        id: 1411,
         text: '商品列表',
         path: '/productlist',
         component: ProductList

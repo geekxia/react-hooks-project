@@ -1,66 +1,114 @@
-import React from 'react'
+import {useEffect,useState} from 'react'
+import {useSelector,useDispatch} from 'react-redux'
 import { Table, Tag, Space } from 'antd';
+import img from '@/utils/img'
+import action from '@/store/actions'
+import moment from 'moment'
 
 export default props => {
+
+    const dispatch = useDispatch()
+    const goodData = useSelector(store=>store.good.goodData)
+
+    let [page,setPage] =useState(1)
+    let [size,setSize] =useState(2)
+
+    useEffect(()=>{
+        let params = {
+            size,
+            page
+        }
+        dispatch(action.getGoodList(params))
+        return undefined
+    },[page,size])
+
 
     const columns = [
         {
           title: '商品',
           dataIndex: 'name',
           key: 'name',
-          render: text => <a>{text}</a>,
+          align:"center",
+          render: (text,row,idx)=> {
+            return (
+                <div className='gl-good'>
+                    <img src={img.imgBase+row.img} alt={row.name} />
+                    <a>{text}</a>
+                </div>
+            )
+          }
         },
         {
-          title: 'Age',
-          dataIndex: 'age',
-          key: 'age',
+          title: '商品描述',
+          dataIndex: 'desc',
+          key: 'desc',
+          align:"center",
         },
         {
-          title: 'Address',
-          dataIndex: 'address',
-          key: 'address',
+          title: '价格',
+          dataIndex: 'price',
+          key: 'price',
+          align:"center",
+          render: text=> <div>{'￥'+text}</div>
         },
         {
-          title: 'Tags',
-          key: 'tags',
-          dataIndex: 'tags',
+          title: '是否热销',
+          key: 'hot',
+          dataIndex: 'hot',
+          align:"center",
+          render: text=><div>{text?'是':'否'}</div>
           
         },
         {
-          title: 'Action',
+          title: '上架时间',
           key: 'action',
-        
+          dataIndex: 'create_time',
+          align:"center",
+          render: text=> {
+              return(
+                  <>
+                  <div>{moment(text).format('YYYY年MM月DD日')}</div>
+                  <div>{moment(text).format('hh:mm:ss')}</div>
+                  </>
+              )
+          }
         },
+        {
+            title: '操作',
+            key: 'tags',
+            align: 'center',
+            dataIndex: 'tags',
+            render: () => (
+              <>
+                <a href="">删除</a>
+                <a href="">编辑</a>
+              </>
+            )
+          }
       ]
       
-      const data = [
-        {
-          key: '1',
-          name: 'John Brown',
-          age: 32,
-          address: 'New York No. 1 Lake Park',
-          tags: ['nice', 'developer'],
-        },
-        {
-          key: '2',
-          name: 'Jim Green',
-          age: 42,
-          address: 'London No. 1 Lake Park',
-          tags: ['loser'],
-        },
-        {
-          key: '3',
-          name: 'Joe Black',
-          age: 32,
-          address: 'Sidney No. 1 Lake Park',
-          tags: ['cool', 'teacher'],
-        },
-      ]
 
     return (
         <div className='productlist'>
             <h1>商品列表</h1>
-            <Table columns={columns} dataSource={data} />
+            <div>
+                查询条件
+            </div>
+            <div style={{margin:'20px 0'}}>
+                
+            </div>
+            <Table
+                rowKey='_id'
+                columns={columns}
+                dataSource={goodData.list}
+                pagination={{
+                    total: goodData.total,
+                    defaultPageSize: size,
+                    onChange: page=>setPage(page),
+                    onShowSizeChange: (page, size)=>setSize(size),
+                    pageSizeOptions: [2,5,10,15,20]
+                }}
+            />
         </div>
     )
 }
