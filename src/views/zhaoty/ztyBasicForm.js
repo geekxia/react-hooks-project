@@ -9,7 +9,8 @@ import {
     BasicFormWeight,
     BasicFormSubmitOrSave,
     BasicFormDataPicker,
-    BasicFormShareState
+    BasicFormShareState,
+    ZtyBreadCrumb
 }from './components/index'
 
 
@@ -17,6 +18,7 @@ export default props=>{
    
     return (
         <div className='zty-form'>
+            <ZtyBreadCrumb />
             <BasicFormTitle />
             <BasicFormDataPicker />
             <BasicFormDesc />

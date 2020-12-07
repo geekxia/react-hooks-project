@@ -7,10 +7,11 @@ import {
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const ztyBasicForm = loadable(()=>import('./zhaoty/ztyBasicForm'))
 const ztyTableList = loadable(()=>import('./zhaoty/ztyTableList'))
-
+const ztyGoodList = loadable(()=>import('./zhaoty/ztyGoodList'))
+const ztyGoodUpdate = loadable(()=>import('./zhaoty/ztyGoodUpdate'))
 export default [ // eslint-disable-line
   {
-    id: 11,
+    id: 11,                                                                                                          
     text: '概况管理',
     icon: <DotChartOutlined />,
     children: [
@@ -38,6 +39,19 @@ export default [ // eslint-disable-line
         text:'查询表格',
         path:'/zhao/table-list',
         component:ztyTableList
+      },
+      {
+        id:'30009003',
+        text:'商品列表',
+        path:'/zhao/good/list',
+        component:ztyGoodList,
+        children:[
+          {
+            id:3000900310,
+            path:'/zhao/good/update',
+            component:ztyGoodUpdate
+          }
+        ]
       }
     ]
 

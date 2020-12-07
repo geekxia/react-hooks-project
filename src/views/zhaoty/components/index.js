@@ -7,6 +7,7 @@ import BasicFormWeight from './ztyBasicForm/weight'
 import BasicFormSubmitOrSave from './ztyBasicForm/submitOrSave'
 import BasicFormDataPicker from './ztyBasicForm/dataPicker'
 import BasicFormShareState from './ztyBasicForm/shareState'
+import ZtyBreadCrumb from './breadCrumb'
 
 
 export {
@@ -18,5 +19,6 @@ export {
     BasicFormWeight,
     BasicFormSubmitOrSave,
     BasicFormDataPicker,
-    BasicFormShareState
+    BasicFormShareState,
+    ZtyBreadCrumb
 }
