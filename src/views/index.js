@@ -1,7 +1,8 @@
 import loadable from '@loadable/component'
 import {
   DotChartOutlined,
-  DribbbleOutlined
+  DribbbleOutlined,
+  HeartOutlined
 } from '@ant-design/icons'
 
 const TestRedux = loadable(()=>import('./home/TestRedux'))
@@ -12,6 +13,8 @@ const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./list/ListHome"))
 
+const List =loadable(()=>import('./hml/List'))
+const AddOrEdit =loadable(()=>import('./hml/AddOrEdit'))
 
 export default [
   {
@@ -55,15 +58,36 @@ export default [
     ]
   },
   {
-    id: 12,
+    id: 13,
     text:"胡辉列表",
     icon:<DribbbleOutlined />,
     children :[
       {
-        id:1211,
+        id:1311,
         text:"查询表格",
         path:"/hulist",
         component:ListHome
+      }
+    ]
+  },
+  {
+    id: 14,
+    text:"hml列表",
+    icon:<HeartOutlined />,
+    children:[
+      {
+        id:1410,
+        text:'商品列表',
+        path:'/hml/list',
+        component:List,
+        children:[
+          {
+            id:141010,
+            text:'商品增加或编辑',
+            path:'/hml/add',
+            component:AddOrEdit
+          }
+        ]
       }
     ]
   }

@@ -63,5 +63,15 @@
       // height: 100%;
       min-width: 750px;
     }
+    .ant-table-cell{
+      text-align: center;
+    }
+    .add{
+      position: relative;
+      left:  -50px;
+      right:0;
+      top: -35px;
+      bottom: 0;
+    }
   }
 }
