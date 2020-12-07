@@ -95,3 +95,8 @@ git push origin xia
 ```
 git config --global credential.helper store
 ```
+### 如何拉代码
+git add .
+git commit -m ''
+git push  地址
+git pull  地址

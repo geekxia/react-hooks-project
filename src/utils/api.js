@@ -8,6 +8,37 @@ export function fetchQqMusic(params) {
   })
 }
 
+// 添加商品
+export function fetchGoodOrEdit(data) {
+  return axios({
+    url: '/api/v1/good/addOrEdit',
+    method: 'POST',
+    data
+  })
+}
+
+// 获取商品列表
+export function fetchGoodList(params) {
+  return axios({
+    url: '/api/v1/good/list',
+    method: 'GET',
+    params
+  })
+}
+
+//添加商品yjb
+export function fetchYjbGood(data){
+  return axios({
+    url:'/api/v1/good/addOrEdit',
+    method:'POST',
+    data
+  })
+}
+
+
 export default {
-  fetchQqMusic
+  fetchQqMusic,
+  fetchGoodOrEdit,
+  fetchGoodList,
+  fetchYjbGood
 }

@@ -14,6 +14,8 @@ const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./list/ListHome"))
 const YjbGood = loadable(()=>import("./yjb/good/YjbGood"))
+const GoodAdd = loadable(()=>import("./yjb/good/GoodAdd"))
+
 
 export default [
   {
@@ -75,10 +77,18 @@ export default [
     icon:<RadarChartOutlined />,
     children:[
       {
-        id:1411,
-        text:"表格查询",
+        id:1410,
+        text:"商品详情页",
         path:"/bolist",
-        component:YjbGood
+        component:YjbGood,
+        children:[
+          {
+            id:141010,
+            text:"商品新增页",
+            path:"/bolist/add",
+            component:GoodAdd
+          }
+        ]
       }
     ]
   }
