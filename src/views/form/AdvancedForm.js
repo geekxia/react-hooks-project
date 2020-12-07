@@ -1,5 +1,8 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import action from '@/store/actions'
+import moment from 'moment'
+import img from '@/utils/img'
+import './style.scss'
 import {
     useSelector,
     useDispatch
@@ -18,40 +21,69 @@ import {
     Button,
     Breadcrumb 
 } from 'antd';
-const { Option } = Select
-
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
- 
+ const { Option } = Select
 export default props=>{
+    let [size,setSize]=useState(2)
+    let [page,setPage]=useState(1)
     const [form] = Form.useForm();
     const dispatch = useDispatch()
     let data = useSelector(store=>store.study.data)
     const onFinish = (values) => {
         console.log(values);
     };
+    useEffect(()=>{
+        let params = {
+            size,
+            page
+        }
+        dispatch(action.YuGetGoodList(params))
+        
+        return undefined
+    },[page,size]) 
+
     const columns=[
         {
-            title: '成员姓名',
-            dataIndex: '成员姓名',
-            key: '成员姓名',
-            render: text => <a>{text}</a>,
+            title: '商品',
+            dataIndex: 'name',
+            key: 'name',
+            render: (text,row) => {
+                return (
+                    <div className='gl-good'>
+                        <img src={img.imgBase+row.img} alt={row.name} />
+                        <a>{text}</a>
+                    </div>
+                )
+            }
         },
         {
-            title: '年龄',
-            dataIndex: '年龄',
-            key: '年龄',
+            title: 'price',
+            dataIndex: 'price',
+            key: 'price',
         },
         {
-            title: '所属部门',
-            dataIndex: '所属部门',
-            key: '所属部门',
+            title: 'desc',
+            dataIndex: 'desc',
+            key: 'desc',
+        },
+        {
+            title: 'create_time',
+            dataIndex: 'create_time',
+            key: 'create_time',
+            render:text=>{
+                return (
+                    <>
+                        <div>{moment(text).format('YYYY-MM-DD')}</div>
+                    </>
+                )
+            } 
         },
         {
             title: 'Action',
             key: 'action',
             render: (text, record) => 
-                data.length >= 1 ? (
+                data.list.length >= 1 ? (
                     <Space>
                         <a>编辑</a>
                         <Popconfirm title="Sure to delete?" onConfirm={() =>dispatch(action.handleDelete(record.key))}>
@@ -215,7 +247,19 @@ export default props=>{
             
             <div style={{'paddingBottom':100+'px','background':'white','padding':10+'px'}}>
                 <Row style={{'borderBottom':1+'px'}}>成员管理</Row>
-                <Table columns={columns} dataSource={data} />
+                <Table 
+                    columns={columns} 
+                    dataSource={data.list} 
+                    rowKey='_id'
+                    pagination={{
+                        pageSizeOptions:[2,5,10,15,20] ,
+                        defaultPageSize:size,
+                        hideOnSinglePage:true,
+                        total:data.total,
+                        onShowSizeChange:(page,size)=>setSize(size),
+                        onChange:page=>setPage(page)
+                    }}
+                />
                 <Row>
                     <Col span={24} className='col' onClick={()=>dispatch(action.handleAdd(0))}>
                         新增成员

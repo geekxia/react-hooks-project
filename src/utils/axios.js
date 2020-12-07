@@ -18,8 +18,13 @@ instance.interceptors.request.use(function (config) {
 
 instance.interceptors.response.use(function (response) {
   // 数据过滤
+  // console.log(response)
   let res = null
   if(response.status === 200) {
+    if(response.data.err===0&&response.data.data){
+      res=response.data.data
+      // console.log('商品列表',res)
+    }
     if(response.data && response.data.code===0) {
       res = response.data.data
     }

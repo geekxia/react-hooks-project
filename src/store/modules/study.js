@@ -10,34 +10,8 @@ let initState = {
     count: 0
   },
   loading:true,
-  data:[
-    {
-      key: '1',
-      成员姓名: 'John Brown',
-      年龄: 32,
-      所属部门: 'New York No. 1 Lake Park',
-    },
-    {
-      key: '2',
-      成员姓名: 'Jim Green',
-      年龄: 42,
-      所属部门: 'London No. 1 Lake Park',
-    },
-    {
-      key: '3',
-      成员姓名: 'Joe Black',
-      年龄: 32,
-      所属部门: 'Sidney No. 1 Lake Park',
-    }
-  ],
-  data1:
-    {
-      key: 4,
-      成员姓名: 'John Brown',
-      年龄: 32,
-      所属部门: 'New York No. 1 Lake Park',
-    } 
-  
+  data:[]
+ 
 }
 export default (state=initState, action) => {
   // 第一步，接收store给的信号（干什么、数据）
@@ -66,6 +40,9 @@ export default (state=initState, action) => {
     case type.HANDLEADD:
       newState.data1.key+=1
       newState.data=[...newState.data,newState.data1]
+      break
+    case type.YUGOODLIST:
+      newState.data=action.payload
       break
     default:
       return state

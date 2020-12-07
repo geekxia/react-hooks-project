@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
+import { fetchQqMusic,fetchGoodList } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -59,11 +59,25 @@ function musicListAction(params) {
   }
 }
 
+//获取商品列表
+function YuGetGoodList(params){
+  return dispatch=>{
+    fetchGoodList(params).then(res=>{
+      console.log('good list-------',res)
+      dispatch({
+        type:type.YUGOODLIST,
+        payload:res
+      })
+    })
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   fanLoading,
   handleDelete,
-  handleAdd
+  handleAdd,
+  YuGetGoodList
 }
