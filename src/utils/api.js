@@ -8,6 +8,15 @@ export function fetchQqMusic(params) {
   })
 }
 
+export function fetchFoodList(params) {
+  return axios({
+    url:'/jisuapi/search',
+    method: 'GET',
+    params
+  })
+}
+
 export default {
-  fetchQqMusic
+  fetchQqMusic,
+  fetchFoodList
 }

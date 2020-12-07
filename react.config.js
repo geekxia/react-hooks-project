@@ -11,6 +11,10 @@ module.exports = {
     '/soso': {
       target: 'https://c.y.qq.com',
       changeOrigin: true
+    },
+    '/jisuapi': {
+      target: 'https://way.jd.com',
+      changeOrigin: true
     }
   },
   alias: {
@@ -31,7 +35,7 @@ module.exports = {
             javascriptEnabled: true,
             // 自定义antd主题
             modifyVars: {
-              "primary-color": "#00ff00"
+              "primary-color": "#66ccff"
             }
           }
         }}

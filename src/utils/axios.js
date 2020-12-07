@@ -22,8 +22,10 @@ instance.interceptors.response.use(function (response) {
   if(response.status === 200) {
     if(response.data && response.data.code===0) {
       res = response.data.data
+    } else if(response.data && response.data.code==='10000') {
+      res= response.data.result.result
     }
-  }
+  } 
   return res
 }, function (error) {
   return Promise.reject(error)

@@ -3,7 +3,7 @@ import React from 'react'
 import routes from '@/views'
 import { NavLink } from 'react-router-dom'
 
-import { Menu } from 'antd'
+import { Menu, Image } from 'antd'
 const { SubMenu } = Menu
 
 console.log('routes', routes)
@@ -34,13 +34,19 @@ export default props=>{
 
   return (
     <div className='qf-sider'>
+      <div className='logo'>
+        <a href="/">
+          <img src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
+          <h1>Ant Design</h1>
+        </a>
+      </div>
 
-    <Menu
-      mode="inline"
-      theme="dark"
-    >
-      { createNavLink()}
-    </Menu>
+      <Menu
+        mode="inline"
+        theme="dark"
+      >
+        { createNavLink()}
+      </Menu>
     </div>
   )
 }

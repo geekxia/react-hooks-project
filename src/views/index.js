@@ -4,6 +4,7 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+const FoodList = loadable(()=>import('./food/FoodList'))
 
 export default [
   {
@@ -16,6 +17,19 @@ export default [
         text: '学习Redux哟',
         path: '/',
         component: ReduxStudy
+      }
+    ]
+  },
+  {
+    id: 12,
+    text: '美食专栏',
+    icon: '',
+    children: [
+      {
+        id: 1211,
+        text: '菜谱大全',
+        path: '/food',
+        component: FoodList
       }
     ]
   }

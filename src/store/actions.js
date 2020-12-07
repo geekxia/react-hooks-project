@@ -1,5 +1,8 @@
 import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
+import { 
+  fetchQqMusic,
+  fetchFoodList 
+} from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -39,8 +42,29 @@ function musicListAction(params) {
   }
 }
 
+function foodListAction(params) {
+  return function(dispatch) {
+    fetchFoodList(params).then(res=>{
+      console.log('fetchFoodList',res);
+      dispatch({
+        type: type.AJAX_FOOD_LIST,
+        payload: res.list
+      })
+    })
+  }
+}
+
+function foodNameAction(payload) {
+  return {
+      type: type.AJAX_FOOD_NAME,
+      payload
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  foodListAction,
+  foodNameAction
 }
