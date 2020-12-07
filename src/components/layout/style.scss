@@ -40,28 +40,282 @@
     left: 150px;
     right: 0;
     padding: 15px;
+    margin-bottom: 5px;
   }
   .qf-main {
     position: absolute;
-    top: 60px;
+    top: 65px;
     bottom: 0;
     left: 150px;
     right: 0;
     background-color: #eee;
-    padding: 15px;
+    // padding: 15px;
     &>div {
       position: absolute;
-      top: 15px;
-      left: 15px;
-      right: 15px;
-      bottom: 15px;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       overflow: auto;
-      background: white;
+      // background: white;
       padding: 15px;
       border-radius: 5px;
       padding-bottom: 100px;
       // height: 100%;
       min-width: 750px;
+    }
+    .searchTab {
+      padding: 0;
+      .searchTab-header {
+        padding: 5px 20px;
+        background-color:white;
+      }
+      .searchTab-main {
+        position: relative;
+        margin: 20px;
+        .searchTab-main-search {
+          background-color: white;
+          [data-theme='compact'] .ant-advanced-search-form,
+          .ant-advanced-search-form {
+            padding: 24px;
+            background: #fbfbfb;
+            border: 1px solid #d9d9d9;
+            border-radius: 2px;
+          }
+          [data-theme='compact'] .ant-advanced-search-form .ant-form-item,
+          .ant-advanced-search-form .ant-form-item {
+            display: flex;
+          }
+          [data-theme='compact'] .ant-advanced-search-form .ant-form-item-control-wrapper,
+          .ant-advanced-search-form .ant-form-item-control-wrapper {
+            flex: 1;
+          }
+        }
+        .row2 {
+          position: absolute;
+          top: 20px;
+          right: 80px;
+        }
+      }
+    }
+  }
+}
+.userCenter {
+  padding: 15px;
+  background-color: transparent;
+  font-size: 16px;
+  .userCenter-left{
+    position: absolute;
+    padding: 20px;
+    left: 0;
+    top: 0;
+    width: 440px;
+    height: 700px;
+    background-color: white;
+    .Headphoto {
+      text-align: center;
+      line-height: 30px;
+      h1{
+        font-size: 30px;
+        margin-top: 10px;
+        font-weight: 600;
+      }
+      h3{
+        font-size: 20px;
+      }
+    }
+    .userCenter-left-middle {
+      line-height: 20px;
+      // margin-top: 40px;
+      padding-left: 20px;
+    }
+    .userCenter-left-team {
+      margin-top: 20px;
+      line-height: 30px;
+      font-size: 30px;
+      position: relative;
+      .ant-row {
+        height: 60px;
+        span.text {
+          display: inline-block;
+          font-size: 16px;
+          position: absolute;
+          padding-left: 5px;
+        }
+      }
+      
+    }
+  }
+  .userCenter-right{
+    position: absolute;
+    left: 500px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: white;
+    overflow: auto;
+    .ant-tabs{
+      font-size: 16px;
+      .ant-tabs-nav{
+        .ant-tabs-tab{
+          font-size: 20px;
+          padding: 10px;
+        }
+      }
+      .ant-tabs-content-holder{
+        padding: 20px;
+        .article {
+          .commet {
+            border-bottom: 1px solid #aaa;
+            div {
+              margin-bottom: 20px;
+              width: 400px;
+            }
+            .bottom {
+              .bottom-user{
+                color: blue;
+              }
+            }
+          }
+        };
+        .catalogue {
+          .gutter-row {
+            margin-bottom: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+.userSetting {
+  padding: 15px;
+  font-size: 16px;
+  height: 100%;
+  div {
+    max-height: 100%;
+  }
+  .ant-tabs-left {
+    padding: 20px 0; 
+    background-color: white;
+    >.ant-tabs-nav {
+      width: 200px;
+      font-weight: 500;
+      line-height: 60px;
+      .ant-tabs-tab {
+        font-size: 20px;
+        font-weight: 600;
+      }
+    }
+    .ant-tabs-content-holder {
+      .ant-tabs-content {
+        .ant-tabs-tabpane {
+          overflow: auto;
+          h1 {
+            font-size: 24px;
+            line-height: 60px;
+          }
+          .baseSetting {
+            font-size: 16px;
+            .baseSetting-left {
+              .ant-form-item {
+                display: inline-block;
+              }
+              width: 300px;
+              float: left;
+              .ant-input, .ant-btn{
+                // margin-top: 10px;
+                margin-bottom: 20px;
+                height: 40px;
+              }
+              .num1{
+                width: 100px;
+                margin-right: 20px;
+              }
+              .num2{
+                width: 150px;
+              }
+            }
+            .baseSetting-right{
+              float: left;
+              
+              div {
+                margin-bottom: 30px;
+                position: relative;
+                top: 100px;
+                left: 100px;
+                // overflow: hidden;
+                img {
+                  width: 200px;
+                  // display: block;
+                  border-radius: 50%;
+                  height: 200px;
+                }
+                .ant-upload {
+                  position: absolute;
+                  bottom: -40px;
+                  left: 15px;
+                }
+              }
+            }
+          }
+          .safeSetting {
+            font-size: 16px;
+            &>div{
+              line-height: 40px;
+              border-bottom: 1px solid #aaa;
+              position: relative;
+              margin-right: 20px;
+              p>span {
+                color: blue;
+                position: absolute;
+                right: 20px;
+                bottom: 32px;
+                cursor: pointer;
+              }
+            }
+          }
+          .countBinded {
+            font-size: 16px;
+            &>div{
+              line-height: 35px;
+              border-bottom: 1px solid #aaa;
+              position: relative;
+              margin-right: 20px;
+              display: flex;
+              &>div {
+                padding-left: 20px;
+                p>span {
+                  color: blue;
+                  position: absolute;
+                  right: 20px;
+                  bottom: 32px;
+                  cursor: pointer;
+                }
+              }
+              .anticon {
+                margin-top: 10px;
+              }
+            }
+          }
+          .newMsg {
+            font-size: 16px;
+            &>div{
+              line-height: 40px;
+              border-bottom: 1px solid #aaa;
+              position: relative;
+              margin-right: 20px;
+              p>span {
+                color: blue;
+                position: absolute;
+                right: 20px;
+                bottom: 32px;
+                cursor: pointer;
+              }
+            }
+          }
+
+        }
+      }
     }
   }
 }

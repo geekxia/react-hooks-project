@@ -6,7 +6,7 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom'
-
+console.log(routes)
 export default props=>{
 
   // 生成路由匹配规则，当url和Route.path匹配成功，显示当前配对成功的Route.component
@@ -15,16 +15,22 @@ export default props=>{
     let res = []
     // 这是递归方法
     const recursionRoute = arr => {
+      
       arr.map(ele=>{
-        res.push(
-          <Route
-            key={ele.id}
-            path={ele.path}
-            component={ele.component}
-            exact
-          />
-        )
-        if(ele.children) recursionRoute(ele.children)
+        if(ele.children && ele.children.length > 0) {
+          recursionRoute(ele.children)
+          return undefined
+        }
+        else {
+          res.push(
+            <Route
+              key={ele.id}
+              path={ele.path}
+              component={ele.component}
+              exact = {ele.exact}
+            />
+          )
+        } 
         return undefined
       })
     }

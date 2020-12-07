@@ -7,7 +7,13 @@ export function fetchQqMusic(params) {
     params
   })
 }
-
+export function fetchGoodList(params) {
+  return axios({
+    url: '/api/v1/good/list',
+    method: 'GET',
+    params
+  })
+}
 export default {
   fetchQqMusic
 }
