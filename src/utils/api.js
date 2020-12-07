@@ -1,5 +1,7 @@
 import axios from './axios'
 
+
+//获取音乐列表
 export function fetchQqMusic(params) {
   return axios({
     url: '/soso/fcgi-bin/client_search_cp',
@@ -8,6 +10,8 @@ export function fetchQqMusic(params) {
   })
 }
 
+
+//获取天气
 export function fetchWeather(params) {
   return axios({
     url: '/jisuapi/weather',
@@ -16,7 +20,28 @@ export function fetchWeather(params) {
   })
 }
 
+
+//获取商品列表
+export function fetQiangGoodList(params) {
+  return axios({
+    url: "/api/v1/good/list",
+    method: "GET",
+    params
+  })
+}
+
+//提交商品
+export function fetchGoodOrEdit(data) {
+  return axios({
+    url: '/api/v1/good/addOrEdit',
+    method: 'POST',
+    data
+  })
+}
+
 export default {
   fetchQqMusic,
-  fetchWeather
+  fetchWeather,
+  fetQiangGoodList,
+  fetchGoodOrEdit
 }

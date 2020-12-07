@@ -15,7 +15,11 @@ module.exports = {
     "/jisuapi": {
       target: "https://way.jd.com",
       changeOrigin: true
-    }
+    },
+    "/api": {
+      target: "http://10.20.158.29:9999",
+      changeOrigin: true
+    },
   },
   alias: {
     '@': path.resolve(__dirname, 'src')
@@ -37,7 +41,7 @@ module.exports = {
                 javascriptEnabled: true,
                 // 自定义antd主题
                 modifyVars: {
-                  "primary-color": "#00ff00"
+                  "primary-color": "#DD001B"
                 }
               }
             }

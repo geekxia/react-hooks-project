@@ -5,6 +5,8 @@ import {
 
 const ReduxStudy = loadable(() => import('./home/ReduxStudy'))
 const QiangStudy = loadable(() => import('./qiang/qiangqiang'))
+const QiangGoods = loadable(() => import("./qiang/qianggoodList"))
+const QiangGoodsUpdate = loadable(() => import("./qiang/qianggoodupdate"))
 
 export default [
   {
@@ -27,10 +29,24 @@ export default [
     children: [
       {
         id: 5701,
-        text: '占位置',
+        text: '天气预报',
         path: '/qiang',
         component: QiangStudy
-      }
+      },
+      {
+        id: 5702,
+        text: '商品管理',
+        path: '/qianggood/list',
+        component: QiangGoods,
+        children: [
+          {
+            id: 570201,
+            text: "商品新增编辑",
+            path: '/qianggood/update',
+            component: QiangGoodsUpdate
+          }
+        ]
+      },
     ]
   }
 ]

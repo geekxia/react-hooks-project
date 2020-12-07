@@ -23,8 +23,11 @@ instance.interceptors.response.use(function (response) {
     if (response.data && response.data.code === 0) {
       res = response.data.data
     }
-    else if (response.data && response.data.code === "10000") {
+    if (response.data && response.data.code === "10000") {
       res = response.request.response
+    }
+    if (response.data && response.data.err === 0) {
+      res = response.data.data
     }
   }
   return res
