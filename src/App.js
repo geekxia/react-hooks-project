@@ -8,6 +8,7 @@ import store from '@/store'
 function App() {
   return (
     <HashRouter>
+    
       <Provider store={store}>
         <div className="app">
           <Layout />
