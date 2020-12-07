@@ -7,6 +7,8 @@ import {
 } from 'react-redux'
 
 import action from '@/store/actions'
+// 在类组件中使用Redux，只能使用 connect() 高阶函数
+// 在函数式组件中，可以使用 connect()，也可以使用 hooks的写法
 
 // connect(fn1, fn2)()
 
@@ -52,7 +54,8 @@ export default props => {
   const msg = useSelector(store=>store.study.msg)
   const count = useSelector(store=>store.study.foo.count)
   const list = useSelector(store=>store.music.list)
-
+  const stores = useSelector(store=>store)
+  console.log('useSelector(store=>store)',stores,props)
   const dispatch = useDispatch() // 派发，派发的是actions
   const changeMsg = ()=>{
     // 我现在Home组件中，我想改变store中的msg

@@ -11,6 +11,7 @@ export default (state=initState, action) => {
       newState.list = action.payload
       break
     default:
+      return state
   }
   return newState
 }

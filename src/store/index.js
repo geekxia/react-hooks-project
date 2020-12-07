@@ -11,12 +11,16 @@ import thunk from 'redux-thunk'
 // 比如我们要把后端异步数据放进Store，在组件中先发送一次空的action，通知调接口
 // 调接口成功后，再把后端真实数据 dispatch() 到Store
 
-import study from './modules/study'
-import music from './modules/music'
+import study from './modules/study';
+import music from './modules/music';
+import bafo from './modules/bafo';
+import good from './modules/good';
 
 export default createStore(combineReducers({
   study,
-  music
+  music,
+  bafo,
+  good
 }), applyMiddleware(thunk))
 
 // 如何使用redux？

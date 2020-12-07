@@ -62,6 +62,24 @@
       padding-bottom: 100px;
       // height: 100%;
       min-width: 750px;
+      .ant-btn-submit{
+        background: blue;
+        color:white;
+        margin-left:5px;margin-right:5px;
+      }
+      .ant-btn-submit:hover{
+        background: #5344dd;
+      }
+    }
+  }
+  .ant-page-header{
+    .form-nav{
+      span{
+        margin-right:10px;margin-left:10px;margin-bottom: 15px;
+      }
+      span:first-of-type{
+        margin-left:0px;
+      }
     }
   }
 }
