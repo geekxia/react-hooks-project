@@ -13,29 +13,29 @@ let initState = {
   data:[
     {
       key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
+      成员姓名: 'John Brown',
+      年龄: 32,
+      所属部门: 'New York No. 1 Lake Park',
     },
     {
       key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
+      成员姓名: 'Jim Green',
+      年龄: 42,
+      所属部门: 'London No. 1 Lake Park',
     },
     {
       key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
+      成员姓名: 'Joe Black',
+      年龄: 32,
+      所属部门: 'Sidney No. 1 Lake Park',
     }
   ],
   data1:
     {
       key: 4,
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
+      成员姓名: 'John Brown',
+      年龄: 32,
+      所属部门: 'New York No. 1 Lake Park',
     } 
   
 }

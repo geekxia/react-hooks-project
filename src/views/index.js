@@ -7,6 +7,7 @@ import {
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const Loading =loadable(()=>import('./loading/Loading'))
 const AdvancedForm=loadable(()=>import('./form/AdvancedForm'))
+const StepForm=loadable(()=>import('./form/StepForm'))
 
 export default [
   {
@@ -41,8 +42,14 @@ export default [
       {
         id:1301,
         text:'余——高级表单',
-        path:'/form',
+        path:'/form/advanced-form',
         component:AdvancedForm
+      },
+      {
+        id:1302,
+        text:'余——分步表单',
+        path:'/form/step-form',
+        component:StepForm
       }
     ]
   }

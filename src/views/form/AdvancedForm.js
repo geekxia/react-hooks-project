@@ -15,13 +15,14 @@ import {
     Space ,
     Popconfirm,
     Form,
-    Button
+    Button,
+    Breadcrumb 
 } from 'antd';
 const { Option } = Select
 
 import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
-
+ 
 export default props=>{
     const [form] = Form.useForm();
     const dispatch = useDispatch()
@@ -31,20 +32,20 @@ export default props=>{
     };
     const columns=[
         {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            title: '成员姓名',
+            dataIndex: '成员姓名',
+            key: '成员姓名',
             render: text => <a>{text}</a>,
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: '年龄',
+            dataIndex: '年龄',
+            key: '年龄',
         },
         {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
+            title: '所属部门',
+            dataIndex: '所属部门',
+            key: '所属部门',
         },
         {
             title: 'Action',
@@ -78,7 +79,14 @@ export default props=>{
     return (
         <div style={{'background':'transparent'}}>
             <div style={{'background':'white','padding':10+'px','marginBottom':20+'px'}}>
-            <h1>首页/表单/高级表单</h1>
+
+            <Breadcrumb>
+                <Breadcrumb.Item>首页</Breadcrumb.Item>
+                <Breadcrumb.Item>
+                <a href="">表单</a>
+                </Breadcrumb.Item>
+                <Breadcrumb.Item>高级表单</Breadcrumb.Item>
+            </Breadcrumb>
             <h1>高级表单</h1>
             <h3>高级表单常见于一次性输入和提交大批量数据的场景。</h3>
             </div>
@@ -147,7 +155,7 @@ export default props=>{
             
             
 
-            <div style={{'paddingBottom':100+'px','background':'white','padding':10+'px','marginBottom':20+'px'}}>
+            <div style={{'paddingBottom':100+'px','background':'white','padding':10+'px'}}>
                 <Row>
                     <Col span={8}>任务管理</Col>
                 </Row><br/>
