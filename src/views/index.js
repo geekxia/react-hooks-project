@@ -1,8 +1,10 @@
 import loadable from '@loadable/component'
 import {
-  DotChartOutlined
+  DotChartOutlined,
+  DribbbleOutlined
 } from '@ant-design/icons'
 
+<<<<<<< HEAD
 const TestRedux = loadable(()=>import('./home/TestRedux'))
 const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
 
@@ -11,6 +13,10 @@ const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 
 
+=======
+const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+const ListHome = loadable(()=>import("./list/ListHome"))
+>>>>>>> e21096810e65b5295f5d9b23be0dd1db10e8332f
 
 export default [
   {
@@ -50,6 +56,19 @@ export default [
             component: GoodAddOrEdit
           }
         ]
+      }
+    ]
+  },
+  {
+    id: 12,
+    text:"胡辉列表",
+    icon:<DribbbleOutlined />,
+    children :[
+      {
+        id:1211,
+        text:"查询表格",
+        path:"/hulist",
+        component:ListHome
       }
     ]
   }
