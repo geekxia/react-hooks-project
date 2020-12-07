@@ -2,129 +2,62 @@ import React,{ useState } from "react"
 import {
     Form,
     Input,
-    Tooltip,
-    Cascader,
     Select,
-    Row,
-    Col,
-    Checkbox,
     Button,
-    AutoComplete,
     InputNumber,
     Upload,
-    Modal
+    Switch
 } from 'antd'
-import { 
-    PlusOutlined,
-    LoadingOutlined
-} from '@ant-design/icons'
+import img from "@/utils/img"
+import {
+    QfUploadIcon
+} from "@/components/index"
+//引入接口
+import {
+    fetchGoodOrEdit
+} from "@/utils/api"
 
 const { Option } = Select;
 const { TextArea } = Input
 
-const AutoCompleteOption = AutoComplete.Option
+const formItemLayout = {
+    labelCol: {
+      sm: { span: 8 },
+    },
+    wrapperCol: {
+      sm: { span: 12 },
+    },
+}
+
+const tailFormItemLayout = {
+    wrapperCol: {
+      sm: {
+        span: 16,
+        offset: 8,
+      }
+    }
+}
 
 const HuhAddorEdit = (props)=>{
-    const [autoCompleteResult, setAutoCompleteResult] = useState([])
     let [imageUrl,setImageUrl] = useState("")
     const [form] = Form.useForm()
-    const residences = [
-        {
-          value: 'zhejiang',
-          label: 'Zhejiang',
-          children: [
-            {
-              value: 'hangzhou',
-              label: 'Hangzhou',
-              children: [
-                {
-                  value: 'xihu',
-                  label: 'West Lake',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          value: 'jiangsu',
-          label: 'Jiangsu',
-          children: [
-            {
-              value: 'nanjing',
-              label: 'Nanjing',
-              children: [
-                {
-                  value: 'zhonghuamen',
-                  label: 'Zhong Hua Men',
-                },
-              ],
-            },
-          ],
-        },
-    ]
 
-    const formItemLayout = {
-        labelCol: {
-          sm: { span: 8 },
-        },
-        wrapperCol: {
-          sm: { span: 12 },
-        },
-    }
-
-    const tailFormItemLayout = {
-        wrapperCol: {
-          sm: {
-            span: 16,
-            offset: 8,
-          }
-        }
-    }
-
+    //表单提交
     const onFinish = values => {
-        console.log('Received values of form: ', values);
+        values.img = imageUrl
+        console.log('表单提交 ', values);
+        fetchGoodOrEdit(values).then(res=>{
+            props.history.replace('/hucontact')
+        })
     }
-
-    const prefixSelector = (
-        <Form.Item name="prefix" noStyle>
-          <Select style={{ width: 70 }}>
-            <Option value="86">+86</Option>
-            <Option value="87">+87</Option>
-          </Select>
-        </Form.Item>
-    )
-
-    const onWebsiteChange = value => {
-        if (!value) {
-          setAutoCompleteResult([]);
-        } else {
-          setAutoCompleteResult(['.com', '.org', '.net'].map(domain => `${value}${domain}`));
-        }
-    }
-
 
     //图片上传
-    const handleCancel = () => setState({ previewVisible: false })
-    const beforeUpload=(file)=>{
-        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-        if (!isJpgOrPng) {
-            message.error('You can only upload JPG/PNG file!');
-        }
-        const isLt2M = file.size / 1024 / 1024 < 2;
-        if (!isLt2M) {
-            message.error('Image must smaller than 2MB!');
-        }
-        return isJpgOrPng && isLt2M;
-    }
     const imgSuccess = (e)=>{
-        console.log("图片上传成功",e);
+        if( e && e.fileList && e.fileList[0] && e.fileList[0].response){
+            console.log("图片上传成功",e);
+            setImageUrl(e.fileList[0].response.data.url)
+        }
     }
-    const uploadButton = (
-        <div>
-          {loading ? <LoadingOutlined /> : <PlusOutlined />}
-          <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-    )
 
     return (
         <div className="HH-AddorEdit">
@@ -185,7 +118,7 @@ const HuhAddorEdit = (props)=>{
                         <Select
                             showSearch
                             style={{ width: 200 }}
-                            placeholder="Select a person"
+                            placeholder="请选择商品品类"
                         >
                             <Option value="jack">Jack</Option>
                             <Option value="lucy">Lucy</Option>
@@ -197,25 +130,34 @@ const HuhAddorEdit = (props)=>{
                         name="img"
                         label="商品图片"
                         rules={[
-                            { required: true , message: '' }
+                            { required: true , message: '请上传商品图片！' }
                         ]}
                     >
                         <Upload
-                            name="avatar"
+                            name="file"
+                            action={img.uploadUrl}
                             listType="picture-card"
                             className="avatar-uploader"
                             showUploadList={false}
-                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                            beforeUpload={beforeUpload}
                             onChange={imgSuccess}
+                            fileList={imageUrl}
                         >
                             {
                                 imageUrl ? 
-                                <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> 
-                                : uploadButton}
+                                <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} /> 
+                                : <QfUploadIcon />
+                            }
                         </Upload>
                     </Form.Item>
                     
+                    <Form.Item
+                        name="hot"
+                        label="是否热销"
+                        valuePropName="checked"
+                    >
+                        <Switch  />
+                    </Form.Item>
+
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
                             提交

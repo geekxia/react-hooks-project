@@ -1,69 +1,110 @@
-import React from "react"
+import React,{
+    useState,
+    useEffect
+} from "react"
 import { 
     Table,
     Space,
     Row,
     Col,
-    Button
+    Button,
+    Image
 } from 'antd'
-import GoodAddOrEdit from "../good/GoodAddOrEdit"
+import {
+    useDispatch,
+    useSelector
+} from "react-redux"
+import action from "@/store/actions"
+import img from "@/utils/img"
+import moment from "moment"
 
 const HuhClass =(props)=>{
-
-    const columns = [
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-            render: text => <a>{text}</a>,
-        },
-        {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (text, record) => (
-            <Space size="middle">
-                <a>Invite {record.name}</a>
-                <a>Delete</a>
-            </Space>
-            ),
-        }
-    ]
+    const goodData = useSelector(store=>store.good.goodData)
+    const dispatch = useDispatch();
     
-    const data = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park'
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park'
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park'
-        }
-    ]
 
     //跳转商品新增页面
     const GoodAddOrEdit=()=>{
         props.history.push("/hucontact/gooduptate")
     }
+    //渲染table
+    let [page,setPage]=useState(1)
+    let [size,setSize]=useState(2)
+    useEffect(()=>{
+        let params = {
+            size,
+            page
+        }
+        dispatch(action.getGoodList(params))
+        return undefined
+    },[page,size])
+
+    const columns = [
+        {
+            title: '商品',
+            dataIndex: 'name',
+            key: 'name',
+            render: (text,record,idx) => {
+                return(
+                    <div className="table-img">
+                        <Image
+                            width={100}
+                            src={img.imgBase + record.img}
+                        />
+                        <a>{text}</a>
+                    </div>
+                )
+            },
+            align:"center"
+        },
+        {
+            title: '商品描述',
+            dataIndex: 'desc',
+            key: 'desc',
+            align:"center"
+        },
+        {
+            title: '商品价格',
+            dataIndex: 'price',
+            key: 'price',
+            align:"center",
+            sorter: (a, b) => a.price - b.price,
+            render: text=> <div>{ "￥"+text }</div>
+        },
+        {
+            title: '是否热销',
+            dataIndex: 'hot',
+            key: 'hot',
+            align:"center",
+            render: text => <div>{text?"是":"否"}</div>
+        },
+        {
+            title: '上架时间',
+            dataIndex: 'create_time',
+            key: 'create_time',
+            align:"center",
+            render: text =>{
+                return(
+                    <>
+                        <div>{moment(text).format("YYYY年MM月DD日")}</div>
+                        <div>{moment(text).format("hh:mm:ss")}</div>
+                    </>
+                )
+            }
+        },
+        {
+            title: '操作',
+            key: 'hot',
+            dataIndex: 'hot',
+            render: (text, record) => (
+                <Space size="middle">
+                    <a>编辑</a>
+                    <a>删除</a>
+                </Space>
+            ),
+            align:"center"
+        }
+    ]
 
     return(
         <div className="HH-list">
@@ -78,7 +119,18 @@ const HuhClass =(props)=>{
             </div>
             <hr/>
             <div className="List-table">
-                <Table columns={columns} dataSource={data} />
+                <Table
+                    rowKey="_id"
+                    columns={columns} 
+                    dataSource={goodData.list}
+                    pagination={{
+                        total:goodData.total,
+                        defaultPageSize: size,
+                        onChange:page=>setPage(page),
+                        onShowSizeChange:(page,size)=>setSize(size),
+                        pageSizeOptions:[2,5,10,15,20]
+                    }}
+                />
             </div>
         </div>
     )
