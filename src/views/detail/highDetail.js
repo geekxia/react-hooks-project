@@ -1,16 +1,24 @@
 import { Tooltip, Progress } from 'antd';
-
-
+import { Popover, Button } from 'antd';
+const content = (
+    <div>
+      <p>Content</p>
+      <p>Content</p>
+    </div>
+  );
 const HighDetail=props=>{
     return(
-        <div>
-             <div>
+        <div className="f-detail">
+             <div className="f-dtop">
                 <p className="f-bd">首页/详情页/高级详情页</p>
             </div>
-            <div>
+            <div className="f-demain">
                <h3>流程进度</h3>
+               <Popover content={content} title="Title">
+                    <Button type="primary">0</Button>
+                </Popover>,
                 <Tooltip title="3 done / 3 in progress / 4 to do">
-                    <Progress percent={60} success={{ percent: 30 }} />
+                    <Progress percent={25} success={{ percent: 25 }} />
                 </Tooltip>
                 <div className='f-jd'>
                     <span>创建项目</span>

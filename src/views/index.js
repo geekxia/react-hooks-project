@@ -5,6 +5,7 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+const ReduxText = loadable(()=>import('./home/ReduxText'))
 // 引入自己的两个详情页
 const BaseDetail = loadable(()=>import('./detail/baseDetail'))
 const HighDetail = loadable(()=>import('./detail/highDetail'))
@@ -17,10 +18,16 @@ export default [ // eslint-disable-line
     icon: <DotChartOutlined />,
     children: [
       {
-        id: 1111,
+        id: 1110,
         text: '学习Redux',
         path: '/',
         component: ReduxStudy
+      },
+      {
+        id: 1111,
+        text: '学习from',
+        path: '/from',
+        component: ReduxText
       }
     ]
   },

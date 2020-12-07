@@ -69,22 +69,41 @@
           color: #aaa;
           font-size: 14px;
         }
-        div{
-          .f-jd{
-            color:red;
-            display: flex;
-            width: 100%;
-            &>span{
-              display: block;
-              flex: 1;
-              width: 200px;
-            }
-          }
-
-        }
+      }
+      .f-detail{
+        width: 100%;
+        height: 100%;
+        background-color: #cccccc;
         
       }
-      
+    }
+  }
+}
+.f-dtop{
+  width: 100%;
+  height: 200px;
+  background-color: #eee;
+  margin-bottom: 20px;
+  padding: 20px;
+  &>.f-bd{
+    color: #aaa;
+    font-size: 14px;
+  }
+}
+.f-demain{
+  width: 100%;
+  height: 240px;
+  background: #eeeeee;
+  padding: 20px;
+  .f-jd{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    
+    &>span{
+      flex: 1;
+      color:red;
+      text-indent: 250px;
     }
   }
 }
