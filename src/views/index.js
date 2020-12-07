@@ -32,5 +32,17 @@ export default [
         component: FoodList
       }
     ]
+  },
+  {
+    id: 13,
+    text: 'tt小店',
+    icon: <DotChartOutlined />,
+    children: [
+      {
+        id: 1311,
+        text: '新增商品',
+        path: '/ttgood'
+      }
+    ]
   }
 ]
