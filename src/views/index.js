@@ -4,7 +4,7 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
-const FoodList = loadable(()=>import('./food/FoodList'))
+const FoodList = loadable(()=>import('./ttfood/FoodList'))
 
 export default [
   {
@@ -23,7 +23,7 @@ export default [
   {
     id: 12,
     text: '美食专栏',
-    icon: '',
+    icon: <DotChartOutlined />,
     children: [
       {
         id: 1211,
