@@ -90,3 +90,8 @@ git add .
 git commit -m '分支合并完成'
 git push origin xia
 ```
+
+## https 永久记住密码
+```
+git config --global credential.helper store
+```

@@ -8,20 +8,12 @@ import {
 
 import action from '@/store/actions'
 
-// connect(fn1, fn2)()
-
-function mapStateToProps(store) {
-  return {
-    msg: store.msg
-  }
-}
-function mapDispatchToProps(store) {
-  return {}
-}
-
+// 在类组件中使用Redux，只能使用 connect() 高阶函数
+// 在函数式组件中，可以使用 connect()，也可以使用 hooks的写法
 
 // 第1种写法：使用 connect() + 函数式组件
-// export default connect(mapStateToProps, mapDispatchToProps)(props => {
+// connect(fn1, fn2)()
+// export default connect(store=>({msg:store.study.msg}), dispatch=>({}))(props => {
 //   console.log('home props', props)
 //   return(
 //     <div>
@@ -32,22 +24,7 @@ function mapDispatchToProps(store) {
 //   )
 // })
 
-// 第2种写法：使用 connect() + 类组件
-// class Home extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <h1>首页</h1>
-//         <hr/>
-//         <h1>{this.props.msg}</h1>
-//       </div>
-//     )
-//   }
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(Home)
-
-
-// 第3种写法，使用 hooks + 函数式组件
+// 第2种写法，使用 hooks + 函数式组件
 export default props => {
   const msg = useSelector(store=>store.study.msg)
   const count = useSelector(store=>store.study.foo.count)
@@ -92,9 +69,7 @@ export default props => {
             <span>{ele.name}</span>
           </div>
         ))
-
       }
-
     </div>
   )
 }
