@@ -53,8 +53,8 @@ export default props=>{
                     label="商品名称"
                     rules={[
                     {
-                        required: true,
-                    },
+                        required: true
+                    }
                     ]}
                 >
                     <Input />
@@ -63,11 +63,7 @@ export default props=>{
                 <Form.Item
                     name={['product', 'type']}
                     label="商品类别"
-                    rules={[
-                    {
-                        required: true,
-                    },
-                    ]}
+                    rules={[{ required: true }]}
                 >
                     <Select
                     placeholder="请选择商品类别"
@@ -88,7 +84,7 @@ export default props=>{
                         min: 1,
                         max: 1000,
                         required: true
-                    },
+                    }
                     ]}
                 >
                     <InputNumber />

@@ -1,0 +1,14 @@
+.qf-good-list{
+    font-size: 12px;
+    .gl-good{
+        &>img{
+            width: 80px;
+            height: 80px;
+            display: block;
+            margin: 0 auto;
+        }
+    }
+    .ant-table-content{
+        font-size: 12px;
+    }
+}

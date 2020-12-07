@@ -19,8 +19,12 @@ instance.interceptors.request.use(function (config) {
 instance.interceptors.response.use(function (response) {
   // 数据过滤
   let res = null
+  // console.log(response)
   if(response.status === 200) {
     if(response.data && response.data.code===0) {
+      res = response.data.data
+    }
+    if(response.data && response.data.err===0){
       res = response.data.data
     }
   }
