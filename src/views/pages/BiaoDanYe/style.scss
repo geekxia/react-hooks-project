@@ -3,13 +3,13 @@
     .qf-main {
         background: #f0f2f5;
         padding: 0;
-        &>div {
+        &>.d1 {
             position: absolute;
             left: 0;
             top: 0;
             background: #f0f2f5; 
             padding: 0;
-            &>div{
+            &>.d2{
                 padding: 15px 0 0 15px;
                 background-color: white;
                 margin-bottom: 20px;

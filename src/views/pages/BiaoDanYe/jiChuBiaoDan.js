@@ -65,8 +65,8 @@ export default (props) => {
   },[])
 
   return (
-    <div>
-      <div>
+    <div className="d1">
+      <div className="d2">
         <Row justify="start" className="R1">
           <Col>首页</Col>
           <Col>/</Col>
