@@ -9,51 +9,95 @@ import {
   Input,
   Button,
   Radio,
-  Select,
-  Cascader,
   DatePicker,
   Space,
   InputNumber,
-  TreeSelect,
-  Switch,
+  message
 } from 'antd';
-
 
 const { TextArea } = Input;
 
 const { RangePicker } = DatePicker;
 
+
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+}
+
 const FormSizeDemo = () => {
-  const [componentSize, setComponentSize] = useState('default');
+  let timer = null
+  const [componentSize, setComponentSize] = useState('default')
+  const [loadings,setLoadings] = useState(false)
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
-  };
+  }
+
+  const onFinish = values => {
+    console.log('Success:', values)
+      setLoadings(!loadings)
+      timer = setTimeout(()=>{
+        setLoadings(loadings)
+        message.success('提交成功');
+      },1500)
+  }
+
+  const onFinishFailed = errorInfo => {
+    console.log('Failed:', errorInfo)
+  }
+
+  
+  
+  
+  
+  
   return (
     <>
       <Form
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 12 }}
+        labelCol={{ span: 7 }}
+        wrapperCol={{ span: 10 }}
         layout="horizontal"
         initialValues={{ size: componentSize }}
         onValuesChange={onFormLayoutChange}
         size={componentSize}
-        labelAlign='center'
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        name="basic"
       >
-        <Form.Item label="标题">
+        <Form.Item 
+          label="标题"
+          name='标题'
+          rules={[{ required: true, message: '请输入标题' }]}
+        >
           <Input placeholder='给目标起个名字' />
         </Form.Item>
-
-        <Form.Item label="起止日期">
-            <Space direction="vertical" size={12}>
-                <RangePicker />
+    
+        <Form.Item 
+          label="起止日期"
+          name='range-picker'
+          rules={[{type: 'array', required: true, message: '请选择起止日期' }]}
+        >
+            <Space direction="vertical" size={24}>
+              <RangePicker />
             </Space>
         </Form.Item>
 
-        <Form.Item  label="目标描述">
-            <TextArea rows={4} placeholder='请输入你的阶段性工作目标' />
+        <Form.Item  
+          label="目标描述"
+          name='目标描述'
+          rules={[{ required: true, message: '请输入目标描述' }]}
+        >
+            <TextArea rows={4} placeholder='请输入目标描述' />
         </Form.Item>
 
-        <Form.Item  label="衡量标准">
+        <Form.Item  
+          label="衡量标准"
+          name='衡量标准'
+          rules={[{ required: true, message: '请输入衡量标准' }]}
+        >
             <TextArea rows={4} placeholder='请输入衡量标准' />
         </Form.Item>
 
@@ -78,17 +122,25 @@ const FormSizeDemo = () => {
             </Radio.Group>
         </Form.Item>
 
-        <Form.Item >
+        <Form.Item 
+           wrapperCol={{ span: 8,offset:7 }}
+        >
             客户、邀评人默认被分享
         </Form.Item>
 
-        <Form.Item  labelCol={{ offset: 10} } >
-            <Button htmlType="submit" type="primary" placeholder='提交'>
-                提交
-            </Button>
-            <Button htmlType="button">
-                保存
-            </Button>
+        <Form.Item 
+          wrapperCol={{ span: 4,offset:7 }}
+        >
+          <Button 
+            type="primary" 
+            htmlType="submit" 
+            loading={loadings}  
+            >
+              提交
+          </Button>
+          <Button htmlType="button">
+              保存
+          </Button>
         </Form.Item>
 
       </Form>
