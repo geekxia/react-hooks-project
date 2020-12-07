@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
+import { fetchQqMusic,fetchGoodList } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -39,45 +39,14 @@ function musicListAction(params) {
   }
 }
 
-function detailList(){
+function detailList(params){
   return function(dispatch){
-    setTimeout(() => {
-      const list = [
-        {
-          key: '1',
-          name: 'fyb',
-          chinese: 98,
-          math: 60,
-          english: 70,
-        },
-        {
-          key: '2',
-          name: 'fgy',
-          chinese: 98,
-          math: 66,
-          english: 89,
-        },
-        {
-          key: '3',
-          name: 'Joe Black',
-          chinese: 98,
-          math: 90,
-          english: 70,
-        },
-        {
-          key: '4',
-          name: 'Jim Red',
-          chinese: 88,
-          math: 99,
-          english: 89,
-        },
-      ]
-      dispatch({
-        type:type.DETAILLIST,
-        payload:list
-      })
-      
-    }, 1000);
+   fetchGoodList(params).then(res=>{
+    dispatch({
+      type:type.DETAILLIST,
+      payload:res
+    })
+   })
   }
 }
 export default {

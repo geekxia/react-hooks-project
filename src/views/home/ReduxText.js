@@ -1,8 +1,10 @@
-import { Form, Input, Button, Select, Divider } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import {useState} from 'react'
+import { Form, Input, Button, Select,  Upload,Switch  } from 'antd';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { fetchGoodOrEdit } from '@/utils/api'
 const { Option } = Select
 const { TextArea } = Input;
-
+import img from '@/utils/img'
 const layout = {
     labelCol: {
       span: 4,
@@ -17,18 +19,35 @@ const layout = {
       span: 16,
     },
   }
- 
+  
 const FFrom=props=>{
-
-    const Demo = () => {
-        const onFinish = (values) => {
-          console.log('Success:', values);
-        };
+    const [ImageUrl,setImageUrl]=useState("")
+    const loading=false
+    const uploadButton = ()=>{
+        return(
+            <div>
+                {loading ? <LoadingOutlined /> : <PlusOutlined />}
+                <div style={{ marginTop: 8 }}>Upload</div>
+            </div>
+        )
+        }
+        
       
-        const onFinishFailed = (errorInfo) => {
-          console.log('Failed:', errorInfo);
-        };
-      }  
+    
+   
+    const onFinish = (values) => {
+        values.img=ImageUrl
+        fetchGoodOrEdit(values).then(()=>{
+            // 跳转到列表页
+            props.history.replace('/basedetail')
+          })
+    }
+    // 图片上传成功
+    const imgSuccess = e => {
+        if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
+        setImageUrl(e.fileList[0].response.data.url)
+        }
+    }
     return(
         <div className="f-from">
             <h2>from表单</h2>
@@ -38,12 +57,12 @@ const FFrom=props=>{
             initialValues={{
                 remember: true,
             }}
-            // onFinish={onFinish}
-            // onFinishFailed={onFinishFailed}
+            onFinish={onFinish}
+            
             >
                 <Form.Item
-                    label="name"
-                    name="商品名称"
+                    label="商品名称"
+                    name="name"
                     rules={[
                     {
                         required: true,
@@ -55,10 +74,9 @@ const FFrom=props=>{
                 >
                     <Input />
                 </Form.Item>
-
                 <Form.Item
-                    label="desc"
-                    name="商品描述"
+                    label="商品描述"
+                    name="desc"
                     rules={[
                     {
                         required: true,
@@ -72,14 +90,38 @@ const FFrom=props=>{
                     <TextArea rows={4} />
                 </Form.Item>
                 <Form.Item
-                    label="name"
-                    name="商品名称"
+                 label="商品图片"
+                 rules={[
+                    {
+                        required: true,
+                        message: '商品图片必填',
+                    },
+                    ]}
+                >
+                    <Upload
+                    name="file"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    action={img.uploadUrl}
+                    onChange={imgSuccess}
+                    >
+                        {ImageUrl ? <img src={img.imgBase+ImageUrl} alt="img" style={{ width: '100%' }} /> : uploadButton()}
+                    </Upload>
+                </Form.Item>
+                <Form.Item
+                    name='hot'
+                    label='是否热销'
+                    valuePropName='checked'
+                    >
+                    <Switch />
+                    </Form.Item>
+                <Form.Item
+                    label="商品品类"
+                    name="cate"
                     rules={[
                     {
                         required: true,
-                        max:6,
-                        min:2,
-                        message: '请输入2到6位的名称',
                     },
                     ]}
                 >
@@ -102,7 +144,7 @@ const FFrom=props=>{
                 </Form.Item>
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
-                        Submit
+                        提交
                     </Button>
                 </Form.Item>
             </Form>
