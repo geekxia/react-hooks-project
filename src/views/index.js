@@ -1,10 +1,15 @@
 import loadable from '@loadable/component'
 import {
-  DotChartOutlined
+  DotChartOutlined,
+  
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
-const Shopping = loadable(()=>import('./home/Shopping'))
+const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
+const GoodList = loadable(()=>import('./good/GoodList'))
+const GoodAdd = loadable(()=>import('./good/GoodAdd'))
+
+
 
 
 export default [
@@ -23,14 +28,37 @@ export default [
   },
   {
     id: 12,
-    text: '购物车',
+    text: '音乐管理',
     icon: <DotChartOutlined />,
     children: [
       {
         id: 1212,
-        text: '买东西了',
-        path: '/cart',
-        component: Shopping
+        text: '音乐列表',
+        path: '/music',
+        component: TestReduxHook
+      }
+    ]
+  },
+  {
+    id: 13,
+    text: '商品管理',
+    icon: <DotChartOutlined />,
+    children: [
+      {
+        id: 1313,
+        text: '商品列表',
+        path: '/good/list',
+        component: GoodList,
+        children:[
+          {
+            id: 1314,
+            text:'商品新增与编辑',
+            path:'/good/updata',
+            component: GoodAdd
+          
+          }
+
+        ]
       }
     ]
   }
