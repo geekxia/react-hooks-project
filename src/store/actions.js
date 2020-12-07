@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
+import { fetchQqMusic, fetchWeather } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -16,6 +16,24 @@ function addFooCountAction(payload) {
   }
 }
 
+function changeCityAction(payload) {
+  return {
+    type: type.GET_CITY,
+    payload
+  }
+}
+
+function getWeatherAction(params) {
+  return function (dispatch) {
+    fetchWeather(params).then(res => {
+      res = JSON.parse(res)
+      dispatch({
+        type: type.GET_WEATHER,
+        payload: res.result
+      })
+    })
+  }
+}
 // 页面中要使用 QQ 音乐列表？数据从后端来，要状态管理工具里来
 // 状态管理工具有这个QQ音乐列表？没有，我定义，怎么定义？
 // 在子reducer中定义完成，在根store中合并
@@ -27,8 +45,9 @@ function addFooCountAction(payload) {
 
 // redux不支持异步数据
 function musicListAction(params) {
-  return function(dispatch) {
-    fetchQqMusic(params).then(res=>{
+  return function (dispatch) {
+    fetchQqMusic(params).then(res => {
+
       console.log('-----', res)
       // 这才是真正地把后端数据，发送到store中
       dispatch({
@@ -42,5 +61,7 @@ function musicListAction(params) {
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  getWeatherAction,
+  changeCityAction
 }

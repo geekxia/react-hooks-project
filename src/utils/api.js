@@ -8,6 +8,15 @@ export function fetchQqMusic(params) {
   })
 }
 
+export function fetchWeather(params) {
+  return axios({
+    url: '/jisuapi/weather',
+    method: 'GET',
+    params
+  })
+}
+
 export default {
-  fetchQqMusic
+  fetchQqMusic,
+  fetchWeather
 }

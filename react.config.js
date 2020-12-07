@@ -11,6 +11,10 @@ module.exports = {
     '/soso': {
       target: 'https://c.y.qq.com',
       changeOrigin: true
+    },
+    "/jisuapi": {
+      target: "https://way.jd.com",
+      changeOrigin: true
     }
   },
   alias: {
@@ -22,20 +26,24 @@ module.exports = {
       // 如何配置 less 支持 antd 主题色的修改？如下两种方法（二选一）：
       // 一种是使用 webpack 的 less-loader 选项配置
       // 一种是直接修改文件 /node_modules/antd/lib/style/themes/default.less
-      { test: /\.less$/, use: [
-        { loader: 'style-loader' },
-        { loader: 'css-loader' },
-        { loader: 'less-loader', options: {
-          lessOptions: {
-            // 开启JavaScript，支持less中的JS函数
-            javascriptEnabled: true,
-            // 自定义antd主题
-            modifyVars: {
-              "primary-color": "#00ff00"
+      {
+        test: /\.less$/, use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          {
+            loader: 'less-loader', options: {
+              lessOptions: {
+                // 开启JavaScript，支持less中的JS函数
+                javascriptEnabled: true,
+                // 自定义antd主题
+                modifyVars: {
+                  "primary-color": "#00ff00"
+                }
+              }
             }
           }
-        }}
-      ]}
+        ]
+      }
     ]
   }
 }
