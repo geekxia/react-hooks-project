@@ -1,5 +1,7 @@
 import Layout from './layout/Layout'
+import UploadButton from './common/Upload'
 
-export {
-  Layout
+export{
+  Layout,
+  UploadButton
 }

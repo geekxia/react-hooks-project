@@ -1,0 +1,23 @@
+.table{
+    height: 100%;
+    font-size: 20px;
+    overflow: hidden;
+    .table-pillar{
+      float: left;
+      height: 100%;
+    }
+    .table-list{
+      height: 100%;
+      float: left;
+      &>div{
+        overflow: hidden;
+        width:300px;
+        .table-list-1{
+          float: left;
+        }
+        .table-list-2{
+          float: right;
+        }
+      }
+    }
+  }
