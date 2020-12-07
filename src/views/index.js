@@ -11,9 +11,6 @@ const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
 const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
-const ListHome = loadable(()=>import("./list/ListHome"))
-const LjxTest = loadable(()=>import("./ljx/LjxTest"))
-
 
 export default [
   {
@@ -37,8 +34,8 @@ export default [
   },
   {
     id: 12,
-    text: '商品管理',
-    icon: <DotChartOutlined />,
+    text: '锦兴页面',
+    icon: <AliwangwangOutlined />,
     children: [
       {
         id: 1210,
@@ -55,31 +52,5 @@ export default [
         ]
       }
     ]
-  },
-  {
-    id: 13,
-    text:"胡辉列表",
-    icon:<DribbbleOutlined />,
-    children :[
-      {
-        id:1211,
-        text:"查询表格",
-        path:"/hulist",
-        component:ListHome
-      }
-    ]
-  },
-  {
-    id: 14,
-    text:"赖锦兴",
-    icon:<AliwangwangOutlined />,
-    children :[
-      {
-        id:1411,
-        text:"测试一下",
-        path:"/ljx",
-        component:LjxTest
-      }
-    ]
-  },
+  }
 ]

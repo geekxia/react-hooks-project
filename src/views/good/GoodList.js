@@ -78,9 +78,9 @@ export default props => {
 
   return (
     <div className='qf-good-list'>
-      <h1>商品列表</h1>
+      <h1>购物车</h1>
       <div>
-        查询条件
+        商品列表
       </div>
       <div style={{margin: '20px 0'}}>
         <Table columns={columns} dataSource={data} />
