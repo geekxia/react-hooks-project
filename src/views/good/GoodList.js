@@ -83,7 +83,7 @@ export default props => {
           <a href="">删除</a>
           <a href="">编辑</a>
         </>
-      ),
+      )
     }
   ]
 
