@@ -1,25 +1,26 @@
-import {
-  createStore,
-  combineReducers,
-  applyMiddleware
-} from 'redux'
+import { createStore, combineReducers, applyMiddleware } from "redux";
 
 // redux-thunk   redux-saga
-import thunk from 'redux-thunk'
+import thunk from "redux-thunk";
 // 用于把一个异步action，转化成两个同步的action
 // 即，让 dispatch({}) 支持 dispatch(dispatch=>dispatch({})) 语法
 // 比如我们要把后端异步数据放进Store，在组件中先发送一次空的action，通知调接口
 // 调接口成功后，再把后端真实数据 dispatch() 到Store
 
-import study from './modules/study'
-import music from './modules/music'
-import gtitle from './modules/gtitle'
+import study from "./modules/study";
+import music from "./modules/music";
+import gtitle from "./modules/gtitle";
+import good from "./modules/good";
 
-export default createStore(combineReducers({
-  study,
-  music,
-  gtitle
-}), applyMiddleware(thunk))
+export default createStore(
+  combineReducers({
+    study,
+    music,
+    gtitle,
+    good,
+  }),
+  applyMiddleware(thunk)
+);
 
 // 如何使用redux？
 
@@ -42,7 +43,6 @@ export default createStore(combineReducers({
 // 1、如果使用connect()的方式：export default connect(fn1, fn2)(Home)
 // 2、如果使用hooks的方式，const msg = useSelector(store=>store.msg)
 // 建议使用 hooks 写法
-
 
 // 面试：三三原则
 

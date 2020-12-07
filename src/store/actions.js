@@ -1,19 +1,19 @@
-import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
+import type from "./actionTypes";
+import { fetchQqMusic, fetchGoodList } from "@/utils/api";
 
 // action 生成器
 function changeMsgAction(payload) {
   return {
     type: type.CHANGE_MSG,
-    payload
-  }
+    payload,
+  };
 }
 
 function addFooCountAction(payload) {
   return {
     type: type.ADD_FOO_COUNT,
-    payload
-  }
+    payload,
+  };
 }
 
 // 页面中要使用 QQ 音乐列表？数据从后端来，要状态管理工具里来
@@ -27,30 +27,40 @@ function addFooCountAction(payload) {
 
 // redux不支持异步数据
 function musicListAction(params) {
-  return function(dispatch) {
-    fetchQqMusic(params).then(res=>{
-      console.log('-----', res)
+  return function (dispatch) {
+    fetchQqMusic(params).then((res) => {
+      console.log("-----", res);
       // 这才是真正地把后端数据，发送到store中
       dispatch({
         type: type.AJAX_MUSIC_LIST,
-        payload: res.song.list
-      })
-    })
-  }
+        payload: res.song.list,
+      });
+    });
+  };
 }
 
 function getTitleName(payload) {
   return {
     type: type.PATH_TITLE,
-    payload
-  }
+    payload,
+  };
 }
 
 function changeMusicAction(payload) {
   return {
-      type: type.CHANGE_MUSIC,
-      payload
-  }
+    type: type.CHANGE_MUSIC,
+    payload,
+  };
+}
+
+// 商品列表
+function getGoodList(params) {
+  return (dispatch) => {
+    fetchGoodList(params).then((res) => {
+      console.log("商品列表", res);
+      dispatch({ type: type.GET_GOOD_LIST, payload: res });
+    });
+  };
 }
 
 export default {
@@ -58,5 +68,6 @@ export default {
   addFooCountAction,
   musicListAction,
   getTitleName,
-  changeMusicAction
-}
+  changeMusicAction,
+  getGoodList,
+};

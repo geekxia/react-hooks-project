@@ -1,5 +1,4 @@
-import Layout from './layout/Layout'
+import Layout from "./layout/Layout";
+import UploadIcon from "./common/uploadicon";
 
-export {
-  Layout
-}
+export { Layout, UploadIcon };
