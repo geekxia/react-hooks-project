@@ -5,6 +5,7 @@ module.exports = {
   publicPath: 'qfabc/efg',
   proxy: {
     '/api': {
+      // target: 'http://10.20.158.42:9999',
       target: 'http://10.20.158.29:9999',
       changeOrigin: true
     },
@@ -31,7 +32,7 @@ module.exports = {
             javascriptEnabled: true,
             // 自定义antd主题
             modifyVars: {
-              "primary-color": "#99FF33"
+              "primary-color": "#9932CC"
             }
           }
         }}

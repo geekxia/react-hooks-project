@@ -1,9 +1,10 @@
 import React from 'react'
-
+import { Breadcrumb } from 'antd';
 import {
   useHistory,
   // withRouter
 } from 'react-router-dom'
+import routes from '@/views'
 
 // 问题：没有被Route组件直接包裹的React组件中，是没有路由API的。
 // 那该怎么办？
@@ -13,10 +14,16 @@ import {
 // withRouter 是一个高阶组件，让那些没有被Route组件直接包裹的React组件拥有路由API
 // useHistory 是ReactRouter提供的Hooks API，帮助我们在无状态组件中使用路由API
 
+// const createBreadcrumb = ()=>{
+//   return routes.map(ele=>(
+//     <Breadcrumb.Item>
+//       <a href={ele.}>{ele.text}</a>
+//     </Breadcrumb.Item>
+//   ))
+// }
 
 
 // 一、使用Hooks写法，来解决React无状态组件中没有路由API的问题
-
 
 export default props => {
   const history = useHistory()
@@ -24,7 +31,10 @@ export default props => {
   console.log('---header history', history)
   return (
     <div className='qf-header'>
-      header
+      <Breadcrumb>
+        <Breadcrumb.Item>Home</Breadcrumb.Item>
+          
+      </Breadcrumb>
     </div>
   )
 }

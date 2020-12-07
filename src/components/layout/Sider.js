@@ -38,6 +38,7 @@ export default props=>{
     <Menu
       mode="inline"
       theme="dark"
+      defaultSelectedKeys={['1']}
     >
       { createNavLink()}
     </Menu>
