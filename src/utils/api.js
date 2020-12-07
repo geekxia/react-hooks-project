@@ -7,7 +7,15 @@ export function fetchQqMusic(params) {
     params
   })
 }
-
+// 添加商品
+export function fetchGoodOrEdit(data) {
+  return axios({
+    url: '/api/v1/good/addOrEdit',
+    method: 'POST',
+    data
+  })
+}
+// 获取商品列表
 export function fetchGoodList(params) {
   return axios({
     url: '/api/v1/good/list',
@@ -18,5 +26,6 @@ export function fetchGoodList(params) {
 
 export default {
   fetchQqMusic,
+  fetchGoodOrEdit,
   fetchGoodList
 }
