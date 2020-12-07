@@ -1,7 +1,8 @@
 import loadable from '@loadable/component'
 import {
   DotChartOutlined,
-  DribbbleOutlined
+  DribbbleOutlined,
+  AliwangwangOutlined
 } from '@ant-design/icons'
 
 const TestRedux = loadable(()=>import('./home/TestRedux'))
@@ -11,6 +12,7 @@ const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./list/ListHome"))
+const LjxTest = loadable(()=>import("./ljx/LjxTest"))
 
 
 export default [
@@ -66,5 +68,18 @@ export default [
         component:ListHome
       }
     ]
-  }
+  },
+  {
+    id: 14,
+    text:"赖锦兴",
+    icon:<AliwangwangOutlined />,
+    children :[
+      {
+        id:1411,
+        text:"测试一下",
+        path:"/ljx",
+        component:LjxTest
+      }
+    ]
+  },
 ]
