@@ -3,8 +3,10 @@ import {
   DotChartOutlined
 } from '@ant-design/icons'
 
+
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const Find = loadable(()=>import('./liufind/Find.js'))
+const GoodList = loadable(()=>import('./liufind/GoodList.js'))
 
 export default [
   {
@@ -29,6 +31,12 @@ export default [
         text:'表格新增呀',
         path:'/find',
         component:Find
+      },
+      {
+        id:1202,
+        text:'商品列表呀',
+        path:'/goodlist',
+        component:GoodList
       }
     ]
   }
