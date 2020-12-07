@@ -1,13 +1,20 @@
 import loadable from '@loadable/component'
 import {
   DotChartOutlined,
-  FormOutlined 
+  FormOutlined ,
+  TableOutlined
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+// 表单页的三个页面
 const Basic = loadable(()=>import('./form/Basic'))
 const Distribution = loadable(()=>import('./form/Distribution'))
 const Advanced = loadable(()=>import('./form/Advanced'))
+
+//商品页的两个页面
+const ShopList = loadable(()=>import('./shop/ShopList'))
+const ShopAddOrEdit = loadable(()=>import('./shop/ShopAddOrEdit'))
+
 
 export default [
   {
@@ -46,6 +53,27 @@ export default [
         
         path: '/form/distribution',
         component: Advanced
+      }
+    ]
+  },
+  {
+    id: 13,
+    text: '商品页',
+    icon: <TableOutlined />,
+    children: [
+      {
+        id: 1301,
+        text: '商品列表',
+        path: '/shop/list',
+        component: ShopList,
+        children:[
+          {
+            id:130101,
+            text:'商品新增',
+            path:'/shop/addList',
+            component:ShopAddOrEdit
+          }
+        ]
       }
     ]
   }
