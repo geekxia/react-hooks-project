@@ -8,6 +8,9 @@ const Login = loadable(()=>import('./User/Login'))
 const Detail = loadable(()=>import('./User/Details'))
 const YourMsg = loadable(()=>import('./User/YourMsg'))
 const RegistrationForm = loadable(()=>import('./User/Register'))
+
+const GoodList = loadable(()=>import('./good/GoodList'))
+const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 export default [
   {
     id: 11,
@@ -51,6 +54,29 @@ export default [
         path: '/register',
         component: RegistrationForm
       },
+    ]
+  },
+  {
+    id: 13,
+    text: '商品管理',
+    icon: <DotChartOutlined />,
+    children: [
+      {
+        id: 1310,
+        text: '商品列表',
+        path: '/good/list',
+        component: GoodList,
+        children: [
+          {
+            id: 131010,
+            text: '商品新增与编辑',
+            path: '/good/update',
+            component: GoodAddOrEdit, 
+          },
+        
+        ]
+      },
+    
     ]
   },
 ]
