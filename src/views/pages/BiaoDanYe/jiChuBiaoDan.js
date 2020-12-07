@@ -65,21 +65,23 @@ export default (props) => {
 
   return (
     <div>
-      <Row justify="start" className="R1">
-        <Col>首页</Col>
-        <Col>/</Col>
-        <Col>表单叶</Col>
-        <Col>/</Col>
-        <Col className={oo}>基础表单</Col>
-      </Row>
-      <Row className="R2">
-        <Col>基础表单</Col>
-      </Row>
-      <Row>
-        <Col>
-          表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景
-        </Col>
-      </Row>
+      <div>
+        <Row justify="start" className="R1">
+          <Col>首页</Col>
+          <Col>/</Col>
+          <Col>表单叶</Col>
+          <Col>/</Col>
+          <Col className={oo}>基础表单</Col>
+        </Row>
+        <Row className="R2">
+          <Col>基础表单</Col>
+        </Row>
+        <Row>
+          <Col>
+            表单页用于向用户收集或验证信息，基础表单常见于数据项较少的表单场景
+          </Col>
+        </Row>
+      </div>
 
       <Form wrapperCol={{ span: 7 }} labelCol={{ span: 8 }} name="basic" onFinish={onFinish}>
         <Form.Item
