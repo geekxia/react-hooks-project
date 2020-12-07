@@ -1,9 +1,20 @@
 import loadable from '@loadable/component'
 import {
-  DotChartOutlined
+  DotChartOutlined,
+  UserOutlined
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+
+
+
+
+const DjlUser = loadable(()=>import('./djluser/User'))
+const DjlGoods = loadable(()=>import('./djluser/Goods.js'))
+
+
+
+
 
 export default [
   {
@@ -16,6 +27,25 @@ export default [
         text: '学习Redux哟',
         path: '/',
         component: ReduxStudy
+      }
+    ]
+  },
+  {
+    id:12,
+    text:'邓继林中心',
+    icon:<UserOutlined />,
+    children:[
+      {
+        id:1210,
+        text:'个人信息',
+        path:'/djluser',
+        component:DjlUser
+      },
+      {
+        id:1211,
+        text:'商品列表',
+        path:'/good/list',
+        component:DjlGoods
       }
     ]
   }
