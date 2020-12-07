@@ -2,7 +2,7 @@ import {
   createStore,
   combineReducers,
   applyMiddleware
-} from 'redux'
+} from 'redux' 
 
 // redux-thunk   redux-saga
 import thunk from 'redux-thunk'
@@ -13,10 +13,13 @@ import thunk from 'redux-thunk'
 
 import study from './modules/study'
 import music from './modules/music'
+import list from './modules/goodlist'
+
 
 export default createStore(combineReducers({
   study,
-  music
+  music,
+  list
 }), applyMiddleware(thunk))
 
 // 如何使用redux？

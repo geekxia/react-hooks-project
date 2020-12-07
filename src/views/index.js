@@ -1,10 +1,13 @@
 import loadable from '@loadable/component'
 import {
-  DotChartOutlined
+  DotChartOutlined,
+  LoadingOutlined
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
-const ShawnLearn = loadable(()=>import('./home/ShawnLearn'))
+const ShawnTestRedux = loadable(()=>import('./shawn/ShawnTestRedux'))
+const ShawnGoodList = loadable(()=>import('./shawn/ShawnGoodList'))
+const ShawnGoodDetail = loadable(()=>import('./shawn/ShawnGoodDetail'))
 
 
 export default [
@@ -22,15 +25,29 @@ export default [
     ]
   },
   {
-    id: 12,
+    id: 444,
     text: 'Shawn',
-    icon: <DotChartOutlined />,
+    icon: <LoadingOutlined />,
     children: [
       {
-        id: 1211,
-        text: 'learn more',
-        path: '/shawnlearn',
-        component: ShawnLearn
+        id: 4441,
+        text: '测试redux',
+        path: '/shawntestredux',
+        component: ShawnTestRedux
+      },
+      {
+        id: 4442,
+        text: '商品列表',
+        path: '/shawngoodlist',
+        component: ShawnGoodList,
+        children: [
+          {
+            id: 4443,
+            text: '测试redux',
+            path: '/shawngoodlist/detail',
+            component: ShawnGoodDetail
+          }
+        ]
       }
     ]
   }

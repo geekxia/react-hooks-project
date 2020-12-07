@@ -74,6 +74,7 @@ export default props => {
     dispatch(action.musicListAction(params))
     return undefined
   }, [])
+  console.log('store',props.store)
   return (
     <div>
       <h1>首页</h1>

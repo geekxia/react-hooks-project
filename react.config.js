@@ -1,7 +1,7 @@
 const path = require('path')
 
 module.exports = {
-  port: 9000,
+  port: 4000,
   publicPath: 'qfabc/efg',
   proxy: {
     '/api': {

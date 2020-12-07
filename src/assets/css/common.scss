@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.shawngood_list{
+  .shawngood_table{
+    text-align: center;
+    &>img {
+      display: block;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto;
+    }
+  }
+}
