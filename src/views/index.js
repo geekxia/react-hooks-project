@@ -1,7 +1,8 @@
 import loadable from '@loadable/component'
 import {
   DotChartOutlined,
-  DribbbleOutlined
+  DribbbleOutlined,
+  WarningOutlined
 } from '@ant-design/icons'
 
 const TestRedux = loadable(()=>import('./home/TestRedux'))
@@ -66,5 +67,10 @@ export default [
         component:ListHome
       }
     ]
+  },
+  {
+    id: 9000,
+    text:"IMJERRY",
+    icon:<WarningOutlined />,
   }
 ]
