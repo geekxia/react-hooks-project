@@ -1,7 +1,8 @@
 import loadable from '@loadable/component'
 import {
-  DotChartOutlined,
-  DribbbleOutlined
+  Html5TwoTone,
+  DropboxSquareFilled,
+  MenuFoldOutlined
 } from '@ant-design/icons'
 
 const TestRedux = loadable(()=>import('./home/TestRedux'))
@@ -17,7 +18,7 @@ export default [
   {
     id: 11,
     text: '概况管理',
-    icon: <DotChartOutlined />,
+    icon: <Html5TwoTone />,
     children: [
       {
         id: 1110,
@@ -36,7 +37,7 @@ export default [
   {
     id: 12,
     text: '商品管理',
-    icon: <DotChartOutlined />,
+    icon: <DropboxSquareFilled />,
     children: [
       {
         id: 1210,
@@ -56,8 +57,8 @@ export default [
   },
   {
     id: 13,
-    text:"胡辉列表",
-    icon:<DribbbleOutlined />,
+    text:"Prince列表",
+    icon:<MenuFoldOutlined />,
     children :[
       {
         id:1211,

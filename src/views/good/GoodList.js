@@ -110,3 +110,6 @@ export default props => {
     </div>
   )
 }
+
+//如果是类组件，将复制的代码粘贴在return的前面，render里面
+// 无状态组件，建议粘贴在有props的里面，不然外面也可以

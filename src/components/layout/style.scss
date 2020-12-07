@@ -13,7 +13,7 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: 150px;
+    width: 200px;
     background: #001529;
     overflow: auto;
     &>div {
@@ -28,16 +28,19 @@
         height: 100%;
         color: white;
       }
-      &>a.on {
-        background: orange;
-      }
+      // &>a.on {
+      //   background: deepskyblue; 
+      // }
+      // .ant-menu-item a::before{
+      //     background: deepskyblue;
+      // }
     }
   }
   .qf-header {
     position: absolute;
     top: 0;
     height: 60px;
-    left: 150px;
+    left: 200px;
     right: 0;
     padding: 15px;
   }
@@ -45,9 +48,9 @@
     position: absolute;
     top: 60px;
     bottom: 0;
-    left: 150px;
+    left: 200px;
     right: 0;
-    background-color: #eee;
+    background-color:rgb(250, 172, 3);
     padding: 15px;
     &>div {
       position: absolute;

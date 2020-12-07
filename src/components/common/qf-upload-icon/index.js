@@ -8,7 +8,7 @@ export default props => {
   return (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div style={{ marginTop: 8 }}>Upload</div>
+      <div style={{ marginTop: 8 }}>添加图片</div>
     </div>
   )
 }

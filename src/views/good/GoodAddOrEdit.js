@@ -21,6 +21,7 @@ import {
 } from '@/components'
 
 import img from '@/utils/img'
+// 从事件里面调直接调到页面
 import { fetchGoodOrEdit } from '@/utils/api'
 
 import { QuestionCircleOutlined } from '@ant-design/icons';
@@ -59,6 +60,7 @@ export default props => {
   // 图片上传成功
   const imgSuccess = e => {
     console.log('图片上传成功', e)
+    // 一定要先判断
     if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
       setImageUrl(e.fileList[0].response.data.url)
     }
@@ -134,9 +136,11 @@ export default props => {
             style={{ width: 200 }}
             placeholder="选择一个品类"
           >
-            <Option key='1' value="jack">Jack</Option>
-            <Option key='2' value="lucy">Lucy</Option>
-            <Option key='3' value="tom">Tom</Option>
+            <Option key='1' value="qingtong">青铜</Option>
+            <Option key='2' value="baiyin">白银</Option>
+            <Option key='3' value="hold">黄金</Option>
+            <Option key='4' value="zuanshi">钻石</Option>
+            <Option key='5' value="hero">王者</Option>
           </Select>
         </Form.Item>
 
@@ -169,8 +173,6 @@ export default props => {
         >
           <Switch />
         </Form.Item>
-
-
 
 
         <Form.Item {...tailFormItemLayout}>
