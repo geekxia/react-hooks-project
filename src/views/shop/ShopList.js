@@ -1,4 +1,10 @@
 import { useHistory } from 'react-router-dom'
+import moment from 'moment'
+import { useDispatch,useSelector } from 'react-redux'
+import { useState,useEffect } from 'react'
+import action from '@/store/actions'
+import img from '@/utils/img'
+
 import { 
     Table, 
     Tag, 
@@ -7,94 +13,98 @@ import {
 } from 'antd';
 
 export default props =>{
+  const dispatch = useDispatch()
+  const shopData = useSelector(store=>store.shop.shopData)
+
+  let [page,setPage] = useState(1)
+  let [size,setSize] = useState(2)
+
+  useEffect(()=>{
+    let params = {
+      size,
+      page
+    }
+    dispatch(action.getShopList(params))
+    return undefined
+  },[page,size])
+
     //跳转到商品新增页面
     const history = useHistory()
     const skipToAdd = ()=>{
         history.push('/shop/addList')
     }
 
+
     const columns = [
         {
-          title: 'Name',
+          title: '商品名称',
           dataIndex: 'name',
           key: 'name',
-          render: text => <a>{text}</a>,
+          render: (text,row,idx) => {
+            return(
+              <div className='zgf-shop'>
+                <img src={img.imgBase+row.img} alt={row.name} />
+                <a>{text}</a>
+              </div>
+            )
+          }
         },
         {
-          title: 'Age',
-          dataIndex: 'age',
-          key: 'age',
+          title: '商品描述',
+          dataIndex: 'desc',
+          key: 'desc',
         },
         {
-          title: 'Address',
-          dataIndex: 'address',
-          key: 'address',
+          title: '价格',
+          dataIndex: 'price',
+          key: 'price',
+          render:text=><div>{'￥'+text}</div>
         },
         {
-          title: 'Tags',
+          title: '是否热销',
+          key: 'hot',
+          dataIndex: 'hot',
+        render: text => <div>{text?'是':'否'}</div>
+        },
+        {
+          title: '上架时间',
+          key: 'create_time',
+          dataIndex:'create_time',
+          render: text=>{
+            return(
+              <div>
+                <div>{moment(text).format('YYYY年MM月DD日')}</div>
+                <div>{moment(text).format('hh:mm:ss')}</div>
+              </div>
+            )
+          }
+        },
+        {
+          title: '操作',
           key: 'tags',
           dataIndex: 'tags',
-          render: tags => (
+          render: ()=>{
             <>
-              {tags.map(tag => {
-                let color = tag.length > 5 ? 'geekblue' : 'green';
-                if (tag === 'loser') {
-                  color = 'volcano';
-                }
-                return (
-                  <Tag color={color} key={tag}>
-                    {tag.toUpperCase()}
-                  </Tag>
-                );
-              })}
+              <a href=''>删除</a>
+              <a href=''>编辑</a>
             </>
-          ),
+          }
         },
-        {
-          title: 'Action',
-          key: 'action',
-          render: (text, record) => (
-            <Space size="middle">
-              <a>Invite {record.name}</a>
-              <a>Delete</a>
-            </Space>
-          ),
-        },
-      ];
-      
-      const data = [
-        {
-          key: '1',
-          name: 'John Brown',
-          age: 32,
-          address: 'New York No. 1 Lake Park',
-          tags: ['nice', 'developer'],
-        },
-        {
-          key: '2',
-          name: 'Jim Green',
-          age: 42,
-          address: 'London No. 1 Lake Park',
-          tags: ['loser'],
-        },
-        {
-          key: '3',
-          name: 'Joe Black',
-          age: 32,
-          address: 'Sidney No. 1 Lake Park',
-          tags: ['cool', 'teacher'],
-        }
       ]
-
 
     return(
         <div>
-            <div>
+            <div className='zgf-shop-list'>
                 <h1>商品列表</h1>
                 <span><Button type="primary" onClick={skipToAdd}>新增</Button></span>
             </div>
             <div>
-                {<Table columns={columns} dataSource={data} />}
+                {<Table 
+                  rowKey = '_id'
+                  columns={columns} 
+                  dataSource={shopData.list}
+                  
+                  />}
             </div>
         </div>
     )
