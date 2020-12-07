@@ -3,7 +3,14 @@ import {
   DotChartOutlined
 } from '@ant-design/icons'
 
-const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
+const TestRedux = loadable(()=>import('./home/TestRedux'))
+const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
+
+const GoodList = loadable(()=>import('./good/GoodList'))
+const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
+
+
+
 
 export default [
   {
@@ -12,10 +19,37 @@ export default [
     icon: <DotChartOutlined />,
     children: [
       {
-        id: 1111,
-        text: '学习Redux哟',
+        id: 1110,
+        text: 'TestRedux',
         path: '/',
-        component: ReduxStudy
+        component: TestRedux
+      },
+      {
+        id: 1111,
+        text: 'TestReduxHook',
+        path: '/redux/hook',
+        component: TestReduxHook
+      }
+    ]
+  },
+  {
+    id: 12,
+    text: '商品管理',
+    icon: <DotChartOutlined />,
+    children: [
+      {
+        id: 1210,
+        text: '商品列表',
+        path: '/good/list',
+        component: GoodList,
+        children: [
+          {
+            id: 121010,
+            text: '商品新增与编辑',
+            path: '/good/update',
+            component: GoodAddOrEdit
+          }
+        ]
       }
     ]
   }
