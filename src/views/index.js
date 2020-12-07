@@ -1,7 +1,8 @@
 import loadable from '@loadable/component'
 import {
   DotChartOutlined,
-  DribbbleOutlined
+  DribbbleOutlined,
+  AliwangwangOutlined
 } from '@ant-design/icons'
 
 const TestRedux = loadable(()=>import('./home/TestRedux'))
@@ -11,6 +12,9 @@ const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./list/ListHome"))
+const InfoList =loadable(()=>import("./llf/InfoList"))
+const InfoAddOrEdit =loadable(()=>import("./llf/InfoAddOrEdit"))
+
 
 
 export default [
@@ -55,7 +59,7 @@ export default [
     ]
   },
   {
-    id: 12,
+    id: 13,
     text:"胡辉列表",
     icon:<DribbbleOutlined />,
     children :[
@@ -64,6 +68,27 @@ export default [
         text:"查询表格",
         path:"/hulist",
         component:ListHome
+      }
+    ]
+  },
+  {
+    id: 553,
+    text:"李兰菲页",
+    icon:<AliwangwangOutlined />,
+    children :[
+      {
+        id:55301,
+        text:"商品列表",
+        path:"/llfList",
+        component:InfoList,
+        children :[
+          {
+            id:5530101,
+            text:"商品添加与编辑",
+            path:"/llfAddOrEdit",
+            component:InfoAddOrEdit
+          }
+        ]
       }
     ]
   }
