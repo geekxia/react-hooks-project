@@ -31,48 +31,122 @@ const steps = [
 
 
 export default props=>{
+    let a={}
+    const [form] = Form.useForm();
+    const onFinish = (values) => {
+        console.log(values);
+        values?a=values:''
+        next()
+    }
+    
+    const tailFormItemLayout = {
+        wrapperCol: {
+          sm: {
+            span: 16,
+            offset: 4,
+          },
+        }
+    }
     const selectBefore = (
         <Select defaultValue="支付宝" className="select-before">
-          <Option value="支付宝">http://</Option>
-          <Option value="银行账户">https://</Option>
+          <Option value="支付宝">支付宝</Option>
+          <Option value="银行账户">银行账户</Option>
         </Select>
     );
     const [current, setCurrent] = React.useState(0);
 
-    const next = () => {
+    const next = () => {     
         setCurrent(current + 1);
     };
-
+    const init=()=>{
+        return (
+            <>
+                <div>付款账户:{a.payment}</div>
+                <div>收款账户{a.collection}</div>
+                <div>收款人姓名{a.name}</div>
+                <div>转账金额{a.amount}</div>
+            </>
+        )
+    }
     const prev = () => {
         setCurrent(current - 1);
     };
     return (
         <div>
+            <Form form={form} name="register" onFinish={onFinish}>
             <Steps current={current}>
                 {steps.map(item => (
                 <Step key={item.title} title={item.title} />
                 ))}
             </Steps>
             <div className="steps-content" style={{display:'flex',justifyContent:'center'}} >
-                {current==0 && <div style={{width:450+'px'}}>
-                    <div style={{display:"inline-block"}}>付款账户:</div>
-                    <Select value='abc@qq.com'  className='select_form' style={{display:"inline-block"}}>
-                        <Option>abc@qq.com</Option>              
-                    </Select>
+                {current==0 &&<div style={{width:450+'px'}}>
                     
-                    <div style={{display:"inline-block",marginTop:20+'px'}}>收款账户: </div>
-                    <Input addonBefore={selectBefore} defaultValue="mysite" style={{width:370+'px',display:"inline-block",marginTop:20+'px'}} />
                     
-                    <div style={{display:"inline-block",marginTop:20+'px'}}>收款人姓名:</div>
-                        <Input value="Alex" style={{width:370+'px',display:"inline-block",marginTop:20+'px'}} />
 
-                    <div style={{display:"inline-block",marginTop:20+'px'}}>转账金额:</div>
-                    <Input prefix="￥" value="500" style={{width:370+'px',display:"inline-block",marginTop:20+'px'}} />
                     
+                        <Form.Item
+                            name="payment"
+                            label="付款账户"
+                            initialValue="abc@qq.com"
+                            rules={[
+                            {
+                                required: true,
+                                message:'111',
+                            },
+                            ]}
+                        >
+                            <Select className='select_form' style={{display:"inline-block"}} >
+                                <Option>abc@qq.com</Option>              
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
+                            name="collection"
+                            label="收款账户"
+                            rules={[
+                            {
+                                required: true,
+                                message:'请输入收款人账户'
+                            },
+                            ]}
+                        >
+                            <Input addonBefore={selectBefore} value="mysite"/>
+                        </Form.Item>
+                        <Form.Item
+                            name="name"
+                            label="收款人姓名"
+                            rules={[
+                            {
+                                required: true,
+                                message: '请输入收款人姓名!',
+                            },
+                            
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            name="amount"
+                            label="转账金额"
+                            rules={[
+                            {
+                                required: true,
+                                message: '请输入转账金额!',
+                            },
+                            ]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        
+                        
                 </div>
                 }
                 {
-                    current==1
+                    current==1&&<div>
+                    {init()}
+                </div>
+                
+                    
                 }
                 
                 
@@ -82,10 +156,13 @@ export default props=>{
 
 
             <div className="steps-action">
-                {current < steps.length - 1 && (
-                <Button type="primary" onClick={() => next()}>
-                    Next
-                </Button>
+                {current < steps.length - 1 &&(
+                <Form.Item {...tailFormItemLayout}>
+                    <Button type="primary" htmlType="submit" >
+                        Next
+                    </Button>
+                </Form.Item>
+                
                 )}
                 {current === steps.length - 1 && (
                 <Button type="primary" onClick={() => message.success('Processing complete!')}>
@@ -98,6 +175,7 @@ export default props=>{
                 </Button>
                 )}
             </div>
+            </Form>
         </div>
     )
 }

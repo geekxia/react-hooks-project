@@ -102,7 +102,7 @@ export default props=>{
                 </Row>
                 <Row>
                     <Col span={5} >
-                        <Form.Item rules={[{required: true}]}>
+                        <Form.Item label="Note" rules={[{required: true,message:'1111'}]}>
                         <Input placeholder="请输入仓库名称" />
                         </Form.Item>
                     </Col>
