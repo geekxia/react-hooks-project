@@ -55,7 +55,7 @@ export default [
     ]
   },
   {
-    id: 12,
+    id: 13,
     text:"胡辉列表",
     icon:<DribbbleOutlined />,
     children :[
