@@ -11,6 +11,10 @@ const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
 const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
+const PxGoodList = loadable(()=>import('./px-good/GoodList'))
+const PxGoodListAddOrEdit = loadable(()=>import('./px-good/GoodAddOrEdit'))
+
+
 const ListHome = loadable(()=>import("./list/ListHome"))
 
 
@@ -78,6 +82,27 @@ export default [
         text:"归属地查询",
         path:'/testdemo',
         component:Number
+      }
+    ]
+  },
+  {
+    id:2212,
+    text:'潘曦-商品管理',
+    icon: <DotChartOutlined />,
+    children:[
+      {
+        id:221201,
+        text:'商品列表',
+        path:'/panxi/good/list',
+        component:PxGoodList,
+        children:[
+          {
+            id:22120101,
+            text:'商品新增',
+            path:'/panxi/good/list/addoredit',
+            component:PxGoodListAddOrEdit
+          }
+        ]
       }
     ]
   }

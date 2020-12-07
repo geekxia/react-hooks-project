@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
+import { fetchQqMusic,fetchGoodList } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -51,10 +51,25 @@ function numberListAction(params) {
     })
   }
 }
+// AJAX_GOOD_LIST
+
+function goodListAction(params) {
+  return function(dispatch) {
+    fetchGoodList(params).then(res=>{
+      // console.log('-----', res)
+      // 这才是真正地把后端数据，发送到store中
+      dispatch({
+        type: type.AJAX_GOOD_LIST,
+        payload: res
+      })
+    })
+  }
+}
 
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
-  numberListAction
+  numberListAction,
+  goodListAction
 }
