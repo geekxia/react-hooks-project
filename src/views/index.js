@@ -1,6 +1,5 @@
 import loadable from '@loadable/component'
 import {
-  DotChartOutlined,
   DribbbleOutlined
 } from '@ant-design/icons'
 
@@ -9,9 +8,19 @@ const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
 
 const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
+import {
+  DotChartOutlined,
+  GitlabFilled 
+} from '@ant-design/icons'
 
 const ListHome = loadable(()=>import("./list/ListHome"))
-
+const Ming = loadable(()=>import('./zhappy/Zregist'))
+const Yue = loadable(()=>import('./zhappy/ZRo'))
+const Song = loadable(()=>import('./zhappy/ZCreate'))
+const Jian = loadable(()=>import('./zhappy/ZRoot'))
+const Zhao = loadable(()=>import('./zhappy/Zhao'))
+const Zintel = loadable(()=>import('./zhappy/Internation'))
+const ZDisplay = loadable(()=>import('./zhappy/ZDisplay'))
 
 export default [
   {
@@ -64,6 +73,55 @@ export default [
         text:"查询表格",
         path:"/hulist",
         component:ListHome
+      }
+    ]
+  },
+  {
+    id: 20172021,
+    text: 'Z-表单',
+    icon: <GitlabFilled />,
+    children: [
+      {
+        id: 2017202101,
+        text: '注册表单',
+        path: '/zhappy/ming',
+        component:Ming
+      },
+      {
+        id: 2017202102,
+        text: '个人资料',
+        path: '/zhappy/yue',
+        component: Yue
+      },
+      {
+        id: 2017202103,
+        text: '商品新增',
+        path: '/zhappy/song',
+        component: Song
+      },
+      {
+        id: 2017202104,
+        text: '用户信息',
+        path: '/zhappy/jian',
+        component:Jian
+      },
+      {
+        id: 2017202105,
+        text: '可编辑',
+        path: '/zhappy/zhao',
+        component: Zhao
+      },
+      {
+        id: 2017202106,
+        text: '国际化',
+        path: '/zhappy/intel',
+        component: Zintel
+      },
+      {
+        id:2017202107,
+        text:'商品展示',
+        path:'/zhappy/display',
+        component:ZDisplay
       }
     ]
   }
