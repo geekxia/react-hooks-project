@@ -4,13 +4,15 @@ import {
   DribbbleOutlined
 } from '@ant-design/icons'
 
-const TestRedux = loadable(()=>import('./home/TestRedux'))
-const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
+const TestRedux = loadable(() => import('./home/TestRedux'))
+const TestReduxHook = loadable(() => import('./home/TestReduxHook'))
 
-const GoodList = loadable(()=>import('./good/GoodList'))
-const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
+const GoodList = loadable(() => import('./good/GoodList'))
+const GoodAddOrEdit = loadable(() => import('./good/GoodAddOrEdit'))
 
-const ListHome = loadable(()=>import("./list/ListHome"))
+const ZGoodList = loadable(() => import('./zjr/ZGoodList'))
+const ZGoodAddOrEdit = loadable(() => import('./zjr/ZGoodAddOrEdit'))
+
 
 
 export default [
@@ -55,15 +57,23 @@ export default [
     ]
   },
   {
-    id: 12,
-    text:"胡辉列表",
-    icon:<DribbbleOutlined />,
-    children :[
+    id: 92525300,
+    text: "zjr",
+    icon: <DribbbleOutlined />,
+    children: [
       {
-        id:1211,
-        text:"查询表格",
-        path:"/hulist",
-        component:ListHome
+        id: 1211,
+        text: "商品列表",
+        path: "/zjr/list",
+        component: ZGoodList,
+        children: [
+          {
+            id: 925253001,
+            text: '商品新增与编辑',
+            path: '/zjr/good/update',
+            component: ZGoodAddOrEdit
+          }
+        ]
       }
     ]
   }
