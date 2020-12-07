@@ -4,7 +4,8 @@ import {
   DotChartOutlined,
   FormOutlined
 } from '@ant-design/icons'
-
+const GoodList = loadable(()=>import('./good/GoodList'))
+const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const jiChuBiaoDan = loadable(()=>import('./pages/BiaoDanYe/jiChuBiaoDan'))
 
@@ -29,10 +30,31 @@ export default [ // eslint-disable-line
     icon: <FormOutlined />,
     children: [
       {
-        id: 1111,
+        id: 2222,
         text: '基础表单',
         path: '/basic-form',
         component: jiChuBiaoDan
+      }
+    ]
+  },
+  {
+    id: 13,
+    text: '商品管理',
+    icon: <DotChartOutlined />,
+    children: [
+      {
+        id: 1210,
+        text: '商品列表',
+        path: '/good/list',
+        component: GoodList,
+        children: [
+          {
+            id: 121010,
+            text: '商品新增与编辑',
+            path: '/good/update',
+            component: GoodAddOrEdit
+          }
+        ]
       }
     ]
   }

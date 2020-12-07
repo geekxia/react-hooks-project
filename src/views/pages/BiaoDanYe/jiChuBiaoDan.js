@@ -88,7 +88,10 @@ export default (props) => {
         <Form.Item
           label="标题"
           name="biaoti"
-          rules={[{ required: true, message: "Please input your username!" }]}
+          rules={[{ required: true, message: "Please input your username!" },
+          { max: 10, message: '商品名称不能超过10个字' },
+          { min: 2, message: '商品名称不能少于两个字' }
+        ]}
         >
           <Input placeholder="input placeholder" />
         </Form.Item>
@@ -101,8 +104,11 @@ export default (props) => {
           name= {"miaoshu"}
           label="目标描述"
           size="large"
+          rules={[{ required: true, message: "Please input your username!" },
+          {pattern:/^[A-Z,a-z]{3}.*$/, message: "abc123"}
+        ]}
         >
-          <Input.TextArea />
+          <Input.TextArea rows={4}/>
         </Form.Item>
 
         <Form.Item
@@ -110,7 +116,7 @@ export default (props) => {
           label="衡量标准"
           size="large"
         >
-          <Input.TextArea />
+          <Input.TextArea rows={4} disabled/>
         </Form.Item>
 
         <Form.Item
