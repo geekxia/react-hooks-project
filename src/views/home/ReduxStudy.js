@@ -52,6 +52,7 @@ export default props => {
   const msg = useSelector(store=>store.study.msg)
   const count = useSelector(store=>store.study.foo.count)
   const list = useSelector(store=>store.music.list)
+  const keyword=useSelector(store=>store.music.keyword)
 
   const dispatch = useDispatch() // 派发，派发的是actions
   const changeMsg = ()=>{
@@ -61,6 +62,11 @@ export default props => {
     // 我Home自动更新
     dispatch(action.changeMsgAction('hello 2011'))
   }
+  const changemusic=(e)=>{
+    if(e.keyCode===13){
+      dispatch(action.changeMusicList(e.target.value))
+    }
+  }
 
   useEffect(()=>{
     const str = 'ct=24&qqmusic_ver=1298&new_json=1&remoteplace=txt.yqq.song&searchid=61453023483879617&t=0&aggr=1&cr=1&catZhida=1&lossless=0&flag_qc=0&p=1&n=10&w=%E5%BC%A0%E6%9D%B0&g_tk_new_20200303=921856724&g_tk=921856724&loginUin=448914712&hostUin=0&format=json&inCharset=utf8&outCharset=utf-8&notice=0&platform=yqq.json&needNewCode=0'
@@ -69,11 +75,11 @@ export default props => {
       let arr = ele.split('=')
       params[arr[0]] = arr[1]
     })
-    params.w = decodeURI(params.w)
+    params.w = decodeURI(keyword)
 
     dispatch(action.musicListAction(params))
     return undefined
-  }, [])
+  }, [keyword])
   return (
     <div>
       <h1>首页</h1>
@@ -84,6 +90,11 @@ export default props => {
       <h1>{count}</h1>
       <button onClick={()=>dispatch(action.addFooCountAction(500))}>我要改变count</button>
       <hr/>
+      <input 
+        type="text"
+        placeholder={keyword}
+        onKeyUp={(e)=>changemusic(e)}
+      />
       {
         list.map(ele=>(
           <div key={ele.id}>

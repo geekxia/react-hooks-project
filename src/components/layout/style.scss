@@ -5,22 +5,27 @@
   left: 0;
   right: 0;
   overflow: hidden;
+
   .ant-layout {
     height: 100%;
   }
+
   .qf-sider {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     width: 150px;
-    background: #001529;
+    background-color: #FAFAFA;
     overflow: auto;
+    border-right: 2px solid #ccc;
+
     &>div {
       text-align: center;
       line-height: 40px;
       cursor: pointer;
       border-bottom: 1px solid #aaa;
+
       &>a {
         text-decoration: none;
         display: block;
@@ -28,11 +33,13 @@
         height: 100%;
         color: white;
       }
+
       &>a.on {
         background: orange;
       }
     }
   }
+
   .qf-header {
     position: absolute;
     top: 0;
@@ -40,15 +47,19 @@
     left: 150px;
     right: 0;
     padding: 15px;
+    background-color: #FAFAFA;
+    border-bottom: 2px solid #ccc;
   }
+
   .qf-main {
     position: absolute;
     top: 60px;
     bottom: 0;
     left: 150px;
     right: 0;
-    background-color: #eee;
+    background-color: #FAFAFA;
     padding: 15px;
+
     &>div {
       position: absolute;
       top: 15px;

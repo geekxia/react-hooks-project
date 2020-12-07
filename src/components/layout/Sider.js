@@ -37,7 +37,7 @@ export default props=>{
 
     <Menu
       mode="inline"
-      theme="dark"
+      theme="red"
     >
       { createNavLink()}
     </Menu>

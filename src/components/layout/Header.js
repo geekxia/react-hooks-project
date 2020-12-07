@@ -1,9 +1,7 @@
 import React from 'react'
+import { Breadcrumb } from 'antd';
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 
-import {
-  useHistory,
-  // withRouter
-} from 'react-router-dom'
 
 // 问题：没有被Route组件直接包裹的React组件中，是没有路由API的。
 // 那该怎么办？
@@ -18,14 +16,20 @@ import {
 // 一、使用Hooks写法，来解决React无状态组件中没有路由API的问题
 
 
-export default props => {
-  const history = useHistory()
-  console.log('---header props', props)
-  console.log('---header history', history)
-  return (
-    <div className='qf-header'>
-      header
-    </div>
+export default props=>{
+  return(
+      <div className='qf-header'>
+          <Breadcrumb>
+              <Breadcrumb.Item href="">
+                  <HomeOutlined />
+              </Breadcrumb.Item>
+              <Breadcrumb.Item href="">
+                  <UserOutlined />
+              <span>Application List</span>
+              </Breadcrumb.Item>
+              <Breadcrumb.Item>Application</Breadcrumb.Item>
+          </Breadcrumb>
+      </div>
   )
 }
 
