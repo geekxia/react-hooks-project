@@ -11,7 +11,7 @@ import {
   InputNumber,
   Radio,
   Select,
-  Button
+  Button,
 } from "antd";
 //input输入框
 const { RangePicker } = DatePicker;
@@ -46,6 +46,7 @@ export default (props) => {
     });
   };
   // 下拉选择
+  const { Option } = Select;
   let [selectedItems, SETselectedItems] = useState([]);
   const OPTIONS = ["Apples", "Nails", "Bananas", "Helicopters"];
   const filteredOptions = OPTIONS.filter((o) => !selectedItems.includes(o));
@@ -125,6 +126,20 @@ export default (props) => {
           />
           %
         </Form.Item>
+        <Form.Item
+            name="hehe"
+            label="选择品类"
+        >
+            <Select
+                style={{ width: 200 }}
+                placeholder="Select a person"
+              >
+                <Option value="jack">Jack</Option>
+                <Option value="lucy">Lucy</Option>
+                <Option value="tom">Tom</Option>
+          </Select>
+         </Form.Item>
+
 
         <Form.Item
           name={"Radio"}
