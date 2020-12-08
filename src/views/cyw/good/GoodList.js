@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Table,  Space } from 'antd'
+import { Table,  Space, Row, Col, Input, Button, Select } from 'antd'
 import moment from 'moment'
 import action from '@/store/actions'
 import img from '@/utils/img'
 import './style.scss'
+import CateSelect from '../components/CateSelect'
+
+const { Option } = Select
 
 export default props => {
     const dispatch = useDispatch()
@@ -12,15 +15,29 @@ export default props => {
     console.log('goodData', goodData)
     let [size, setSize] = useState(5)
     let [page, setPage] = useState(2)
+
+    let [text, setText] = useState('')
+    
+    let [filter, setFilter] = useState({
+        size: 5,
+        page: 1,
+        text: '',
+        hot: ''
+    })
+
+    const textChange = val => {
+        console.log('value text', val)
+        setText(val)
+        if (!val) {
+            filter.text = ''
+            setFilter(JSON.parse(JSON.stringify(filter)))
+        }
+    }
     
     useEffect(() => {
-        let params = {
-            size,
-            page
-        }
-        dispatch(action.getGoodList(params))
+        dispatch(action.getGoodList(filter))
         return undefined
-    },[page, size])
+    },[filter])
 
     const columns = [
         {
@@ -60,8 +77,8 @@ export default props => {
         },
         {
             title: '上架时间',
-            key: 'time',
-            dataIndex: 'time',
+            key: 'create_time',
+            dataIndex: 'create_time',
             align: 'center',
             render: text => {
                 return (
@@ -90,6 +107,57 @@ export default props => {
         <div className='qf-good-list'>
             <h1>商品列表</h1>
             <hr />
+            <div style={{ margin: '25px 0' }}>
+                {/* 第一行  */}
+                <Row align='middle'>
+                    <Col span={2}>
+                        <span className='filter-label'>搜索:</span>
+                    </Col>
+                    <Col span={4}>
+                        <Input
+                            value={text}
+                            onChange={e => textChange(e.target.value)}
+                            placeholder='搜索'
+                            allowClear
+                            onPressEnter={e=>filterChange('text',e.target.value)}
+                        />
+                    </Col>
+                    <Col span={2}>
+                        <span className='filter-label'>品类：</span>
+                    </Col>
+                    <Col span={6}>
+                        <CateSelect
+                            hasAll
+                            onChange={cate=>filterChange('cate',cate) }
+                            allowClear
+                        />
+                    </Col>
+                    <Col span={2}>
+                        <span  className='filter-label'>状态：</span>
+                    </Col>
+                    <Col span={4}>
+                        <Select
+                            onChange={val => filterChange('hot', val)}
+                            style={{ width: '100px' }}
+                            allowClear
+                            defaultValue=''
+                        >
+                            <Select.Option key='1' value=''>全部</Select.Option>
+                            <Select.Option key='2' value={true}>是</Select.Option>
+                            <Select.Option key='3' value={false}>否</Select.Option>
+                        </Select>
+                    </Col>
+                    <Col offset={2} span={2}>
+                        <Button
+                            size='small'
+                            type='primary'
+                            onClick={()=>props.history.push('/good/update/0')}
+                        >
+                            新增
+                        </Button>
+                    </Col>
+                </Row>
+            </div>
             <div>
                 查询条件
             </div>

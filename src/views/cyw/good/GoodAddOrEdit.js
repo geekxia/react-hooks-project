@@ -10,11 +10,10 @@ import {
 } from 'antd'
 import { UploadIcon } from '@/components'
 import img from '@/utils/img'
-import {
-    LoadingOutlined,
-    PlusOutlined
-} from '@ant-design/icons'
+
 import { fetchGoodOrEdit } from '@/utils/api'
+
+import CateSelect from '../components/CateSelect'
 
 const { Option } = Select
   
@@ -31,19 +30,23 @@ const tailFormItemLayout = {
     }
 }
 
-
-
 export default props => {  
     const [form] = Form.useForm()
+    let [values, setValues] = useState({})
     
     let [imageUrl, setImageUrl] = useState('')
     const onFinish = values => {
-        // values.img = imageUrl
+        values.img = imageUrl
         // console.log('values 提交', values)
         fetchGoodOrEdit(values).then(()=>{
             // 跳转到列表页
             props.history.replace('/good/list')
         })
+    }
+
+    // 当form表单值发生变化的时候，我们手动取值，赋值给声明式变量 values
+    const formChange = values => {
+        setValues(values)
     }
 
     // 图片上传成功
@@ -65,6 +68,7 @@ export default props => {
                     name="register"
                     onFinish={onFinish}
                     scrollToFirstError
+                    onValuesChange={(val, values)=>formChange(values)}
                 >
                     <Form.Item
                         style={{margin: '20px 0'}}
@@ -111,11 +115,7 @@ export default props => {
                             {  required: true, message: '请选择商品品类' },
                         ]}
                     >
-                        <Select style={{ width: 200 }} >
-                            <Option value="jack">Jack</Option>
-                            <Option value="lucy">Lucy</Option>
-                            <Option value="Yiminghe">yiminghe</Option>
-                        </Select>
+                        <CateSelect />
                     </Form.Item>
 
                     <Form.Item

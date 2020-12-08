@@ -1,7 +1,8 @@
 import loadable from '@loadable/component'
 import {
   DotChartOutlined,
-  DribbbleOutlined
+  DribbbleOutlined,
+  PlusOutlined
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
@@ -39,7 +40,7 @@ export default [
   {
     id: 13,
     text:"cyw-good",
-    icon:<DribbbleOutlined />,
+    icon:<PlusOutlined />,
     children :[
       {
         id:1311,
@@ -50,7 +51,7 @@ export default [
           {
             id: 131110,
             text: '商品新增与编辑',
-            path: '/good/update',
+            path: '/good/update/:id',
             component: GoodAddOrEdit
           }
         ]

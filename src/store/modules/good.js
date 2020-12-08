@@ -1,7 +1,8 @@
 import type from '../actionTypes'
 
 const initState = {
-  goodData: {} 
+  goodData: {},
+  cates: []
 }
 
 export default (state=initState, action) => {
@@ -9,6 +10,9 @@ export default (state=initState, action) => {
   switch (action.type) {
     case type.GET_GOOD_LIST:
       newState.goodData = action.payload
+      break
+    case type.GET_CATE_LIST:
+      newState.cates = action.payload
       break
     default:
   }

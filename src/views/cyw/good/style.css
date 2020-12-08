@@ -8,3 +8,9 @@
   height: 80px;
   margin: 0 auto;
 }
+
+.qf-good-list .filter-label {
+  display: block;
+  text-align: right;
+  padding-right: 10px;
+}
