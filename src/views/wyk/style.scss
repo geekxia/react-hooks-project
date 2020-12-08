@@ -1,11 +1,20 @@
 .qf-good-list{
-    .al-good{
-        text-align: center;
-        &>img{
-            display: block;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto;
-        }
+  .al-good{
+    text-align: center;
+    &>img{
+      display: block;
+      width: 100px;
+      height: 100px;
+      margin: 0 auto;
     }
+  }
+  .ant-table-cell{
+    width: 250px;
+    height: 20px;
+  }
+  .edit{
+    margin:0 8px;
+    color: rgb(60, 60, 184);
+    cursor: pointer;
+  }
 }

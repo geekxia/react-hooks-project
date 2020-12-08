@@ -12,6 +12,7 @@ import {
 } from 'antd';
 
 import {fetchGoodOrEdit} from '@/utils/api'
+import CateSelect from './components/CateSelect'
 
 import {
     QfUploadIcon
@@ -41,53 +42,26 @@ const tailFormItemLayout = {
 };
 
 export default props =>{
-    const residences = [
-        {
-          value: 'zhejiang',
-          label: 'Zhejiang',
-          children: [
-            {
-              value: 'hangzhou',
-              label: 'Hangzhou',
-              children: [
-                {
-                  value: 'xihu',
-                  label: 'West Lake',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          value: 'jiangsu',
-          label: 'Jiangsu',
-          children: [
-            {
-              value: 'nanjing',
-              label: 'Nanjing',
-              children: [
-                {
-                  value: 'zhonghuamen',
-                  label: 'Zhong Hua Men',
-                },
-              ],
-            },
-          ],
-        },
-      ];
-
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);
     let [imageUrl,setImageUrl] = useState('')
+    let [values,setValues] = useState({})
 
+    // 获取Form实例
     const [form] = Form.useForm()
+
+    // Form表单值发生变化时，手动取值，赋值给声明式变量 values
+    const formChange = values=>{
+        setValues(values)
+    }
 
     // 表单提交
     const onFinish = values =>{
-        // console.log('values',values)
+        values.img = imageUrl
+        console.log('values',values)
         fetchGoodOrEdit(values).then(()=>{
-            console.log('添加成功',values)
+            console.log('表单内容',values)
             // 跳转到列表页
-            // props.history.replace('/wyk/AllGoodList')
+            props.history.replace('/wyk/AllGoodList')
         })
     }
 
@@ -100,7 +74,7 @@ export default props =>{
     }
     return (
         <div>
-            <h1>新增表单</h1>
+            <h1>商品新增表单</h1>
             <Form
             style={{margin:'25px 0'}}
                 {...formItemLayout}
@@ -112,6 +86,7 @@ export default props =>{
                     prefix: '86',
                 }}
                 scrollToFirstError
+                onValuesChange={(val,values)=>formChange(values)}
             >
                 <Form.Item
                     name="name"
@@ -151,17 +126,10 @@ export default props =>{
                     name="cate"
                     label="商品品类"
                     rules={[
-                    // {required: true,message: '请输入选择商品品类！'},
+                    {required: true,message: '请输入选择商品品类！'},
                     ]}
                 >
-                    <Select
-                        style={{ width: 200 }}
-                        placeholder="请选择商品品类"
-                    >
-                        <Option key='1' value="jack">Jack</Option>
-                        <Option key='2' value="lucy">Lucy</Option>
-                        <Option key='3' value="tom">Tom</Option>
-                    </Select>,
+                    <CateSelect/>
                 </Form.Item>
 
                 <Form.Item
@@ -192,7 +160,7 @@ export default props =>{
 
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">
-                    提交商品
+                    提交
                     </Button>
                 </Form.Item>
                 </Form>
