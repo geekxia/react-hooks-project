@@ -96,7 +96,7 @@ export default [ // eslint-disable-line
           {
             id:150101,
             text:'商品添加',
-            path:'/good/add',
+            path:'/good/add/:id',
             component:GoodAdd
           }
         ]

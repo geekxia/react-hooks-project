@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import UploadButton from '@/components/uploadButton'
 import img from '@/utils/img'
 import api from '@/utils/api'
 import {
   Form,
   Input,
-  Tooltip,
-  Cascader,
   Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
-  AutoComplete,
   InputNumber,
   Upload,
-  message,
   Switch
 } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import CatesSelect from './components/CatesSelect'
+import { useDispatch,useSelector } from 'react-redux'
+import action from '@/store/actions'
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -46,6 +41,8 @@ export default props=>{
         let [loading,setLoading] = useState(false)
         let [imageUrl,setImageUrl] = useState('')
         const [form] = Form.useForm();
+        const dispatch = useDispatch()
+        const goodDetail = useSelector(store=>store.good.goodDetail)
       
         const onFinish = values => {
             values.img = imageUrl
@@ -61,6 +58,13 @@ export default props=>{
                 setImageUrl(e.fileList[0].response.data.url)
             }
         }
+
+        useEffect(()=>{
+            dispatch(action.initGoodEdit(props.match.params))
+            console.log(goodDetail)
+            form.setFieldsValue(goodDetail)
+            return undefined
+        },[])
 
 
     return (
@@ -92,15 +96,7 @@ export default props=>{
                         { required:true, message:'请选择商品类别！'}
                     ]}
                 >
-                    <Select
-                        style={{ width: 200 }}
-                        placeholder="选择一个品类"
-                        optionFilterProp="children"
-                    >
-                        <Option value="jack">Jack</Option>
-                        <Option value="lucy">Lucy</Option>
-                        <Option value="tom">Tom</Option>
-                    </Select>
+                    <CatesSelect />
                 </Form.Item>
 
                 <Form.Item

@@ -35,9 +35,28 @@ export function fetchDelGood(params){
 })
 }
 
+//获取商品类别
+export function fetchGoodCates(){
+  return axios({
+    method:'GET',
+    url:'/api/v1/good/cates'
+})
+}
+
+//编辑商品时初始化页面
+export function FetchGoodEdit(params){
+  return axios({
+      method:'GET',
+      url:'/api/v1/good/detail',
+      params
+  })
+}
+
 export default {
   fetchQqMusic,
   fetchAddGood,
   fetchGoodList,
-  fetchDelGood
+  fetchDelGood,
+  fetchGoodCates,
+  FetchGoodEdit
 }

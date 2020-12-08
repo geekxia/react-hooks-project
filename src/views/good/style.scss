@@ -1,14 +1,35 @@
 .qf-good-list{
     font-size: 12px;
+    // padding: 0,20px;
     .gl-good{
         &>img{
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             display: block;
             margin: 0 auto;
         }
     }
     .ant-table-content{
+        font-size: 12px;
+    }
+    .qf-good-filter{
+        margin: 25px 0;
+        font-size: 12px;
+        input{
+            font-size: 12px;
+        }
+        button{
+            font-size: 12px;
+        }
+        .filter-label{
+            display: block;
+            text-align: right;
+            padding-right: 10px;
+            font-size: 14px;
+        }
+
+    }
+    .qf-table-row{
         font-size: 12px;
     }
 }

@@ -57,11 +57,39 @@ const getGoodListAction = params=>{
   }
 }
 
+//商品类别
+const getGoodCatesAction = ()=>{
+  return dispatch=>{
+    api.fetchGoodCates().then(res=>{
+      // console.log(res)
+      dispatch({
+        type:type.GOOD_CATES,
+        payload:res.list
+      })
+    })
+  }
+}
+
+//商品编辑
+const initGoodEdit = (params)=>{
+  return dispatch=>{
+    api.FetchGoodEdit(params).then(res=>{
+      // console.log(res)
+      dispatch({
+        type:type.GOOD_DETAIL,
+        payload:res
+      })
+    })
+  }
+}
+
 
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   advAnalyze,
-  getGoodListAction
+  getGoodListAction,
+  getGoodCatesAction,
+  initGoodEdit
 }
