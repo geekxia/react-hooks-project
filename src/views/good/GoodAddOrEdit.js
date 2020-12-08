@@ -47,7 +47,7 @@ export default props => {
 
   // 表单提交
   const onFinish = values => {
-    console.log('values', values);
+    // console.log('values', values);
   }
 
   return(

@@ -95,3 +95,7 @@ git push origin xia
 ```
 git config --global credential.helper store
 ```
+# good模块
++ 拿数据啥的，接口的调用要触发！
++ 这是函数式组件搭配hooks的写法，要使用useEffect，在这里触发来调接口
++ 

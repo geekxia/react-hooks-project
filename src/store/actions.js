@@ -1,5 +1,6 @@
 import type from './actionTypes'
 import { fetchQqMusic } from '@/utils/api'
+import { fetchGoodList } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -39,8 +40,25 @@ function musicListAction(params) {
   }
 }
 
+
+
+//获取商品列表
+function getGoodList(params){
+  //通知要调接口
+  return dispatch=>{
+    //真的调接口
+    fetchGoodList(params).then(res=>{
+      console.log("看看结果",res)
+      dispatch({type: type.GET_GOODLIST,payload:res})
+    })
+  }
+}
+
+
+
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  getGoodList
 }
