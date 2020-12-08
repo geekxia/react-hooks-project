@@ -1,5 +1,6 @@
 import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
+import { fetchQqMusic,fetchGoodList } from '@/utils/api'
+
 
 // action 生成器
 function changeMsgAction(payload) {

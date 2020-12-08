@@ -10,8 +10,8 @@ export default props => {
     const dispatch = useDispatch()
     const goodData = useSelector(store=>store.good.goodData)
 
-    let [page,setPage] =useState(1)
-    let [size,setSize] =useState(2)
+    let [page,setPage] = useState(1)
+    let [size,setSize] = useState(2)
 
     useEffect(()=>{
         let params = {
