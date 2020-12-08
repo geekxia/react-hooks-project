@@ -4,7 +4,21 @@ import moment from 'moment'
 import {useEffect,useState} from 'react'
 import {useDispatch,useSelector } from 'react-redux'
 import {goodlistAction} from '@/store/actions'
+import './style.scss'
 export default props=>{
+    const dispatch = useDispatch()
+    const goodData = useSelector(store=>store.good.goodData)
+
+    let [page, setPage] = useState(1)
+    let [size, setSize] = useState(2)
+    useEffect(()=>{
+        let params = {
+            size,
+            page
+        }
+        dispatch(goodlistAction(params))
+        return undefined
+        }, [page,size])
     const columns = [
         {
         title: '商品',
@@ -51,6 +65,7 @@ export default props=>{
                 <>
                     <div>
                         {moment(text).format('YYYY年MM月DD日')}
+                        {moment(text).format('hh:mm:ss')}
                     </div>
                 </>
             )
@@ -61,34 +76,36 @@ export default props=>{
             key:'tags',
             align: 'center',
             dataIndex:'tags',
-            render:()=>{
+            render:()=>(
                 <>
-                    <Button type="primary">增加商品</Button>
-                    <Button type="primary">删除商品</Button>
+                    <Button type="primary"
+                    size='small'
+                    shape='round'>增加</Button>
+                    <Button type="primary"
+                    size='small'
+                    shape='round'>删除</Button>
                 </>
-            }
+            )
         }
     ];
-    const dispatch = useDispatch()
-    const goodData = useSelector(store=>store.good.goodData)
-    let [page,setPage]=useState(1)
-    let [size,setSize]=useState(2)
-    useEffect(()=>{
-        let params={
-            size,
-            page
-        }
-        console.log('params',params)
-        dispatch(goodlistAction(params))
-        return undefined
-    })
+
     return(
-        <div>
+        <div className='wd-good-list'>
             <h1>商品列表</h1>
             
             <div style={{margin:'20px 0'}}>
-                <Table columns={columns}  
-                dataSource={goodData.list}/>
+            <Table
+          rowKey='_id'
+          columns={columns}
+          dataSource={goodData.list}
+          pagination={{
+            total: goodData.total,
+            defaultPageSize: size,
+            onChange: page=>setPage(page),
+            onShowSizeChange: (page, size)=>setSize(size),
+            pageSizeOptions: [2,5,10,15,20],
+          }}
+        />
             </div>
             
         </div>
