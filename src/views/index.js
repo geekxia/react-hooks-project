@@ -41,7 +41,7 @@ export default [
       },{
         id: 2020120503,
         text: '新增商品',
-        path: '/xxladd',
+        path: '/xxladd/:id',
         component: xxlAddShop
       },{
         id: 2020120504,

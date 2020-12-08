@@ -8,3 +8,15 @@
   width: 80px;
   margin: 0 auto;
 }
+
+.qf-main .xxl-shop-list .xxl-Query {
+  margin: 20px 0;
+}
+
+.qf-main .xxl-shop-list .xxl-Query .query {
+  margin-left: 60px;
+}
+
+.qf-main .xxl-shop-list .xxl-Query .query_cate {
+  margin-left: 30px;
+}

@@ -2,7 +2,8 @@
 import type from '../../../actionTypes'
 
 let initState = {
-    shopDate:{}
+    shopDate:{},
+    cates:[]
 }
 
 export default (state=initState,action)=>{
@@ -11,6 +12,9 @@ export default (state=initState,action)=>{
         case type.XXL_GET_SHOP:
             newState.shopDate = action.payload
             break;
+        case type.XXL_GET_CATES:
+            newState.cates = action.payload
+        break;
         default:
             return state
     }

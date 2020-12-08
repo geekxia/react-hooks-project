@@ -1,22 +1,22 @@
 import React,{useState} from "react"
+import { useSelector,useDispatch} from 'react-redux'
 import { 
     Form, 
     Input, 
     InputNumber, 
     Button,
-    Select,
-    Upload,
-    message,
     Switch
-} from 'antd';
-import XxlUploadIcon from '@/components/xxl-upload-icon/index.js'
-import img from "@/utils/img"
-import api from '@/utils/api'
-const { Option } = Select
+} from "antd"
+import CateSelect from "./components/cateSelect"
+import UploadPic from './components/uploadPic'
+import api from "@/utils/api"
 
 
 export default props=>{
-    let [imageUrl,setImageUrl] = useState("")
+    
+    let shopDate = useSelector(store=>(store.xxlgetshop.shopDate))
+    let [values,setValues] = useState("")
+    const [form] =Form.useForm()
     const layout = {
         labelCol: {
           span: 4,
@@ -25,23 +25,6 @@ export default props=>{
           span: 20,
         },
     }   
-    const onFinish = (values) => {
-        //提交成功
-        values.img = imageUrl
-        api.pushshop(values).then(()=>{
-            props.history.replace("/xxlshop")
-        })
-
-    }
-    function handleChange(value) {
-        console.log(`selected ${value}`);
-    }
-    const imgSuccess = e=>{
-        console.log("图片上传成功",e)
-        if(e && e.fileList && e.fileList[0] && e.fileList[0].response && e.fileList[0].response.data){
-            setImageUrl(e.fileList[0].response.data.url)
-        }
-    }
     const tailFormItemLayout = {
         wrapperCol: {
           sm: {
@@ -50,17 +33,32 @@ export default props=>{
           },
         }
     }
+    const formChange = values =>{
+        setValues(values)
+    }
+    const onFinish = (values) => {
+        //提交成功
+        console.log(values)
+        api.pushshop(values).then(()=>{
+            props.history.replace("/xxlshop")
+        })
+
+    }
+    console.log("商品id----------",props.match.params.id)
+    console.log("商品数据----------",shopDate)
     return (
         <div className="xxl-addshop">
             <Form 
                 {...layout}
                 name="reguster"
+                scrollToFirstError
                 onFinish={onFinish} 
+                onValuesChange = {(val,values)=>formChange(values)}
+                form = {form}
                 initialValues={{
                     residence: ['zhejiang', 'hangzhou', 'xihu'],
                     prefix: '86',
                 }}
-                scrollToFirstError
             >   
 
                 <Form.Item
@@ -106,30 +104,17 @@ export default props=>{
                         {required:true,message:"选择品类是必填的"}
                     ]}
                 >
-                    <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange}>
-                        <Option value="jack">xxl</Option>
-                        <Option value="lucy">ljj</Option>
-                        <Option value="xxl" >xhh</Option>
-                        <Option value="Yiminghe">xpp</Option>
-                    </Select>
+                    <CateSelect />
                 </Form.Item>
 
                 <Form.Item  
+                    name="img"
                     label="商品图片"
                     rules={[
                         {required:true,message:"商品图片是必填"}
                     ]}
                 >
-                     <Upload
-                        name="file"
-                        listType="picture-card"
-                        className="avatar-uploader"
-                        showUploadList={false}
-                        action={img.uploadUrl}
-                        onChange={imgSuccess}
-                    >
-                        {imageUrl ? <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} /> : <XxlUploadIcon/>}
-                    </Upload>
+                    <UploadPic src={values.img}/>
                     
                 </Form.Item>
 

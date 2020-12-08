@@ -32,6 +32,14 @@ function xxlGetShop(params){
     })
   }
 }
+function xxlgetcates(params){
+  return dispatch =>{
+    api.fetchXxxGetCates(params).then(res=>{
+      // console.log("品类",res)
+      dispatch({type:type.XXL_GET_CATES,payload:res.list})
+    })
+  }
+}
 
 
 
@@ -63,5 +71,6 @@ export default {
   addFooCountAction,
   musicListAction,
   addPro,
-  xxlGetShop
+  xxlGetShop,
+  xxlgetcates
 }
