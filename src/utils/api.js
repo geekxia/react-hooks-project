@@ -11,7 +11,7 @@ export function fetchQqMusic(params) {
 // 添加商品
 export function fetchGoodAdd(data) {
   return axios({
-    url: '/api/v1/good/add',
+    url: '/api/v1/good/addOrEdit', // 这里url是是后端接口
     method: 'POST',
     data
   })

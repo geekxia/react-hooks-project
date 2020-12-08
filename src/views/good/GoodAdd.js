@@ -11,7 +11,8 @@ import {
   Button,
   AutoComplete,
   Upload,
-  Switch
+  Switch,
+  InputNumber
 } from 'antd';
 
 import{
@@ -67,7 +68,7 @@ export default props => {
     const onFinish = values => {
       values.img = imageUrl
       console.log('values 提交接口', values)
-      fetchGoodOrEdit(values).then(()=>{
+      fetchGoodAdd(values).then(()=>{
         // 跳转到列表页
         props.history.replace('/good/list')
       })
@@ -80,6 +81,7 @@ export default props => {
 <div> 
     <h1>商品新增</h1>     
     <Form
+       style={{margin:'25px 0'}}
       {...formItemLayout}
       form={form}
       name="register"
@@ -143,28 +145,27 @@ export default props => {
       </Form.Item>
 
       <Form.Item
-        name="cate"
-        label= "选择品类"
-        rules={[{ required: true, message: '商品品类必选'}]}
-      >
-            <Select
-               
-                style={{ width: 200 }}
-                placeholder="选择一个品类"
-             
-               
-            >
-                <Option value="jack">学习</Option>
-                <Option value="lucy">加班</Option>
-                <Option value="tom">干饭</Option>
-            </Select>,
-      </Form.Item>
+          name="cate"
+          label="选择品类"
+          rules={[
+            { required: true, message: '商品描述是必填!' }
+          ]}
+        >
+          <Select
+            style={{ width: 200 }}
+            placeholder="选择一个品类"
+          >
+            <Option key='1' value="jack">Jack</Option>
+            <Option key='2' value="lucy">Lucy</Option>
+            <Option key='3' value="tom">Tom</Option>
+          </Select>
+        </Form.Item>
 
       <Form.Item
        
         label="商品图片"
         rules={[
-          { type: 'array', required: true, message: '商品图片是必填' },
+          {  required: true, message: '商品图片是必填' },
         ]}
       >
 
@@ -177,7 +178,7 @@ export default props => {
           onChange={imgSuccess}
        >
            {
-               imgUrl ? 
+               imageUrl ? 
                <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} />
                : <QfUploadIcon />
            }
