@@ -6,7 +6,6 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom'
-console.log(routes)
 export default props=>{
 
   // 生成路由匹配规则，当url和Route.path匹配成功，显示当前配对成功的Route.component

@@ -1,24 +1,40 @@
 import React, { useState } from 'react'
-import { Form, Row, Col, Input, Button } from 'antd';
+import { Form, Row, Col, Input, Button, Select } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Tabs, Breadcrumb } from 'antd'
 import Table from '@/components/common/Table'
+const { Option } = Select
 export default prosp => {
   const [expand, setExpand] = useState(false);
   const [form] = Form.useForm()
   const inputInit = [
-    {name: "规则名称"},
+    {name: "商品名称"},
+    {name: "品类"},
+    {name: "价格"},
     {name: "描述"},
-    {name: "服务调用次数"},
-    {name: "状态"},
-    {name: "上次调度时间"}
+    {name: "时间"}
   ]
   const getFields = () => {
-    const count = expand ? 5 : 2
+    const count = expand ? 4 : 2
     const children = []
     for (let i = 0; i < count; i++) {
-
-      children.push(
+      // children.push(
+      // <Col span={8} key={i}>
+      //   <Form.Item
+      //     name={`${inputInit[i].name}`}
+      //     label={`${inputInit[i].name}`}
+      //     rules={[
+      //       {
+      //         required: true,
+      //         message: 'Input something!',
+      //       },
+      //     ]}
+      //   >
+      //     <Input size='large' placeholder="placeholder" />
+      //   </Form.Item>
+      // </Col>
+      
+      i!==2 ? children.push(
         <Col span={8} key={i}>
           <Form.Item
             name={`${inputInit[i].name}`}
@@ -31,6 +47,20 @@ export default prosp => {
             ]}
           >
             <Input size='large' placeholder="placeholder" />
+          </Form.Item>
+        </Col>
+      )
+      : children.push(
+        <Col span={8} key={i}>
+          <Form.Item
+              name='hot'
+              label='是否热销'
+            >
+              <Select style={{width: '200px'}}>
+                <Option value=''>全部</Option>
+                <Option value='true'>是</Option>
+                <Option value='false'>否</Option>
+              </Select>
           </Form.Item>
         </Col>
       )
@@ -63,8 +93,8 @@ export default prosp => {
           onFinish={onFinish}
           style={{backgroundColor: 'white'}}
           >
-            <Row gutter={24}>{getFields()}</Row>
-            <Row className={!expand && 'row2'}>
+            <Row key='1' gutter={24}>{getFields()}</Row>
+            <Row key='2' className={!expand && 'row2'}>
               <Col span={24} style={{ textAlign: 'right' }}>
                 <Button
                   size='large'
