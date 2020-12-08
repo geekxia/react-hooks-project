@@ -114,15 +114,25 @@ export default props=>{
             }
         },
     ];
-    let [page,setPage] = useState(1)
-    let [size,setSize] = useState(2)
+    let [filter,setFilter] = useState({
+        size:2,
+        page:1
+    })
+
+    const filterChange = (key,val)=>{
+        console.log(key,val);
+        let newFilter = JSON.parse(JSON.stringify(filter))
+        newFilter[key]=val
+        if(key!=='page'){
+            newFilter.page=1
+        }
+        setFilter(newFilter)
+    }
     useEffect(()=>{
-        dispatch(action.goodListAction({
-            page,
-            size
-        }))
+        dispatch(action.goodListAction(filter))
+        console.log('filter',filter);
         return undefined
-    },[page,size])
+    },[filter])
       
     return (
         <div className='px-good'>
@@ -195,10 +205,10 @@ export default props=>{
                     total:goodList.total,
                     defaultPageSize:2,
                     onChange:(page)=>{
-                        setPage(page)
+                        filterChange('page',page)
                     },
                     onShowSizeChange:(current, size)=>{
-                        setSize(size)
+                        filterChange('size',size)
                     },
                     pageSizeOptions:[
                         2,5,10,20
