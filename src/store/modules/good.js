@@ -17,5 +17,6 @@ export default function reducer(state=initState, action) {
     default:
 
   }
+  console.log('new state goodData', newState)
   return newState
 }
