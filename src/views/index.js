@@ -11,7 +11,7 @@ const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 
 const DjlUser = loadable(()=>import('./djluser/User'))
 const DjlGoods = loadable(()=>import('./djluser/Goods.js'))
-
+const DjlGoodadd = loadable(()=>import('./djluser/GoodAdd'))
 
 
 
@@ -45,8 +45,16 @@ export default [
         id:1211,
         text:'商品列表',
         path:'/good/list',
-        component:DjlGoods
-      }
+        component:DjlGoods,
+        children:[
+          {
+            id:1212,
+            path:'/goodadd/:id',
+            component:DjlGoodadd
+          }
+        ]
+      },
+    
     ]
   }
 ]
