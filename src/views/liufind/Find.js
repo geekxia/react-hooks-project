@@ -1,5 +1,6 @@
 import React ,{useState}from 'react'
 import img from '@/utils/img.js'
+import {fetchGoodOrEdit} from '@/utils/api.js'
 
 import { Form,
          Input, 
@@ -42,7 +43,10 @@ const Find =()=>{
   let [imageUrl, setImageUrl] = useState('')
   // 方法
   const onFinish = (values) => {
+    values.img = imageUrl
     console.log("表单值",values);
+    fetchGoodOrEdit(values)
+
   };
 // 图片上传
   const imgSuccess = e => {
