@@ -1,5 +1,8 @@
 import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
+import { 
+  fetchQqMusic ,
+  fetchGoodList
+} from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -39,8 +42,20 @@ function musicListAction(params) {
   }
 }
 
+//生成商品列表
+function getGoodList(params){
+  return dispatch=>{
+    fetchGoodList(params).then(res=>{
+      console.log('商品列表获取',res)
+      //真正的页面dispatch 的地方
+      dispatch({type:type.YLQ_GET_GOODLIST,payload:res})
+    })
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  getGoodList
 }

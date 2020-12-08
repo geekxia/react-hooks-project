@@ -20,7 +20,12 @@ instance.interceptors.response.use(function (response) {
   // 数据过滤
   let res = null
   if(response.status === 200) {
+    //qq音乐
     if(response.data && response.data.code===0) {
+      res = response.data.data
+    }
+    //自己的管理系统
+    if(response.data&&response.data.err === 0){
       res = response.data.data
     }
   }
