@@ -16,9 +16,7 @@ import {
   Switch
 } from 'antd'
 
-import {
-  QfUploadIcon
-} from '@/components'
+import {QfUploadIcon} from '@/components'
 
 import img from '@/utils/img'
 import { fetchGoodOrEdit } from '@/utils/api'

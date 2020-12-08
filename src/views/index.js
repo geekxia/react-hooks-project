@@ -27,13 +27,11 @@ export default [
       {id: 9001,
       text:"AddShow",
       path:'/AddShow',
-      icon:<WarningOutlined />,
       component:AddShow,
       },
       {id: 9002,
         text:"ListShow",
         path:'/ListShow',
-        icon:<WarningOutlined />,
         component:ListShow,
       },
     ]
