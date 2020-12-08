@@ -5,13 +5,16 @@ import {
 } from '@ant-design/icons'
 
 const TestRedux = loadable(()=>import('./home/TestRedux'))
+
 const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
 
 const GoodList = loadable(()=>import('./good/GoodList'))
+
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./list/ListHome"))
 
+const demo = loadable(()=>import("./chu/demo"))
 
 export default [
   {
@@ -55,15 +58,15 @@ export default [
     ]
   },
   {
-    id: 12,
-    text:"胡辉列表",
-    icon:<DribbbleOutlined />,
-    children :[
+    id: 13,
+    text: 'lixinxlixin',
+    icon: <DribbbleOutlined />,
+    children: [
       {
-        id:1211,
-        text:"查询表格",
-        path:"/hulist",
-        component:ListHome
+        id: 1998,
+        text: 'demo',
+        path: '/chu/demo',
+        component: demo
       }
     ]
   }
