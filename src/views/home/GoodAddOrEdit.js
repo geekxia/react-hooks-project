@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-
+import CateSelect from '@/components/CateSelect'
 import { Form, 
         Input, 
         Button,
@@ -57,7 +57,7 @@ export default props=>{
                 onFinish={onFinish}
                 >
                 <Form.Item                      
-                    label="查询商品"
+                    label="商品名称"
                     name="name"                       
                     rules={[
                         { required: true, message: '请输入你要查询的商品名称'},
@@ -95,14 +95,7 @@ export default props=>{
                     { required: true, }
                 ]}
                 >
-                <Select                
-                    style={{ width: 200 }}
-                    placeholder="请选择品类"
-                >
-                    <Option value="jack">Jack</Option>
-                    <Option value="lucy">Lucy</Option>
-                    <Option value="tom">Tom</Option>
-                </Select>
+                <CateSelect />
                 </Form.Item>
 
                 <Form.Item

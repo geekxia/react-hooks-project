@@ -7,7 +7,7 @@ import {
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const Analysis =loadable(()=>import('./analysis/Analysis.js'))
-const Testsocket=loadable(()=>import('./home/Testsocket'))
+const GoodList=loadable(()=>import('./home/GoodList'))
 const GoodAddOrEdit=loadable(()=>import('./home/GoodAddOrEdit.js'))
 
 
@@ -40,12 +40,12 @@ export default [ // eslint-disable-line
         id:1213,
         text:'商品列表',
         path:'/good/list',
-        component:Testsocket,
+        component:GoodList,
         children:[
           {
             id:121314,
             text:'商品新增和编辑',
-            path:'/good/updata',
+            path:'/good/updata/:id',
             component:GoodAddOrEdit
           }        
         ]
