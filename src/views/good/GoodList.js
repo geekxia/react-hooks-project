@@ -195,7 +195,7 @@ const mulDelete=()=>{
             <span className='filter-label'>品类:</span>
           </Col>
           <Col span={6}>
-            <CateSelect xx  onChange={cate=>setfen("cate",cate)}/>
+            <CateSelect jj  onChange={cate=>setfen("cate",cate)}/>
           </Col>
           <Col offset={1} span={4}>
             <Select
