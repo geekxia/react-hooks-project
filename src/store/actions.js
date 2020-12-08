@@ -1,7 +1,8 @@
 import type from './actionTypes'
 import { 
   fetchQqMusic,
-  fetchGoodList 
+  fetchGoodList,
+  fetchCatesList 
 } from '@/utils/api'
 
 // action 生成器
@@ -43,16 +44,27 @@ function musicListAction(params) {
 }
 
 function goodListAction(params){
-  return dispatch=>(
+  return function(dispatch){
     fetchGoodList(params).then(res=>{
-      console.log('----',res)
       dispatch({
         type:type.AJAX_GOOD_LIST,
         payload:res
       })
     })
-  )
+  }
 }
+
+function cateListAction(params){
+  return function(dispatch){
+    fetchCatesList(params).then(res=>{
+      dispatch({
+        type:type.AJAX_CATE_LIST,
+        payload:res
+      })
+    })
+  }
+}
+
 
 export default {
   changeMsgAction,

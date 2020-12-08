@@ -52,18 +52,18 @@ export default (props)=>{
     let [imageUrl, setImageUrl] = useState('')
     let { loading } = props
     const [form] = Form.useForm()
+
     const imgSuccess = e => {
-        if(e.fileList && e.fileList[0] && e.fileList[0].response){
+        if(e && e.fileList && e.fileList[0] && e.fileList[0].response){
             setImageUrl(e.fileList[0].response.data.url)
         }
-       };
+       }
+
     const onFinish = values => {
         values.img = imageUrl
-        
         fetchGoodAddOrEdit(values).then(() => {
             // 跳转到列表页
-            // props.history.replace('/good/list')
-            console.log('values',values)
+            props.history.replace('/good/list')
         })
         }
         
@@ -83,16 +83,16 @@ export default (props)=>{
             onFinish={onFinish}
             form={form}
             >
-                <Form.Item name={['user', 'name']} label="商品名称" rules={[{ required: true, min: 2, max: 10 }]}>
+                <Form.Item name='name' label="商品名称" rules={[{ required: true, min: 2, max: 10 }]}>
                     <Input />
                 </Form.Item>
-                <Form.Item name={['user', 'desc']} label="商品描述" rules={[{ required: true,min:10,max:30 }]}>
+                <Form.Item name='desc' label="商品描述" rules={[{ required: true,min:10,max:30 }]}>
                     <TextArea rows={4} />
                 </Form.Item>
-                <Form.Item name={['user', 'price']} label="商品价格" rules={[{ required: true,type: 'number', min: 0}]}>
+                <Form.Item name= 'price' label="商品价格" rules={[{ required: true,type: 'number', min: 0}]}>
                     <InputNumber />
                 </Form.Item>
-                <Form.Item name={['user', 'cate']} label="选择品类" rules={[{required: true}]}>
+                <Form.Item name= 'cate' label="选择品类" rules={[{required: true}]}>
                     <Select>
                         <Option value="jack">Jack</Option>
                         <Option value="lucy">Lucy</Option>
@@ -100,7 +100,7 @@ export default (props)=>{
                     </Select>
                 </Form.Item>
                 <Form.Item
-                name={['user', 'upload']}
+                name='upload'
                 label="图片上传"
                 >
                 <Upload
