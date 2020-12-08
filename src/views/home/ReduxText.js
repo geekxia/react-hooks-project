@@ -2,24 +2,25 @@ import {useState} from 'react'
 import { Form, Input, Button, Select,  Upload,Switch,InputNumber  } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { fetchGoodOrEdit } from '@/utils/api'
+import img from '@/utils/img'
+import CreateSelect from '@/views/components/createSelect'
 const { Option } = Select
 const { TextArea } = Input;
-import img from '@/utils/img'
-    const layout = {
-    labelCol: {
-      span: 4,
-    },
-    wrapperCol: {
-      span: 16,
-    },
-  };
-  const tailLayout = {
-    wrapperCol: {
-      offset: 4,
-      span: 16,
-    },
-  }
-  
+const layout = {
+                labelCol: {
+                    span: 4,
+                },
+                wrapperCol: {
+                    span: 16,
+                },
+                }
+const tailLayout = {
+                wrapperCol: {
+                offset: 4,
+                span: 16,
+                },
+            }
+// 定义一个无状态组件
 const FFrom=props=>{
     const [ImageUrl,setImageUrl]=useState("")
     const loading=false
@@ -32,10 +33,7 @@ const FFrom=props=>{
             </div>
         )
         }
-        
-      
-    
-   
+    // 当提交的时候将img手动添加到val上
     const onFinish = (values) => {
         values.img=ImageUrl
         fetchGoodOrEdit(values).then(()=>{
@@ -126,22 +124,7 @@ const FFrom=props=>{
                     },
                     ]}
                 >
-                    <Select
-                    showSearch
-                    style={{ width: 200 }}
-                    placeholder="选择品类 "
-                    optionFilterProp="children"
-                    filterOption={(input, option) =>
-                    option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                    }
-                    filterSort={(optionA, optionB) =>
-                    optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-                    }
-                    >
-                        <Option value="1">方一波</Option>
-                        <Option value="2">啦啦啦啦</Option>
-                        <Option value="3">哈哈哈</Option>
-                    </Select>
+                   <CreateSelect/>
                 </Form.Item>
                 <Form.Item
                     label="商品价格"

@@ -115,3 +115,10 @@
     height: 100%;
   }
 }
+.f-table{
+
+  &>a{
+    display: inline-block;
+    margin-left: 10px;
+  }
+}
