@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import CateSelect from './components/CateSelect'
 
 import {
   Form,
@@ -70,7 +71,7 @@ export default props => {
     console.log('values 提交接口', values)
     fetchGoodOrEdit(values).then(()=>{
       // 跳转到列表页
-      props.history.replace('/good/list')
+      props.history.replace('/zhappy/display')
     })
   }
 
@@ -106,12 +107,22 @@ export default props => {
           name="price"
           label="商品价格"
           rules={[
-            { required: true, message: '商品描述是必填!',}
+            { required: true, message: '商品价格是必填!',}
           ]}
         >
           <InputNumber min={0} />
         </Form.Item>
 
+        {/* <Form.Item
+          name="num"
+          label="库存"
+          rules={[
+            { required: true, message: '库存是必填!',}
+          ]}
+        >
+          <InputNumber min={0} />
+        </Form.Item> */}
+        
         <Form.Item
           name="cate"
           label="选择品类"
@@ -119,14 +130,7 @@ export default props => {
             { required: true, message: '商品描述是必填!' }
           ]}
         >
-          <Select
-            style={{ width: 200 }}
-            placeholder="选择一个品类"
-          >
-            <Option key='1' value="jack">电子产品</Option>
-            <Option key='2' value="lucy">冬装秋裤</Option>
-            <Option key='3' value="tom">汽车户外</Option>
-          </Select>
+          <CateSelect />
         </Form.Item>
         
         <Form.Item
@@ -135,7 +139,7 @@ export default props => {
           rules={[
             { required: true, message: '商品描述是必填!',},
             { max: 30, message: '商品描述不能超过30个字' },
-            { min: 10, message: '商品描述不能少于10个字' }
+            { min: 2, message: '商品描述不能少于10个字' }
           ]}
         >
           <TextArea rows={4} />
