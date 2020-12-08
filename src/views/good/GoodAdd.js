@@ -7,6 +7,7 @@ import {
 import {
   fetchGoodOrEdit
 } from '@/utils/api'
+import CateSelect from './components/CateSelect'
 
 import { 
   Form, 
@@ -108,9 +109,7 @@ export default props => {
             name="cate"
             rules={[{ required: true, message: '请选择商品品类!' }]}
           >
-            <Select style={{ width: 200 }} onChange={handleChange} placeholder="请选择一个品类">
-              <Option value="jack">Jack</Option>
-            </Select>
+            <CateSelect/>
           </Form.Item>    
 
           <Form.Item
@@ -137,7 +136,7 @@ export default props => {
             name="hot"
             valuePropName="checked"
           >
-            <Switch defaultChecked onChange={onChangeswitch}/>
+            <Switch />
           </Form.Item>             
 
           <Form.Item {...tailLayout}>
