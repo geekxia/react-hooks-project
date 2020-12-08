@@ -1,0 +1,16 @@
+.gl-good{
+    &>img{
+        display:block;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+.qf-filter{
+    .qf-label{
+        display: block;
+        text-align: right;
+        padding-right: 15px;
+    }
+}

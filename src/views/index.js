@@ -5,7 +5,9 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
-const ReduxYunxi = loadable(()=>import('./yunxi/ReduxYunxi'))
+const GoodList = loadable(()=>import('./yunxi/GoodList'))
+const GoodAddorEdit = loadable(()=>import('./yunxi/GoodAddorEdit'))
+
 
 export default [
   {
@@ -23,14 +25,22 @@ export default [
   },
   {
     id: 22,
-    text: 'yunxi',
+    text: '云兮商品',
     icon: <DingdingOutlined />,
     children: [
       {
         id: 2222,
-        text: '第一个工作',
-        path: '/yunxi',
-        component: ReduxYunxi
+        text: '商品列表',
+        path: '/list', 
+        component: GoodList,
+        children:[
+          {
+            id: 23333,
+            text: '新增商品与编辑',
+            path: '/aore/:id', 
+            component: GoodAddorEdit,
+          }
+        ]
       }
     ]
   }
