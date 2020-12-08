@@ -65,12 +65,14 @@ export default [
         text: '商品列表',
         path: '/good/list',
         component: GoodList,
-      },
-      {
-        id: 121010,
-        text: '商品新增与编辑',
-        path: '/good/update',
-        component: GoodAddOrEdit
+        children: [
+          {
+            id: 121010,
+            text: '商品新增与编辑',
+            path: '/good/update/:id',
+            component: GoodAddOrEdit
+          }
+        ]
       }
     ]
   },
