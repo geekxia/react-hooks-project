@@ -8,8 +8,9 @@ export default (state=initState,action)=>{
     console.log('action ',action)
     switch(action.type){
         case type.ZTY_GOOD_LIST:
-            newState = action.payload
+            newState.goodData = action.payload
         break
     }
+    console.log('我是newState',newState)
     return newState
 }

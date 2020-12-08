@@ -15,6 +15,7 @@ import {
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import myImg from '@/utils/zhaoty/img'
+import {goodUpdate} from '@/utils/zhaoty/api'
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
 const { TextArea } = Input
@@ -41,7 +42,12 @@ export default props => {
   const [form] = Form.useForm();
   const [imageUrl,setImageUrl]=useState('')
   const onFinish = values => {
+    values.img  = imageUrl
     console.log('Received values of form: ', values);
+    goodUpdate(values).then(
+      props.history.replace('/zhao/good/list')
+    )
+
   };
   const { loading } = props;
   const uploadButton = (

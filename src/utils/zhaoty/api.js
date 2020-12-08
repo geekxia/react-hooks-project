@@ -14,7 +14,15 @@ export function fetchGoodList(params) {
     params
   })
 }
+export function goodUpdate(data) {
+  return axios({
+    url: 'api/v1/good/addOrEdit',
+    method: 'POST',
+    data
+  })
+}
 export default {
   fetchQqMusic,
-  fetchGoodList
+  fetchGoodList,
+  goodUpdate
 }
