@@ -1,26 +1,59 @@
-// import '@/assets/css/zhaoty/ztyGetGoodList.scss'
-import '@/assets/css/zhaoty/ztyGoodList.scss'
-// import '../../assets/css/zhaoty/ztyGoodList'
 
+import '@/assets/css/zhaoty/ztyGoodList.scss'
 import React,{useState,useEffect} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
-import {Table} from 'antd'
+import {
+  Table,
+  Row,
+  Col,
+  Input,
+  Select,
+  Button
+} from 'antd'
+import SelectCate from './components/cateSelect'
 import action from '@/store/actions'
 import moment from 'moment'
 import myImg from '@/utils/zhaoty/img'
-
 export default props=>{
     const dispatch = useDispatch()
     const goodData = useSelector(store=>store.ztyGood.goodData)
-   let params={}
+    const goodCates = useSelector(store=>store.ztyGood.cateArr)
+    const [filter,setFilter] = useState({
+      page:1,
+      size:2,
+      text:'',
+      cate:''
+    })
+    const [text,setText]=useState('')
+   let params={
+     page:filter.page,
+     size:filter.size,
+     text:filter.text,
+     cate:filter.cate
+   }
+   const textChange=val=>{
+     setText(val)
+     if(!val){
+       filter.text=''
+       setFilter(JSON.parse(JSON.stringify(filter)))
+     }
+   }
     useEffect(()=>{
         dispatch(action.ztyGetGoodList(params))
         return undefined
-    },[])
+    },[filter])
     useEffect(()=>{
-      console.log('goodData',goodData)
+      dispatch(action.ztyGetGoodCates({}))
       return undefined
     },[])
+    const filterChange=(key,val)=>{
+      filter[key]=val
+      setFilter(JSON.parse(JSON.stringify(filter)))
+      console.log(filter)
+    }
+    const skipToUpdateGood=()=>{
+      props.history.push('/zhao/good/update')
+    }
       const columns = [
         {
           title: '商品名称',
@@ -62,10 +95,45 @@ export default props=>{
     return (
         <div className='zty-good-list'>
             <h1>这是商品列表</h1>
+            <Row align='middle'>
+              <Col span={1} align='center' al>
+              名称
+              </Col>
+              <Col span={4}>
+                <Input 
+                placeholder='输入商品名称' 
+                allowClear
+                value={text}
+                onChange={(e)=>textChange(e.target.value)}
+                onPressEnter={e=>filterChange('text',e.target.value)}
+                />
+              </Col>
+              <Col offset={1} span={1} align='center'>
+              品类
+              </Col>
+              <Col span={4}>
+                <SelectCate 
+                allowClear 
+                onChange={cate=>filterChange('cate',cate)}
+                cateArr = {goodCates}
+                />
+              </Col>
+              <Col offset={2} span={4}>
+                <Button type="primary" onClick={()=>skipToUpdateGood()}>添加商品</Button>
+              </Col>
+            </Row>
             <Table 
             dataSource={goodData.list} 
             columns={columns} 
             rowKey='_id'
+            pagination={{
+            total: goodData.total,
+            defaultPageSize: filter.size,
+            pageSizeOptions: [2,3,5,10,15,20],
+            showSizeChanger:true,
+            onChange:(page)=>filterChange('page',page),
+            onShowSizeChange:(current,size)=>filterChange('size',size)
+          }}
             />
         </div>
     )

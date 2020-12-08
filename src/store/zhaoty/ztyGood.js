@@ -1,6 +1,7 @@
 import type from '../actionTypes'
  let initState = {
-    goodData: {}
+    goodData: {},
+    cateArr:[]
   }
   
 export default (state=initState,action)=>{
@@ -10,6 +11,8 @@ export default (state=initState,action)=>{
         case type.ZTY_GOOD_LIST:
             newState.goodData = action.payload
         break
+        case type.ZTY_GOOD_CATES:
+            newState.cateArr=action.payload
     }
     console.log('我是newState',newState)
     return newState

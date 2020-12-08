@@ -1,6 +1,6 @@
 
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   Form,
   Input,
@@ -12,12 +12,19 @@ import {
   Upload,
   Switch
 } from 'antd';
+
+
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import myImg from '@/utils/zhaoty/img'
 import {goodUpdate} from '@/utils/zhaoty/api'
+import {useDispatch,useSelector} from 'react-redux'
+import action from '@/store/actions'
+
 const { Option } = Select;
 const AutoCompleteOption = AutoComplete.Option;
+import SelectCate from './components/cateSelect'
+
 const { TextArea } = Input
 
 const formItemLayout = {
@@ -39,6 +46,8 @@ const tailFormItemLayout = {
 
 console.log('myImg',myImg)
 export default props => {
+  const dispatch = useDispatch()
+const goodCates = useSelector(store=>store.ztyGood.cateArr)
   const [form] = Form.useForm();
   const [imageUrl,setImageUrl]=useState('')
   const onFinish = values => {
@@ -61,6 +70,10 @@ export default props => {
           setImageUrl(e.file.response.data.url)
       }
   }
+  useEffect(()=>{
+    dispatch(action.ztyGetGoodCates({}))
+    return undefined
+  },[])
   return (
     <Form
       {...formItemLayout}
@@ -101,14 +114,18 @@ export default props => {
         name='cate'
         label='选择品类'
       >
-        <Select
+        {/* <Select
             style={{ width: 200 }}
             placeholder="选择品类"
         >
             <Option value="jack">Jack</Option>
             <Option value="lucy">Lucy</Option>
             <Option value="tom">Tom</Option>
-        </Select>
+        </Select> */}
+        <SelectCate 
+                allowClear 
+                cateArr = {goodCates}
+                />
       </Form.Item>
       <Form.Item
        label='商品图片'

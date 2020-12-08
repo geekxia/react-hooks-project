@@ -21,8 +21,16 @@ export function goodUpdate(data) {
     data
   })
 }
+export function goodCates(params){
+  return axios({
+    url:'api/v1/good/cates',
+    method:'GET',
+    params
+  })
+}
 export default {
   fetchQqMusic,
   fetchGoodList,
-  goodUpdate
+  goodUpdate,
+  goodCates
 }
