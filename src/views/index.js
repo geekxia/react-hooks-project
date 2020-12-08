@@ -63,7 +63,7 @@ export default [
           {
             id:311010,
             text:'商品新增与编辑',
-            path:'/good/updata',
+            path:'/good/updata/:id',
             component:GoodAddOrEit
           }
         ]

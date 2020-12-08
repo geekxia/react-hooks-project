@@ -1,6 +1,9 @@
 import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
-import { fetchGoodList } from 'e:/上课视频/js/react/react-project/src/utils/api'
+import { 
+  fetchQqMusic,
+  fetchGoodList,
+  fetchCates
+} from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -59,10 +62,21 @@ function getGoodList(params){
     })
   }
 }
+
+// 获取品类列表
+const getCatesAction = params => {
+  return dispatch => {
+    fetchCates(params||{}).then(res=>{
+      console.log('品类列表', res)
+      dispatch({type: type.GET_CATE_LIST, payload: res.list})
+    })
+  }
+}
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   selectFriendAction,
-  getGoodList
+  getGoodList,
+  getCatesAction
 }

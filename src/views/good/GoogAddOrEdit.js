@@ -15,7 +15,8 @@ import {
   PlusOutlined 
 } from '@ant-design/icons';
 import { configConsumerProps } from 'antd/lib/config-provider';
-
+import CateSelect from './components/CateSelect';
+import GoodUpload from './components/GoodUpload';
 const { Option } = Select;
 
 const layout = {
@@ -49,24 +50,30 @@ function beforeUpload(file) {
 
 export default props=>{
   const [imageUrl,setImageUrl] = useState('')
-  const [loading,setLoading] = useState('')
+  const [loading,setLoading] = useState('');
+  let [values,setValues] = useState({});
+
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
   );
-
-  //图片上传成功
-  const imgSuccess = e=>{
-    console.log('图片上传成功', e);
-    if(e && e.fileList && e.fileList[0].response) {
-      setImageUrl(e.fileList[0].response.data.url)
-    }
+  
+  // 当Form表单值发生变化时，我们手动取值，赋值给声明式变量 values
+  const formChange = values=>{
+    console.log('form-values', values);
+    setValues(values)
   }
+  // //图片上传成功
+  // const imgSuccess = e=>{
+  //   console.log('图片上传成功', e);
+  //   if(e && e.fileList && e.fileList[0].response) {
+  //     setImageUrl(e.fileList[0].response.data.url)
+  //   }
+  // }
   // 表单提交
-  const onFinish = (values) => {
-    values.imgUrl = imageUrl; 
+  const onFinish = () => {
     console.log('values 提交接口',values);
     api.fetchGoodOrEdit(values).then((res)=>{
       // 跳转到列表页
@@ -86,6 +93,7 @@ export default props=>{
         name="nest-messages" 
         onFinish={onFinish}
         validateMessages={validateMessages}
+        onValuesChange={(val,values)=>formChange(values)}
       >
         <Form.Item
           name='name'
@@ -100,21 +108,12 @@ export default props=>{
         </Form.Item>
         <Form.Item
           label='商品图片'
+          name='img'
           rules={[
             {required:true}
           ]}
         >
-          <Upload
-            action={img.uploadUrl}
-            name="file"
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            beforeUpload={beforeUpload}
-            onChange={imgSuccess}
-          >
-            {imageUrl ? <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-          </Upload>
+          <GoodUpload src={values.img}/>
         </Form.Item>
         <Form.Item 
           name='desc' 
@@ -146,11 +145,7 @@ export default props=>{
             {required:true}
           ]}
         >
-          <Select placeholder="选择一个品类" style={{ width: 200 }}>
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
-          </Select>
+          <CateSelect/>
         </Form.Item>
         <Form.Item 
           name='hot'
