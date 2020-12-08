@@ -5,7 +5,7 @@ const initState = {
 }
 
 export default function reducer(state=initState, action) {
-  console.log('来自于视图组件的action====', action)
+  // console.log('来自于视图组件的action====', action)
   let newState = JSON.parse(JSON.stringify(state))
   switch (action.type) {
     case type.GET_GOOD_LIST:

@@ -43,7 +43,7 @@ function musicListAction(params) {
 function goodListAction(params) {
   return dispatch=>{
     fetchGoodList(params).then(res=>{
-      console.log('商品列表', res)
+      // console.log('商品列表', res)
       dispatch({type: type.GET_GOOD_LIST, payload: res})
     })
   }

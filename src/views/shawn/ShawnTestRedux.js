@@ -26,7 +26,6 @@ export default props => {
     if(flag==='prev' && page<=1) return alert('已经是第一页了')
     setPage(flag==='next' ? ++page : --page)
   }
-  console.log('store',props.store)
 
   return (
     <div>
