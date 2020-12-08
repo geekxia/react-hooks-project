@@ -8,6 +8,7 @@ const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const Loading =loadable(()=>import('./loading/Loading'))
 const AdvancedForm=loadable(()=>import('./form/AdvancedForm'))
 const StepForm=loadable(()=>import('./form/StepForm'))
+const GoodAddOrEdit=loadable(()=>import('./form/GoodAddOrEdit'))
 
 export default [
   {
@@ -50,6 +51,11 @@ export default [
         text:'余——分步表单',
         path:'/form/step-form',
         component:StepForm
+      },{
+        id:1303,
+        text:'添加商品',
+        path:'/form/add',
+        component:GoodAddOrEdit
       }
     ]
   }

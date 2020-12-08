@@ -10,6 +10,7 @@ const HANDLEADD='HANDLEADD'
 const YUGOODLIST='YUGOODLIST'
 
 const AJAX_MUSIC_LIST = 'AJAX_MUSIC_LIST'
+const  GET_CATE_LIST='GET_CATE_LIST'
 
 export default {
   CHANGE_MSG,
@@ -18,5 +19,6 @@ export default {
   FAN,
   DELETE,
   HANDLEADD,
-  YUGOODLIST
+  YUGOODLIST,
+  GET_CATE_LIST
 }

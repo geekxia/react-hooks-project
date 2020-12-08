@@ -10,7 +10,8 @@ let initState = {
     count: 0
   },
   loading:true,
-  data:[]
+  data:[],
+  cates: []
  
 }
 export default (state=initState, action) => {
@@ -43,6 +44,9 @@ export default (state=initState, action) => {
       break
     case type.YUGOODLIST:
       newState.data=action.payload
+      break
+    case type.GET_CATE_LIST:
+      newState.cates = action.payload
       break
     default:
       return state

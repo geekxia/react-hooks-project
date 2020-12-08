@@ -3,6 +3,7 @@ import action from '@/store/actions'
 import moment from 'moment'
 import img from '@/utils/img'
 import './style.scss'
+import api from '@/utils/api'
 import {
     useSelector,
     useDispatch
@@ -25,24 +26,36 @@ import 'moment/locale/zh-cn';
 import locale from 'antd/es/date-picker/locale/zh_CN';
  const { Option } = Select
 export default props=>{
-    let [size,setSize]=useState(2)
-    let [page,setPage]=useState(1)
+    let [filter,setFilter]=useState({
+        size:2,
+        page:1,
+        text:'',
+        hot:''
+    })
     const [form] = Form.useForm();
     const dispatch = useDispatch()
     let data = useSelector(store=>store.study.data)
     const onFinish = (values) => {
         console.log(values);
     };
-    useEffect(()=>{
-        let params = {
-            size,
-            page
-        }
-        dispatch(action.YuGetGoodList(params))
-        
+    
+    useEffect(()=>{       
+        dispatch(action.YuGetGoodList(filter))  
         return undefined
-    },[page,size]) 
+    },[filter]) 
 
+    const handleDel=(record)=>{
+        console.log(record)
+        api.fetchGoodDel({id:record._id}).then(()=>{
+            setFilter(JSON.parse(JSON.stringify(filter)))
+        })
+    }
+    const filterChange=(key,val)=>{
+        filter[key]=val
+        if(key!=='page') filter.page=1
+        setFilter(JSON.parse(JSON.stringify(filter)))
+        console.log('filter',filter)
+    }
     const columns=[
         {
             title: '商品',
@@ -81,14 +94,12 @@ export default props=>{
         },
         {
             title: 'Action',
-            key: 'action',
+            key: 'action',//text,row,index三个参数
             render: (text, record) => 
                 data.list.length >= 1 ? (
                     <Space>
                         <a>编辑</a>
-                        <Popconfirm title="Sure to delete?" onConfirm={() =>dispatch(action.handleDelete(record.key))}>
-                            <a>删除</a>
-                        </Popconfirm>
+                            <a onClick={()=>handleDel(record)}>删除</a>
                     </Space>
                     
                 ) : null,
@@ -247,21 +258,27 @@ export default props=>{
             
             <div style={{'paddingBottom':100+'px','background':'white','padding':10+'px'}}>
                 <Row style={{'borderBottom':1+'px'}}>成员管理</Row>
+                <Col offset={2} span={2} style={{textAlign: 'right'}}>
+                    <Button size='small' type='primary' onClick={()=>props.history.push('/form/add')}>
+                        新增
+                    </Button>
+                </Col>
                 <Table 
                     columns={columns} 
                     dataSource={data.list} 
                     rowKey='_id'
                     pagination={{
-                        pageSizeOptions:[2,5,10,15,20] ,
-                        defaultPageSize:size,
+                        current:filter.page,
+                        defaultPageSize:filter.size,
                         hideOnSinglePage:true,
                         total:data.total,
-                        onShowSizeChange:(page,size)=>setSize(size),
-                        onChange:page=>setPage(page)
+                        onShowSizeChange:(page,size)=>filterChange('size',size),
+                        onChange:page=>filterChange('page',page),
+                        pageSizeOptions:[1,2,3,4,5,6] 
                     }}
                 />
                 <Row>
-                    <Col span={24} className='col' onClick={()=>dispatch(action.handleAdd(0))}>
+                    <Col span={24} className='col' onClick={()=>props.history.push('/form/add')}>
                         新增成员
                     </Col>
                 </Row>
