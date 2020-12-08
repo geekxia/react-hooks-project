@@ -52,7 +52,6 @@ function getGoodList(params){
   }
 }
 
-
 export default {
   changeMsgAction,
   addFooCountAction,

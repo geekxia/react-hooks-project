@@ -89,7 +89,6 @@ export default props =>{
             // 跳转到列表页
             // props.history.replace('/wyk/AllGoodList')
         })
-        
     }
 
     // 图片上传
