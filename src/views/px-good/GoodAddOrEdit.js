@@ -11,14 +11,10 @@ import {
     message
 } from 'antd';
 
-import { 
-    LoadingOutlined, 
-    PlusOutlined 
-} from '@ant-design/icons';
-
 import img from "@/utils/img"
 
 import {fetchGoodAddOrEdit} from "@/utils/api"
+import uploadButton from "@/components/common/icon/uploadButton"
 
 const { Option } = Select;
 
@@ -38,15 +34,7 @@ export default props=>{
         })
     };
     let [imageUrl,setImageUrl] = useState('')
-    let [loading,setLoading] = useState(false)
 
-    const uploadButton =()=> (
-        <div>
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </div>
-    );
-    
     const handleChange = info => {
         console.log(info);
         if(info.file&&info.file.response&&info.file.response.data){
@@ -138,7 +126,7 @@ export default props=>{
                         onChange={handleChange}
                         fileList={imageUrl}
                     >
-                        {imageUrl ? <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton()}
+                        {imageUrl ? <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} /> : <uploadButton/>}
                     </Upload>
                 </Form.Item>
 

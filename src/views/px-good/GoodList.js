@@ -114,19 +114,29 @@ export default props=>{
             }
         },
     ];
+
+    let [text,setText] = useState('')
     let [filter,setFilter] = useState({
         size:2,
-        page:1
+        page:1,
+        text:''
     })
 
     const filterChange = (key,val)=>{
-        console.log(key,val);
-        let newFilter = JSON.parse(JSON.stringify(filter))
-        newFilter[key]=val
+        filter[key]=val
+        console.log('filter======',filter);
         if(key!=='page'){
-            newFilter.page=1
+            filter.page=1
         }
-        setFilter(newFilter)
+        setFilter(JSON.parse(JSON.stringify(filter)))
+    }
+    // 输入框onChange
+    const searchTextChange = (e)=>{
+        let text = e.target.value
+        setText(text)
+        if(!text){
+            filterChange('text',text)
+        }
     }
     useEffect(()=>{
         dispatch(action.goodListAction(filter))
@@ -154,7 +164,12 @@ export default props=>{
                     <span className='search-text'>搜索:</span>
                 </Col>
                 <Col span={4}>
-                    <Input placeholder="Basic usage" />
+                    <Input 
+                        placeholder="Basic usage" 
+                        value={text}
+                        onChange={(e)=>searchTextChange(e)}
+                        onPressEnter={()=>filterChange('text',text)}
+                    />
                 </Col>
 
                 <Col span={2}>
