@@ -1,7 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Form, Select, Spin, Modal, Button } from 'antd';
-import { fetchGoodList  } from '@/utils/api.js';
+import { 
+  Table,
+  Form,
+  Spin,
+  Modal, 
+  Button,
+  Input,
+  Radio,
+  Select,
+  InputNumber,
+  Switch, } from 'antd';
+const { TextArea } = Input
+import { fetchGoodList, getCartList,GoodAddOrEdit  } from '@/utils/api.js';
 import { LoadingOutlined } from '@ant-design/icons';
+import UploadS  from '@/components/common/upload'
 const columns = [
   {
     title: '商品名称',
@@ -47,16 +59,22 @@ const columns = [
 // }
 
 export default props => {
-  let count = 0
   // { size, page, cate, hot, text }
+  const [cates, setCates] = useState([])
   const [data, setDate] = useState([])
   const [total, setTotal] = useState(0)
   const [spins, setSpins] =useState(false)
   const [params, setParams] = useState({
     page: 1,
     size: 10,
-    text: ''
+    text: '',
+    
   })
+  // let [filters, setFilters] = useState({})
+  var filters = null
+  // if (props.fillters.cate === '') {
+  //   filters = props.fillters
+  // }
   let [pagination, setPagination ]  = useState({
     current: 1,
     pageSize: 10,
@@ -72,6 +90,22 @@ export default props => {
     })
     return undefined
   },[params])
+  useEffect(() => {
+    setParams({
+      page: 1,
+      size: 10,
+      ...props.fillters
+    })
+    return undefined
+  }, [filters])
+  useEffect(()=> {
+    getCartList({}).then((res) =>{
+      if(res.list) {
+        setCates(res.list)
+      }
+    })
+    return undefined
+  },[])
   var timer = null
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }}  />
   function handleTableChange (v) {
@@ -117,6 +151,18 @@ export default props => {
   const handleCancel = () => {
     setTimeout(() => setVisible(false) )
   }
+  const onFinish = (v) => {
+    if (!v.user.hot) {
+      v.user.hot = false
+    }
+    console.log(v.user)
+    GoodAddOrEdit(v.user).then(res => console.log(res))
+  }
+  //form 
+  const [componentSize, setComponentSize] = useState('default')
+  const onFormLayoutChange = ({ size }) => {
+    setComponentSize(size)
+  }
   return (
     <>
       <div className='header'>
@@ -132,6 +178,50 @@ export default props => {
               onCancel={handleCancel}
             >
               <p>{modalText}</p>
+              <Form
+                labelCol={{ span: 4 }}
+                wrapperCol={{ span: 14 }}
+                layout="horizontal"
+                initialValues={{ size: componentSize }}
+                onValuesChange={onFormLayoutChange}
+                size={componentSize}
+                onFinish={onFinish}
+              >
+                <Form.Item label="Form Size" name="size">
+                  <Radio.Group>
+                    <Radio.Button value="small">Small</Radio.Button>
+                    <Radio.Button value="default">Default</Radio.Button>
+                    <Radio.Button value="large">Large</Radio.Button>
+                  </Radio.Group>
+                </Form.Item>
+                <Form.Item label="商品名称" name={['user', 'name']}>
+                  <Input />
+                </Form.Item>
+                <Form.Item label='产品描述' name={['user', 'desc']}>
+                  <TextArea></TextArea>
+                </Form.Item>
+                 <Form.Item label="Select" name={['user', 'cate']}>
+                  <Select>
+                    { cates.map(ele => {
+                      return (
+                      <Select.Option key={ele._id} value={ele.cate}>{ele.cate_zh}</Select.Option>
+                      )
+                    })}
+                  </Select>
+                </Form.Item>
+                <Form.Item label="你的帅照" name={['user', 'img']}>
+                  <UploadS ></UploadS>
+                </Form.Item>
+                <Form.Item label="InputNumber"  name={['user', 'price']}>
+                  <InputNumber min={1} max={99999} placeholder='3' />
+                </Form.Item>
+                <Form.Item valuePropName='checked' label="Switch" name={['user', 'hot']} >
+                  <Switch  />
+                </Form.Item>
+                <Form.Item label="添加商品" >
+                  <Button type="primary" htmlType="submit">Button</Button>
+                </Form.Item>
+              </Form>
             </Modal>
           </span>
           <span onClick={reset}>刷新</span>

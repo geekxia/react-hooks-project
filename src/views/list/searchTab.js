@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Row, Col, Input, Button, Select } from 'antd';
+import { Form, Row, Col, Input, Button, Select, } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { Tabs, Breadcrumb } from 'antd'
 import Table from '@/components/common/Table'
@@ -7,12 +7,13 @@ const { Option } = Select
 export default prosp => {
   const [expand, setExpand] = useState(false);
   const [form] = Form.useForm()
+  const [fillters, setFillters] = useState({})
   const inputInit = [
-    {name: "商品名称"},
-    {name: "品类"},
-    {name: "价格"},
-    {name: "描述"},
-    {name: "时间"}
+    {name: "商品名称",des: 'name'},
+    {name: "品类", des: 'cate'},
+    {name: "价格", des: 'price'},
+    {name: "描述", des: 'desc'},
+    {name: "时间", des: 'create_time'}
   ]
   const getFields = () => {
     const count = expand ? 4 : 2
@@ -37,14 +38,8 @@ export default prosp => {
       i!==2 ? children.push(
         <Col span={8} key={i}>
           <Form.Item
-            name={`${inputInit[i].name}`}
+            name={`${inputInit[i].des}`}
             label={`${inputInit[i].name}`}
-            rules={[
-              {
-                required: true,
-                message: 'Input something!',
-              },
-            ]}
           >
             <Input size='large' placeholder="placeholder" />
           </Form.Item>
@@ -68,7 +63,9 @@ export default prosp => {
     return children;
   }
   const onFinish = values => {
-    console.log('Received values of form: ', values);
+    if (!values.cate) values.cate = ''
+    setFillters(values)
+    
   }
   return (
     <div className='searchTab'>
@@ -100,6 +97,7 @@ export default prosp => {
                   size='large'
                   style={{ margin: '0 8px' }}
                   onClick={() => {
+                    console.log(1)
                     form.resetFields();
                   }}
                 >
@@ -121,7 +119,7 @@ export default prosp => {
           </Form>
         </div>
         <div className='searchTab-main-table'>
-          <Table/>
+            <Table fillters={ fillters }/>
         </div>
       </div>
     </div>
