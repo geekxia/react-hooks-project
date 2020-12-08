@@ -8,7 +8,8 @@ import {
     Row,
     Col,
     Button,
-    Image
+    Image,
+    Input
 } from 'antd'
 import {
     useDispatch,
@@ -50,6 +51,10 @@ const HuhClass =(props)=>{
                         <Image
                             width={100}
                             src={img.imgBase + record.img}
+                            fallback={img.errorImg}
+                            alt={record.name}
+                            width="80px"
+                            height="80px"
                         />
                         <a>{text}</a>
                     </div>
@@ -87,7 +92,7 @@ const HuhClass =(props)=>{
                 return(
                     <>
                         <div>{moment(text).format("YYYY年MM月DD日")}</div>
-                        <div>{moment(text).format("hh:mm:ss")}</div>
+                        <div>{moment(text).format("HH:mm:ss")}</div>
                     </>
                 )
             }
@@ -111,7 +116,16 @@ const HuhClass =(props)=>{
             <h1>商品列表</h1>
             <hr/>
             <div className="List-query">
-                <Row justify="end">
+                <Row align="middle">
+                    <Col span="2">
+                        <label>名称搜索：</label>
+                    </Col>
+                    <Col span="4">
+                        <Input placeholder="请输入名称" allowClear />
+                    </Col>
+                    <Col span="2">
+                        <label>品类搜索：</label>
+                    </Col>
                     <Col>
                         <Button type="primary" onClick={()=>GoodAddOrEdit()}>新增商品</Button>
                     </Col>
@@ -129,6 +143,11 @@ const HuhClass =(props)=>{
                         onChange:page=>setPage(page),
                         onShowSizeChange:(page,size)=>setSize(size),
                         pageSizeOptions:[2,5,10,15,20]
+                    }}
+                    locale={{
+                        triggerDesc: '点击升序',
+                        triggerAsc: '点击降序',
+                        cancelSort: '点击取消排序',
                     }}
                 />
             </div>
