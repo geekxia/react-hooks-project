@@ -2,13 +2,16 @@ import React,{useEffect,useState} from "react"
 
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 
+import moment from "moment"
+
 import { 
     Row, 
     Col,
     Table,
     Breadcrumb,
     Button,
-    Pagination
+    Input,
+    Select 
 } from 'antd';
 
 import {fetchGoodList} from "@/utils/api"
@@ -23,6 +26,8 @@ import {
 import action from "@/store/actions"
 import img from "@/utils/img"
 import store from "../../store";
+
+const {Option} = Select
 
 export default props=>{
     
@@ -57,10 +62,17 @@ export default props=>{
             key: 'desc',
         },
         {
+            title: '商品品类',
+            dataIndex: 'cate',
+            align:'center',
+            key: 'cate',
+        },
+        {
             title: '商品价格',
             dataIndex: 'price',
             align:'center',
             key: 'price',
+            sorter:(a,b)=>a.price-b.price
         },
         {
             title: '是否热销',
@@ -78,6 +90,15 @@ export default props=>{
             dataIndex: 'create_time',
             align:'center',
             key: 'create_time',
+            render:(text, row, index)=>{
+                return (
+                    <div>
+                        <div>{moment(row.create_time).format('YYYY年MM月DD日')}</div>
+                        <span>{moment(row.create_time).format('HH:mm:ss')}</span>
+                    </div>
+                    
+                )
+            }
         },
         {
             title: '商品操作',
@@ -93,7 +114,6 @@ export default props=>{
             }
         },
     ];
-    // let [goodList,setGoodList] = useState({})
     let [page,setPage] = useState(1)
     let [size,setSize] = useState(2)
     useEffect(()=>{
@@ -119,14 +139,54 @@ export default props=>{
             </Breadcrumb>
             <br/>
             <h1>潘曦-商品列表</h1>
-            <Row justify='end'>
-                <Col>
-                    <Button type="primary" onClick={()=>props.history.push('/panxi/good/list/addoredit')} >商品新增</Button>
+            <Row align='middle'>
+                <Col span={2}>
+                    <span className='search-text'>搜索:</span>
+                </Col>
+                <Col span={4}>
+                    <Input placeholder="Basic usage" />
+                </Col>
+
+                <Col span={2}>
+                    <span className='search-text'>品类:</span>
+                </Col>
+                <Col span={4}>
+                    <Select
+                        placeholder="Select a person"
+                    >
+                        <Option value="jack">Jack</Option>
+                        <Option value="lucy">Lucy</Option>
+                        <Option value="tom">Tom</Option>
+                    </Select>,
+                </Col>
+
+                <Col span={2}>
+                    <span className='search-text'>是否热销:</span>
+                </Col>
+                <Col span={4}>
+                    <Select
+                        placeholder="Select a person"
+                    >
+                        <Option value="jack">全部</Option>
+                        <Option value="lucy">是</Option>
+                        <Option value="tom">否</Option>
+                    </Select>,
+                </Col>
+
+                <Col span={6}>
+                    <div className='submit-btn'>
+                        <Button type="primary" onClick={()=>props.history.push('/panxi/good/list/addoredit')} >商品新增</Button>
+                    </div>
                 </Col>
             </Row>
             
             <hr/>
             <Table 
+                locale={{
+                    triggerDesc: '点击降序',
+                    triggerAsc: '点击升序',
+                    cancelSort: '点击取消排序'
+                }}
                 rowKey="_id" 
                 columns={columns} 
                 dataSource={goodList.list}

@@ -18,4 +18,14 @@ code {
     width: 80px;
     height: 80px;
   }
+  .search-text{
+    text-align: right;
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 20px;
+  }
+  .submit-btn{
+    text-align: right;
+  }
 }
