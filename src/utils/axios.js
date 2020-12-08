@@ -24,6 +24,9 @@ instance.interceptors.response.use(function (response) {
       res = response.data.data
     }
   }
+  if(response.data && response.data.err===0) {
+    res = response.data.data
+  }
   return res
 }, function (error) {
   return Promise.reject(error)

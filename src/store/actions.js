@@ -1,9 +1,10 @@
 
-import { fetchQqMusic } from '@/utils/api'
+import { fetchQqMusic,fetchGoodList} from '@/utils/api'
 const CHANGE_MSG='CHANGE_MSG'
 const ADD_FUNC='ADD_FUNC'
 const SUB_FUNC='SUB_FUNC'
 const MUSIC_LIST='MUSIC_LIST'
+const GOOD_LIST='GOOD_LIST'
 
 function changeMsgAction(payload){
     return{
@@ -35,15 +36,28 @@ return function(dispatch) {
     })
     }
 }
+
+
+// 商品列表
+function goodlistAction(params) {
+    return dispatch=>{
+        fetchGoodList(params).then(res=>{
+            console.log('商品列表', res)
+            dispatch({type: GOOD_LIST, payload: res})
+            })
+        }
+        }
 export {
     CHANGE_MSG,
     ADD_FUNC,
     SUB_FUNC,
     MUSIC_LIST,
+    GOOD_LIST,
 
 
     changeMsgAction,
     addFooCountAction,
     subFooCountAction,
-    musicListAction
+    musicListAction,
+    goodlistAction
 }

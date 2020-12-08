@@ -12,7 +12,7 @@ export default [ // eslint-disable-line
     component:Basic
     },
     {
-    id: 2010,
+    id: 2011,
     text: '安全设置',
     path:'/user/safe',
     component:Safe
