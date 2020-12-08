@@ -23,6 +23,8 @@ import {
 import img from '@/utils/img'
 import { fetchGoodOrEdit } from '@/utils/api'
 
+import CateSelect from './components/CateSelect'
+
 import { QuestionCircleOutlined } from '@ant-design/icons';
 const { Option } = Select
 const { TextArea } = Input
@@ -127,17 +129,10 @@ export default props => {
           name="cate"
           label="选择品类"
           rules={[
-            { required: true, message: '商品描述是必填!' }
+            { required: true, message: '商品品类是必填!' }
           ]}
         >
-          <Select
-            style={{ width: 200 }}
-            placeholder="选择一个品类"
-          >
-            <Option key='1' value="jack">Jack</Option>
-            <Option key='2' value="lucy">Lucy</Option>
-            <Option key='3' value="tom">Tom</Option>
-          </Select>
+          <CateSelect />
         </Form.Item>
 
         <Form.Item

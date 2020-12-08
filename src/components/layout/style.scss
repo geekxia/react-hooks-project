@@ -32,6 +32,18 @@
         background: orange;
       }
     }
+    .logo{
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 30px auto;
+      &>img{
+        width: 100%;
+        height: 100%;
+        // border-radius: 50%;
+      }
+    }
   }
   .qf-header {
     position: absolute;

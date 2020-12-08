@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { logo } from '@/assets/img/index.js'
+
 import routes from '@/views'
 import { NavLink } from 'react-router-dom'
 
@@ -34,14 +36,16 @@ export default props=>{
 
   return (
     <div className='qf-sider'>
-
-    <Menu
-      mode="inline"
-      theme="dark"
-      defaultSelectedKeys={['1']}
-    >
-      { createNavLink()}
-    </Menu>
+      <div className="logo">
+        <img src={logo} alt="1"/>
+      </div>
+      <Menu
+        mode="inline"
+        theme="dark"
+        defaultSelectedKeys={['1']}
+      >
+        { createNavLink()}
+      </Menu>
     </div>
   )
 }
