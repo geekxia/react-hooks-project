@@ -1,7 +1,8 @@
 import type from '../actionTypes'
 
 let initState = {
-  shopData: {}
+  shopData: {},
+  cates:[]
 }
 
 export default function reducer(state=initState, action) {
@@ -10,8 +11,12 @@ export default function reducer(state=initState, action) {
     case type.GET_SHOP_LIST:
       newState.shopData = action.payload
       break
+    case type.GET_CATE_LIST:
+      newState.cates = action.payload
+      break
     default:
 
   }
+  console.log('我的数据',newState)
   return newState
 }

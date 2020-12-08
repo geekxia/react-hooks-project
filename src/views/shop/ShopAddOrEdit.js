@@ -14,6 +14,7 @@ import{
     UploadIcon
 } from '@/components'
 
+import CateSelect from './components/CateSelect'
 import img from '@/utils/img'
 import { fetchShopOrEdit } from '@/utils/api'
 
@@ -63,9 +64,7 @@ export default props =>{
         }
     }
 
- 
-
-    return(
+    return( 
         <div>
             <div>
                 <h1>商品新增</h1>
@@ -107,17 +106,11 @@ export default props =>{
                         name="cate"
                         label="选择品类"
                         rules={[
-                            { required: true, message: '商品描述是必填!' }
+                            { required: true, message: '请输入商品描述!' }
                         ]}
                         >
-                        <Select
-                            style={{ width: 200 }}
-                            placeholder="选择一个品类"
-                        >
-                            <Option key='1' value="jack">Jack</Option>
-                            <Option key='2' value="lucy">Lucy</Option>
-                            <Option key='3' value="tom">Tom</Option>
-                        </Select>
+                        {/* 凡是被Form.Item包裹的表单组件，相当于都给表单传递了一个onChange事件 */}
+                         <CateSelect />
                     </Form.Item>
 
                     <Form.Item
