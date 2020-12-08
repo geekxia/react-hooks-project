@@ -1,11 +1,20 @@
-import { Table, Tag, Space } from 'antd'
+import { 
+  Table, 
+  Tag,
+   Space,
+   Row, 
+   Col,
+   Input,
+   Button  
+   } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import action from '@/store/actions'
 import img from '@/utils/img'
 import './style.scss'
 import moment from 'moment'
-
+import CateSelect from './components/CateSelect'
+ 
 export default props => {
 
   const dispatch = useDispatch()
@@ -86,12 +95,29 @@ export default props => {
       )
     }
   ]
-
   return (
-    <div className='qf-good-list'>
+    <div className='qf-good-list' >
       <h1>商品列表</h1>
-      <div>
-        查询条件
+      <div  style={{margin:'20px 0'}} className='mqhfilter'>
+      <Row>
+      <Col span={2} align='middle'>
+       <span >搜索查询:</span>
+        </Col>
+      <Col span={6}><Input placeholder="Basic usage" /></Col>
+      <Col span={2} align='middle'>
+       <span >品类筛选:</span>
+        </Col>
+        <Col span={6}>
+        <CateSelect hasAll/>
+          </Col>
+        <Col offset='{6}' span={2} style={{textAligin:'right'}}>
+        <Button
+         size='small'
+          type="primary"
+          onClick={()=>props.history.push('/mqh/update/1')}
+        >点击新增</Button>
+        </Col>
+    </Row>
       </div>
       <div style={{margin: '20px 0'}}>
         <Table

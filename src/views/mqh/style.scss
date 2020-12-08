@@ -3,9 +3,16 @@
     text-align: center;
     &>img {
       display: block;
-      width: 80px;
+      width:80px; 
       height: 80px;
       margin: 0 auto;
+    }
+  }
+  .mqhfilter{
+    span{
+      display: block;
+      text-align: right;
+      padding-right:20px;
     }
   }
 }

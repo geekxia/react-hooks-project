@@ -47,7 +47,7 @@ export default [
           {
             id: 121010,
             text: '商品新增与编辑',
-            path: '/mqh/update',
+            path: '/mqh/update/:id',
             component: GoodAddOrEdit
           }
         ]
