@@ -8,14 +8,15 @@ import {
     Upload
 } from 'antd';
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { QfUploadIcon } from "@/components"
 import img from "@/utils/img"
-
 import { fetchGoodOrEdit } from '@/utils/api'
+import action from "@/store/actions"
+import { useDispatch, useSelector } from "react-redux"
+import CateSelect from "./component/cateselect"
 
 const { TextArea } = Input;
-const { Option } = Select;
 
 
 const layout = {
@@ -34,29 +35,25 @@ const tailLayout = {
 };
 
 export default props => {
-
+    const dispatch = useDispatch()
     let [imageUrl, setImageUrl] = useState('')
-
-
-
-
     const imgSuccess = e => {
-        console.log("图片上传成功", e);
         if (e && e.fileList && e.fileList[0] && e.fileList[0].response) {
             setImageUrl(e.fileList[0].response.data.url)
-
         }
-
     }
-
     const onFinish = (values) => {
         values.img = imageUrl
-        console.log('Success:', values);
         fetchGoodOrEdit(values).then((res) => {
-            console.log(res);
             props.history.replace('/qianggood/list')
+
         })
     };
+
+    useEffect(() => {
+        dispatch(action.getCatesAction())
+        return undefined
+    }, [])
 
     return (
         <div>
@@ -73,7 +70,7 @@ export default props => {
                 >
                     <Form.Item
                         label="商品名称"
-                        name="username"
+                        name="name"
                         rules={[
                             { required: true, message: '商品名称必填' },
                             { max: 10, message: "商品名称不能超过10个字" },
@@ -112,25 +109,7 @@ export default props => {
                             { required: true, message: "" }
                         ]}
                     >
-                        <Select
-                            showSearch
-                            style={{ width: 200 }}
-                            placeholder="你还有选择吗"
-                            optionFilterProp="children"
-                            filterOption={(input, option) =>
-                                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                            }
-                            filterSort={(optionA, optionB) =>
-                                optionA.children.toLowerCase().localeCompare(optionB.children.toLowerCase())
-                            }
-                        >
-                            <Option key="1" value="hua">花有重开日</Option>
-                            <Option key="2" value="ren">人无再少年</Option>
-                            <Option key="3" value="bu">不须长富贵</Option>
-                            <Option key="4" value="an">安乐是神仙</Option>
-                            <Option key="5" value="chou">抽刀断水水更流</Option>
-                            <Option key="6" value="ju">举杯消愁愁更愁</Option>
-                        </Select>
+                        <CateSelect />
                     </Form.Item>
 
                     <Form.Item

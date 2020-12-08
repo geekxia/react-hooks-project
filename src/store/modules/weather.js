@@ -7,7 +7,6 @@ let initState = {
 
 export default (state = initState, action) => {
     let newState = JSON.parse(JSON.stringify(state))
-    console.log("=====weather", action);
     switch (action.type) {
         case type.GET_WEATHER:
             newState.result = action.payload.result

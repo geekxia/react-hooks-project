@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic, fetchWeather, fetQiangGoodList } from '@/utils/api'
+import { fetchQqMusic, fetchWeather, fetQiangGoodList, fetchCates } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -45,6 +45,8 @@ function getQGoodListAction(params) {
     })
   }
 }
+
+
 // 页面中要使用 QQ 音乐列表？数据从后端来，要状态管理工具里来
 // 状态管理工具有这个QQ音乐列表？没有，我定义，怎么定义？
 // 在子reducer中定义完成，在根store中合并
@@ -69,11 +71,25 @@ function musicListAction(params) {
   }
 }
 
+const getCatesAction = params => {
+  return dispatch => {
+    fetchCates(params || {}).then(res => {
+      console.log('品类列表', res)
+      dispatch({
+        type: type.GET_CATE_LIST,
+        payload: res.list
+      })
+
+    })
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   getWeatherAction,
   changeCityAction,
-  getQGoodListAction
+  getQGoodListAction,
+  getCatesAction
 }

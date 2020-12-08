@@ -2,10 +2,8 @@ import type from "../actionTypes"
 
 
 const initState = {
-    QGoodData: {
-        a: 1,
-        b: 2
-    }
+    QGoodData: {},
+    cates: []
 }
 
 export default function reducer(state = initState, action) {
@@ -13,6 +11,9 @@ export default function reducer(state = initState, action) {
     switch (action.type) {
         case type.QGOOD_DATA:
             newState.QGoodData = action.payload
+            break
+        case type.GET_CATE_LIST:
+            newState.cates = action.payload
             break
         default:
             return state

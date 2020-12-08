@@ -20,8 +20,7 @@ import {
 
 export default props => {
   const history = useHistory()
-  console.log('---header props', props)
-  console.log('---header history', history)
+
   return (
     <div className='qf-header'>
       header
