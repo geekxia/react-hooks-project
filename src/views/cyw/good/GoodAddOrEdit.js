@@ -50,7 +50,7 @@ export default props => {
     const imgSuccess = e => {
         console.log('图片上传成功', e)
         if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
-        setImageUrl(e.fileList[0].response.data.url)
+            setImageUrl(e.fileList[0].response.data.url)
         }
     }
 
@@ -119,6 +119,7 @@ export default props => {
                     </Form.Item>
 
                     <Form.Item
+                        name='imgForm'
                         label='商品图片'
                         rules={[
                             {required:true, message:'商品图片是必填项！'}
