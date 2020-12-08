@@ -1,0 +1,31 @@
+.gl-good{
+  &>img{
+    width:70px;
+    height:90px;
+    display: block;
+    margin:0 auto;
+    margin-bottom: 6px;
+  }
+}
+
+.handelButton{
+  &>span:first-child{
+    display: inline-block;
+    background-color: red;
+    color:white;
+    margin-right:5px;
+    width:42px;
+    height:24px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  &>span:last-child{
+    display: inline-block;
+    color:white;
+    background-color:blue;
+    width:42px;
+    height:24px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+}

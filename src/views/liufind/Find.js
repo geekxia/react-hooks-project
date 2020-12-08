@@ -16,6 +16,7 @@ import { Form,
 import {
   QfUploadIcon
 } from '@/components/'
+import CateSelects from './components/CateSelects'
 
 const { TextArea } = Input
 const { Option } = Select
@@ -38,14 +39,16 @@ const tailLayout = {
 
 
 
-const Find =()=>{
+const Find =(props)=>{
 
   let [imageUrl, setImageUrl] = useState('')
   // 方法
   const onFinish = (values) => {
     values.img = imageUrl
     console.log("表单值",values);
-    fetchGoodOrEdit(values)
+    fetchGoodOrEdit(values).then(()=>{
+      props.history.replace('./goodlist')
+    })
 
   };
 // 图片上传
@@ -92,14 +95,15 @@ const Find =()=>{
             { required: true, message: '商品描述是必填!' }
           ]}
         >
-          <Select
+          {/* <Select
             style={{ width: 200 }}
             placeholder="选择一个品类"
           >
             <Option key='1' value="jack">Jack</Option>
             <Option key='2' value="lucy">Lucy</Option>
             <Option key='3' value="tom">Tom</Option>
-          </Select>
+          </Select> */}
+          <CateSelects></CateSelects>
         </Form.Item>
         {/* =======商品价格========= */}
         <Form.Item
@@ -146,6 +150,8 @@ const Find =()=>{
           </Button>
         </Form.Item>
       </Form>
+
+
 
     </div>
   )
