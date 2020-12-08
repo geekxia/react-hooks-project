@@ -1,11 +1,11 @@
 import {useState} from 'react'
-import { Form, Input, Button, Select,  Upload,Switch  } from 'antd';
+import { Form, Input, Button, Select,  Upload,Switch,InputNumber  } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { fetchGoodOrEdit } from '@/utils/api'
 const { Option } = Select
 const { TextArea } = Input;
 import img from '@/utils/img'
-const layout = {
+    const layout = {
     labelCol: {
       span: 4,
     },
@@ -23,6 +23,7 @@ const layout = {
 const FFrom=props=>{
     const [ImageUrl,setImageUrl]=useState("")
     const loading=false
+    // 封装一个方法
     const uploadButton = ()=>{
         return(
             <div>
@@ -141,6 +142,18 @@ const FFrom=props=>{
                         <Option value="2">啦啦啦啦</Option>
                         <Option value="3">哈哈哈</Option>
                     </Select>
+                </Form.Item>
+                <Form.Item
+                    label="商品价格"
+                    name="price"
+                    rules={[
+                    {
+                        required: true,
+                        message: '请输入价格',
+                    },
+                    ]}
+                >
+                    <InputNumber min={0} max={10} step={0.1} />
                 </Form.Item>
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
