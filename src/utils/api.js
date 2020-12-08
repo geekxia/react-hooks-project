@@ -18,10 +18,19 @@ export function fetchGoodOrEdit(data) {
 }
 
 // 获取商品列表
-export function fetchGoodList(params) {
+ export function fetchGoodList(params) {
   return axios({
     url: '/api/v1/good/list',
     method: 'GET',
+    params
+  })
+} 
+
+//获取品类列表
+export function fetchCates(params){
+  return axios({
+    url:'/api/v1/good/cates',
+    method:'GET',
     params
   })
 }

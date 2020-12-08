@@ -3,7 +3,6 @@ import {
     Form,
     Input, 
     Button,
-    Select,
     InputNumber ,
     Upload,
     Switch 
@@ -11,7 +10,7 @@ import {
 import ImgCrop from 'antd-img-crop';
 import img from '@/utils/img'
 import { fetchGoodOrEdit } from '@/utils/api'
-
+import CateSelect from './component/CateSelect'
 //form表单布局
 const layout = {
     labelCol: {
@@ -27,8 +26,7 @@ const tailLayout = {
       span: 16,
     },
   };
-  //下拉选项
-const { Option } = Select;
+
 //文本框
 const { TextArea } = Input;
 
@@ -95,16 +93,7 @@ const InfoAddOrEdit=props=>{
                     { required: true,message: '必须要选择品类哦!'},
                     ]}
                 >
-                <Select
-                    showSearch
-                    style={{ width: 200 }}
-                    placeholder="选择品类"
-                    allowClear={true}
-                >
-                    <Option value="jack">Jack</Option>
-                    <Option value="lucy">Lucy</Option>
-                    <Option value="tom">Tom</Option>
-                </Select>
+                  <CateSelect />
                 </Form.Item>
                 
                 <Form.Item
