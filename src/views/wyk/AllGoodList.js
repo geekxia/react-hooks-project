@@ -1,9 +1,26 @@
 import { Table, Tag, Space } from 'antd';
 import {useDispatch, useSelector} from 'react-redux'
+import {useEffect,useState} from 'react'
+import action from '@/store/actions'
+import img from '@/utils/img'
+import './style.scss'
+import moment from 'moment'
 
 export default props =>{
-  const dispatch = useDispatch
+  const dispatch = useDispatch()
   const goodData = useSelector(store=>store.good.goodData)
+
+  let [page,setPage] = useState(1)
+  let [size,setSize] = useState(2)
+
+  useEffect(()=>{
+    let params ={
+      size,
+      page
+    }
+    dispatch(action.getGoodList(params))
+    return undefined
+  },[page,size])
 
 
     const columns = [
@@ -12,7 +29,15 @@ export default props =>{
           dataIndex: 'name',
           key: 'name',
           render: text => <a>{text}</a>,
-          align:'center'
+          align:'center',
+          render:(text,row,idx) =>{
+            return (
+              <div className="al-good">
+                <img src={img.imgBase+row.img} alt={row.name}/>
+                <a>{text}</a>
+              </div>
+            )
+          }
         },
         {
           title: '商品描述',
@@ -24,19 +49,34 @@ export default props =>{
           title: '价格',
           dataIndex: 'price',
           key: 'price',
-          align:'center'
+          align:'center',
+          sorter:(a,b)=>a.price-b.price,
+          render:text=><div>{'￥'+text}</div>
         },
         {
             title: '是否热销',
             dataIndex: 'hot',
             key: 'hot',
-            align:'center'
+            align:'center',
+            render:text=><div>{text?'是':'否'}</div>
         },
         {
             title: '上架时间',
             dataIndex: 'create_time',
             key: 'create_time',
-            align:'center'
+            align:'center',
+            render:text=>{
+              return (
+                <>
+                <div>
+                  {moment(text).format('YYYY-MM-DD')}
+                </div>
+                <div>
+                  {moment(text).format('HH:mm:ss')}
+                </div>
+                </>
+              )
+            }
         },
         {
             title: '操作',
@@ -51,38 +91,23 @@ export default props =>{
             }
         },
       ];
-      
-      const data = [
-        {
-          key: '1',
-          name: 'John Brown',
-          age: 32,
-          address: 'New York No. 1 Lake Park',
-          tags: ['nice', 'developer'],
-        },
-        {
-          key: '2',
-          name: 'Jim Green',
-          age: 42,
-          address: 'London No. 1 Lake Park',
-          tags: ['loser'],
-        },
-        {
-          key: '3',
-          name: 'Joe Black',
-          age: 32,
-          address: 'Sidney No. 1 Lake Park',
-          tags: ['cool', 'teacher'],
-        },
-      ];
 
     return (
-        <div>
-            <h1>商品列表页面</h1>
+        <div className='qf-good-list'>
+            <h1>商品列表</h1>
+            <div>查询条件</div>
             <Table 
+              rowKey='_id'
               style={{margin:'25px 0'}}
               columns={columns} 
-              dataSource={data} 
+              dataSource={goodData.list} 
+              pagination={{
+                total:goodData.total,
+                defaultPageSize:size,
+                onChange:page=>setPage(page),
+                onShowSizeChange:(page,size)=>setSize(size),
+                pageSizeOptions:[2,5,10,15,20]
+              }}
             />
         </div>
     )

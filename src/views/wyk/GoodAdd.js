@@ -11,6 +11,8 @@ import {
     Switch
 } from 'antd';
 
+import {fetchGoodOrEdit} from '@/utils/api'
+
 import {
     QfUploadIcon
 } from '@/components'
@@ -81,7 +83,13 @@ export default props =>{
 
     // 表单提交
     const onFinish = values =>{
-        console.log('values',value)
+        // console.log('values',values)
+        fetchGoodOrEdit(values).then(()=>{
+            console.log('添加成功',values)
+            // 跳转到列表页
+            // props.history.replace('/wyk/AllGoodList')
+        })
+        
     }
 
     // 图片上传
@@ -144,7 +152,7 @@ export default props =>{
                     name="cate"
                     label="商品品类"
                     rules={[
-                    {required: true,message: '请输入选择商品品类！'},
+                    // {required: true,message: '请输入选择商品品类！'},
                     ]}
                 >
                     <Select
