@@ -24,10 +24,19 @@ export function fetchGoodList(params){
   })
 }
 
+export function fetchCateList(params){
+  return axios({
+    url:'/api/v1/good/cates',
+    method:'GET',
+    params
+  })
+}
+
 
 export default {
   fetchQqMusic,
   fetchGoodOrEdit,
-  fetchGoodList
+  fetchGoodList,
+  fetchCateList
 }
 

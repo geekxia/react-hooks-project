@@ -1,11 +1,26 @@
 
-import { Table, Tag, Space } from 'antd';
+import { 
+  Table, 
+  Tag, 
+  Space,
+  Input,
+  Row,
+  Col,
+  Select ,
+  Button
+ } from 'antd';
 import img from '@/utils/img'
 import moment from 'moment'
 import {useSelector,useDispatch}from 'react-redux'
 import {useEffect,useState} from 'react'
 import action from '@/store/actions'
 import '@/assets/css/goodlist.scss'
+import CateSelect from './components/CateSelect.js'
+
+const { Search } = Input;
+const { Option } = Select;
+
+
 
 export default props=>{
   const dispatch=useDispatch()
@@ -21,6 +36,29 @@ export default props=>{
     dispatch(action.getGoodList(params))
     return undefined
   },[page,size])
+
+  let[text,setText]=useState('')
+
+  let[filter,setFilter]=useState({
+    size:2,
+    page:1,
+    text:'',
+    hot:''
+  })
+
+  const textChange=val=>{
+    setText(val)
+    if(!val){
+      filter.text=""
+      setFilter(JSON.parse(JSON.stringify(filter)))
+    }
+  }
+
+  const filterChange=(key,val)=>{
+    filter[key]=val
+    if(key!=='page') filter.page=1
+    setFilter(JSON.parse(JSON.stringify(filter)))
+  }
 
 
   const columns = [
@@ -83,8 +121,45 @@ export default props=>{
 
   return(
     <div className="qf-good-list">
+      <Row align="middle">
+        <Col span={2}>
+          <span>商品搜索</span>
+        </Col>
+        <Col span={6}>
+          <Search
+            value={text}
+            placeholder="搜索"
+            allowClear
+            enterButton="Search"
+            onChange={e=>textChange(e.target.value)}
+            onPressEnter={e=>filterChange('text',e.target.value)}
+          />
+        </Col>
+        <Col span={2} offset={1}>
+          <span>品类选择</span>
+        </Col>
+        <Col span={3}>
+          <CateSelect
+          hasAll
+          />
+        </Col>
+        <Col span={2}>
+          <span>
+            状态
+          </span>
+        </Col>
+        <Col span={3}>
+          <Select defaultValue="lucy" style={{ width: 120 }} >
+            <Option key="3" value="jack">Jack</Option>
+            <Option key="4" value="lucy">Lucy</Option>
+          </Select>
+        </Col>
+        <Col style={{textAlign: 'right'}} offset={3}>
+          <Button >新增</Button>
+        </Col>
+      </Row>
       <Table 
-      rowKry="_id"
+      rowKey="_id"
       columns={columns} 
       dataSource={goodData.list} 
       pagination={{
