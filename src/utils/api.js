@@ -35,9 +35,19 @@ export function fetchCates(params) {
   })
 }
 
+// 删除商品
+export function fetchGoodDel(params) {
+  return axios({
+    url: '/api/v1/good/delete',
+    method: 'GET',
+    params
+  })
+}
+
 export default {
   fetchQqMusic,
   fetchGoodOrEdit,
   fetchGoodList,
-  fetchCates
+  fetchCates,
+  fetchGoodDel
 }
