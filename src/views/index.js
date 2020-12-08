@@ -28,12 +28,12 @@ export default [ // eslint-disable-line
     children:[{
       id:1210,
       text:'商品列表',
-      path:'/good',
+      path:'/good/list',
       component:GoodList,
       children:[{
         id:121010,
         text:'商品新增和编辑',
-        path:'/good/addOrEdit',
+        path:'/good/update',
         component:GoodAddOrEdit
       }]
     }]

@@ -1,92 +1,90 @@
-import React from 'react'
-import { Table, Tag, Space,Button,Row, Col } from 'antd';
+import React,{useEffect,useState} from 'react'
+import { Table, Tag, Space,Button,Row, Col, Divider } from 'antd';
+import {useDispatch,useSelector} from 'react-redux'
+import action from '@/store/actions'
+import img from '@/utils/img'
+import moment from 'moment'
 
 const columns = [
     {
-      title: 'Name',
+      title: '商品',
       dataIndex: 'name',
       key: 'name',
-      render: text => <a>{text}</a>,
+      render: (text,row) => {
+        return (
+          <div>
+            <img src={img.imgBase+row.url} alt={row.name}/>
+            <a>{text}</a>,
+      </div>
+        )
+    }},
+    {
+      title: '商品描述',
+      dataIndex: 'desc',
+      key: 'desc',
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: '价格',
+      dataIndex: 'price',
+      key: 'price',
+      sorter:(a,b)=>(a.price-b.price),
+      render:text=>(<div>
+        {"￥"+text}
+      </div>)
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: '是否热销',
+      key: 'hot',
+      dataIndex: 'hot'
     },
     {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: tags => (
-        <>
-          {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
+      title: '上架时间',
+      key: 'time',
     },
     {
-      title: 'Action',
-      key: 'action',
+      title: '操作',
+      key: 'op',
       render: (text, record) => (
         <Space size="middle">
           <a>Invite {record.name}</a>
           <a>Delete</a>
         </Space>
       ),
-    },
+    }
   ];
 
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
-
+  const data = [];
 
 export default (props)=>{
+  const disPath=useDispatch()
+  const goodData=useSelector(store=>store.good.goodData)
+  let [page,setPage]=useState(1)
+  let [size,setsize]=useState(3)
+  console.log('props属性',props)
+  useEffect(()=>{
+    let params={
+      size,
+      page
+    }
+    disPath(action.goodListAction(params))
+    return undefined
+  },[page,size])
     return (
         <div>
             <Row>
-            <Col  span={16} offset={4}>
-            <h2  >Hello</h2>
+            <Col  span={19} offset={1} align="center">
+            <h2  >商品列表</h2>
             </Col>
-            <Col  span={4}>
+            <Col  span={4} align="center">
             <Button type="primary" shape="round">新增</Button>
             </Col>
             </Row>
-            <Table columns={columns} dataSource={data} />
+            <Row>
+            <Col  span={19} offset={1} align="center">
+            <h4>商品筛选</h4>
+            </Col>
+            </Row>
+            <Table columns={columns} dataSource={goodData} />
         </div>
     )
 }
