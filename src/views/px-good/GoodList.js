@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from "react"
 
-import { HomeOutlined, UserOutlined } from '@ant-design/icons';
+import { HomeOutlined, UserOutlined,ExclamationCircleOutlined  } from '@ant-design/icons';
 
 import moment from "moment"
 
@@ -11,10 +11,11 @@ import {
     Breadcrumb,
     Button,
     Input,
-    Select 
+    Select,
+    Modal
 } from 'antd';
 
-import {fetchGoodList} from "@/utils/api"
+import {fetchDelete} from "@/utils/api"
 
 import routes from '@/views'
 
@@ -23,16 +24,17 @@ import {
     useDispatch
 } from 'react-redux'
 
+import Selector from "./components/common/selector"
+
 import action from "@/store/actions"
 import img from "@/utils/img"
-import store from "../../store";
 
 const {Option} = Select
 
 export default props=>{
-    
-    // const list = useSelector(store=>store.number.list)
+    const { confirm } = Modal;
     const goodList = useSelector(store=>store.good.goodList)
+    const cates = useSelector(store=>store.good.cates)
     const dispatch = useDispatch()
     let hash = document.location.hash.slice(1)
     const FirstMenu = routes.filter(ele=>{
@@ -40,6 +42,44 @@ export default props=>{
             return ele.path===hash
         })
     })
+    // 单选删除
+    const deleteHandel = props=>{
+
+        confirm({
+            title: 'Are you sure delete this task?',
+            icon: <ExclamationCircleOutlined />,
+            content: (
+                <div>
+                    你确定要删除
+                    <span className='del-confirm'>{props.name}</span>
+                    吗？
+                </div>
+            ),
+            okText: '确定',
+            okType: 'danger',
+            cancelText: '取消',
+            onOk() {
+                fetchDelete({id:props._id}).then(res=>{
+                    filterChange(filter)
+                })
+            },
+            onCancel() {
+                console.log('Cancel');
+            }
+          });
+        
+    }
+
+    // 多选删除
+    const mulDelete = keys=>{
+        let str=''
+        keys.map(ele=>{
+            str+=(';'+ele)
+        })
+        fetchDelete({id:str}).then(res=>{
+            filterChange(filter)
+        })
+    }
     const columns = [
         {
             title: '商品名称',
@@ -50,7 +90,7 @@ export default props=>{
                 return (
                     <div>
                         <img src={img.imgBase+row.img} alt=""/>
-                        <a href="">{text}</a>
+                        <span>{text}</span>
                     </div>
                 )
             },
@@ -58,6 +98,7 @@ export default props=>{
         {
             title: '商品描述',
             dataIndex: 'desc',
+            width:"200px",
             align:'center',
             key: 'desc',
         },
@@ -66,6 +107,12 @@ export default props=>{
             dataIndex: 'cate',
             align:'center',
             key: 'cate',
+            render:(text, row, index)=>{
+                let idx = cates.findIndex(ele=>ele.cate===row.cate)
+                return (
+                    <span>{idx>=0 && cates[idx].cate_zh}</span>
+                )
+            }
         },
         {
             title: '商品价格',
@@ -106,9 +153,14 @@ export default props=>{
             render:(text, row, index)=>{
                 return (
                     <div>
-                        <a href="">删除</a>
-                        <span> </span>
-                        <a href="">操作</a>
+                        <Button 
+                            size='small' 
+                            type="primary" 
+                            danger 
+                            style={{margin:"0 5px 0 0 "}}
+                            onClick={()=>deleteHandel(row)}
+                        >删除</Button>
+                        <Button size='small' type="primary">编辑</Button>
                     </div>
                 )
             }
@@ -116,10 +168,14 @@ export default props=>{
     ];
 
     let [text,setText] = useState('')
+    let [hot,setHot] = useState('')
+    let [keys,setKeys] = useState([])
     let [filter,setFilter] = useState({
         size:2,
         page:1,
-        text:''
+        text:'',
+        hot:'',
+        cate:""
     })
 
     const filterChange = (key,val)=>{
@@ -137,6 +193,12 @@ export default props=>{
         if(!text){
             filterChange('text',text)
         }
+    }
+    // 是否热销
+    const isHot = (e)=>{
+        console.log(e);
+        setHot(e)
+        filterChange('hot',e?(e==='yes'?true:false):'')
     }
     useEffect(()=>{
         dispatch(action.goodListAction(filter))
@@ -165,7 +227,7 @@ export default props=>{
                 </Col>
                 <Col span={4}>
                     <Input 
-                        placeholder="Basic usage" 
+                        placeholder="请输入搜索名称" 
                         value={text}
                         onChange={(e)=>searchTextChange(e)}
                         onPressEnter={()=>filterChange('text',text)}
@@ -176,13 +238,10 @@ export default props=>{
                     <span className='search-text'>品类:</span>
                 </Col>
                 <Col span={4}>
-                    <Select
-                        placeholder="Select a person"
-                    >
-                        <Option value="jack">Jack</Option>
-                        <Option value="lucy">Lucy</Option>
-                        <Option value="tom">Tom</Option>
-                    </Select>,
+                    <Selector 
+                        hasAll
+                        onChange={(e)=>filterChange('cate',e)}
+                    />
                 </Col>
 
                 <Col span={2}>
@@ -190,17 +249,19 @@ export default props=>{
                 </Col>
                 <Col span={4}>
                     <Select
-                        placeholder="Select a person"
+                        placeholder="是否热销"
+                        value={hot}
+                        onChange={(e)=>isHot(e)}
                     >
-                        <Option value="jack">全部</Option>
-                        <Option value="lucy">是</Option>
-                        <Option value="tom">否</Option>
-                    </Select>,
+                        <Option value="">全部</Option>
+                        <Option value='yes'>是</Option>
+                        <Option value='no'>否</Option>
+                    </Select>
                 </Col>
 
                 <Col span={6}>
                     <div className='submit-btn'>
-                        <Button type="primary" onClick={()=>props.history.push('/panxi/good/list/addoredit')} >商品新增</Button>
+                        <Button size='small' type="primary" onClick={()=>props.history.push('/panxi/good/list/addoredit/0')} >商品新增</Button>
                     </div>
                 </Col>
             </Row>
@@ -227,8 +288,18 @@ export default props=>{
                     },
                     pageSizeOptions:[
                         2,5,10,20
-                    ]
+                    ],
+                    showSizeChanger:true
                 }}
+                rowSelection={{
+                    type:"checkbox",
+                    onChange:(selectedRowKeys)=>setKeys(selectedRowKeys)
+                }}
+                footer={
+                    ()=>(
+                        <Button type="primary" danger onClick={()=>mulDelete(keys)} >批量删除</Button>
+                    )
+                }
             />
         </div>
     )

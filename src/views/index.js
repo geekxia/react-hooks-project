@@ -99,7 +99,7 @@ export default [
           {
             id:22120101,
             text:'商品新增',
-            path:'/panxi/good/list/addoredit',
+            path:'/panxi/good/list/addoredit/:id',
             component:PxGoodListAddOrEdit
           }
         ]

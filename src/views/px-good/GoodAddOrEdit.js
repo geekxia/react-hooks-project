@@ -1,22 +1,18 @@
-import React,{ useState } from 'react'
+import React,{ useState,useEffect } from 'react'
 
 import { 
     Form, 
     Input, 
     Button, 
-    Select,
     InputNumber,
     Switch,
-    Upload,
-    message
 } from 'antd';
 
-import img from "@/utils/img"
-
 import {fetchGoodAddOrEdit} from "@/utils/api"
-import uploadButton from "@/components/common/icon/uploadButton"
 
-const { Option } = Select;
+import Selector from "./components/common/selector"
+import Uploader from "./components/common/Uploader"
+
 
 const layout = {
     labelCol: { span: 8 },
@@ -34,13 +30,6 @@ export default props=>{
         })
     };
     let [imageUrl,setImageUrl] = useState('')
-
-    const handleChange = info => {
-        console.log(info);
-        if(info.file&&info.file.response&&info.file.response.data){
-            setImageUrl(info.file.response.data.url)
-        }
-    };
 
     return (
         <div className='px-goodAddOrEdit'>
@@ -95,14 +84,7 @@ export default props=>{
                         message: '请选择商品类型!' 
                     }]}
                 >
-                    <Select 
-                        // defaultValue="lucy" 
-                        allowClear
-                    >
-                        <Option value="lucy">Lucy</Option>
-                        <Option value="jack">Jack</Option>
-                        <Option value="Yiminghe">yiminghe</Option>
-                    </Select>
+                    <Selector />
                 </Form.Item>
 
                 <Form.Item
@@ -117,17 +99,11 @@ export default props=>{
                     label="商品图片"
                     name="img"
                 >
-                    <Upload
-                        name="file"
-                        listType="picture-card"
-                        className="avatar-uploader"
-                        showUploadList={false}
-                        action={img.uploadUrl}
-                        onChange={handleChange}
-                        fileList={imageUrl}
+                    <Uploader 
+                        onChange={(src)=>setImageUrl(src)}
+                        src={imageUrl}
                     >
-                        {imageUrl ? <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} /> : <uploadButton/>}
-                    </Upload>
+                    </Uploader>
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>

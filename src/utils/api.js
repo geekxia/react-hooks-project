@@ -24,8 +24,26 @@ export function fetchGoodAddOrEdit(data) {
   })
 }
 
+export function fetchCates(params) {
+  return axios({
+    url: '/api/v1/good/cates',
+    method: 'GET',
+    params
+  })
+}
+
+export function fetchDelete(params) {
+  return axios({
+    url: '/api/v1/good/delete',
+    method: 'GET',
+    params
+  })
+}
+
 export default {
   fetchQqMusic,
   fetchGoodList,
-  fetchGoodAddOrEdit
+  fetchGoodAddOrEdit,
+  fetchCates,
+  fetchDelete
 }

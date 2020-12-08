@@ -11,12 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.del-confirm{
+  padding: 10px;
+  color: red;
+}
 .px-good{
   img{
     margin: 0 auto;
     display: block;
     width: 80px;
-    height: 80px;
   }
   .search-text{
     text-align: right;
@@ -28,4 +31,5 @@ code {
   .submit-btn{
     text-align: right;
   }
+  
 }

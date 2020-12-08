@@ -8,8 +8,7 @@ import {
 } from '@ant-design/icons';
 
 export default props=>{
-    let [loading,setLoading] = useState(false)
-
+    let {loading} = props
     return (
         <div>
             {loading ? <LoadingOutlined /> : <PlusOutlined />}
