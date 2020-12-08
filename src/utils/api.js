@@ -26,8 +26,18 @@ export function fetchGoodList(params) {
   })
 }
 
+// 获取品类列表
+export function fetchCates(params) {
+  return axios({
+    url: '/api/v1/good/cates',
+    method: 'GET',
+    params
+  })
+}
+
 export default {
   fetchQqMusic,
   fetchGoodOrEdit,
-  fetchGoodList
+  fetchGoodList,
+  fetchCates
 }
