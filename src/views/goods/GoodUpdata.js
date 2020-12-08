@@ -1,18 +1,23 @@
 
 
-import React,{ useState } from "react";
-
+import { useState } from "react";
+// UI组件
 import { 
     Form, 
     Input, 
     Button, 
     Select,
     InputNumber,
+    AutoComplete,
+
     Upload, 
     Switch
 } from 'antd';
 
+// 自定义 Icon 组件
 import { UploadIcon } from "@/components";
+
+import { fetchGoodOrEdit } from "@/utils/api";
 
 import img from "@/utils/img";
 
@@ -20,33 +25,27 @@ import img from "@/utils/img";
 
 const { Option } = Select;
 
-function onChange(value) {
-console.log(`selected ${value}`);
-}
 
-function onBlur() {
-console.log('blur');
-}
-
-function onFocus() {
-console.log('focus');
-}
-
-function onSearch(val) {
-console.log('search:', val);
-}
-
+const layout = {
+    labelCol: {
+      span: 4,
+    },
+    wrapperCol: {
+      span: 16,
+    },
+};
 
 export default props=>{
 
     const [autoCompleteResult,setAutoCompleteResult]=useState([])
+
     let [imageUrl,setImageUrl]=useState("")
 
     // 获取Form的实例
     const [form]=Form.useForm()
 
     // 图片上传成功
-    const imgSuccess=e=>{
+    const imgSuccess = e => {
         console.log("图片上传成功",e);
         if (e && e.fileList && e.fileList[0] && e.fileList[0].response) {
             
@@ -54,21 +53,25 @@ export default props=>{
         }
     }
 
-    const layout = {
-        labelCol: {
-          span: 4,
-        },
-        wrapperCol: {
-          span: 16,
-        },
-    };
+    // 提交表单
+    const onFinish = values =>{
+        values.img=imageUrl
+        console.log("values 提交接口",values);
+        fetchGoodOrEdit(values).then(()=>{
+            props.history.replace("/goodlist")
+        })
+    }
 
     return(
         <div className="">
             <h1>商品新增</h1>
             <hr/>
             <div>
-                <Form {...layout} name="nest-messages" >
+                <Form 
+                    {...layout} 
+                    name="nest-messages"  
+                    onFinish={onFinish}    
+                >
                     <Form.Item
                         name="name"
                         label="商品名称"
@@ -81,36 +84,24 @@ export default props=>{
                     </Form.Item>
                   
                     <Form.Item 
-                        name="details"
-                        label="商品详情"
+                        name="desc"
+                        label="商品介绍"
                         rules={[
                             {required: true,message:"必填项"},
-                            {min:10,message:"商品详情不少于 10 字"}
+                            {min:5,message:"商品详情不少于 5 字"}
                         ]}
                         >
                         <Input.TextArea />
                     </Form.Item>
                     
                     <Form.Item 
-                        name="category"
+                        name="cate"
                         label="商品种类"
-                        rules={[
-                            {required: true,message:"必填项"},
-                            {max:10,min:2,message:"商品名称 必须为 2 和 10 之间"}
-                        ]}
+                        rules={[{required: true,message:"必填项"}]}
                     >
                         <Select
-                            showSearch
                             style={{ width: 200 }}
                             placeholder="品类"
-                            optionFilterProp="children"
-                            onChange={onChange}
-                            onFocus={onFocus}
-                            onBlur={onBlur}
-                            onSearch={onSearch}
-                            filterOption={(input, option) =>
-                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                            }
                         >
                             <Option value="jack">Jack</Option>
                             <Option value="lucy">Lucy</Option>
@@ -140,7 +131,7 @@ export default props=>{
                            showUploadList={false}
                            onChange={imgSuccess}
                         >
-                            {imageUrl ? <img src={img.imgBase +imageUrl} alt="avatar" style={{ width: '100%' }} /> :<UploadIcon />}
+                            {imageUrl ? <img src={img.imgBase + imageUrl} alt="avatar" style={{ width: '100%' }} /> :<UploadIcon />}
                         </Upload>
                     </Form.Item>
 
@@ -153,7 +144,13 @@ export default props=>{
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 4 }}>
-                        <Button type="primary" htmlType="submit">提交</Button>
+                        <Button 
+                            type="primary" 
+                            htmlType="submit" 
+                            
+                        >
+                            提交
+                        </Button>
                     </Form.Item>
                 </Form>
             </div>

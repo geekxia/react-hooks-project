@@ -1,14 +1,17 @@
 
 
 
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { 
+    LoadingOutlined, 
+    PlusOutlined 
+} from '@ant-design/icons';
 
-export default props=>{
+export default props =>{
     let { loading } = props
     return(
       <div>
         {loading ? <LoadingOutlined /> : <PlusOutlined />}
-        <div style={{ marginTop: 8 }}>Upload</div>
+        <div style={{ marginTop: 8 }}>上传</div>
       </div>
     )
 } 
