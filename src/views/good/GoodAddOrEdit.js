@@ -19,6 +19,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import img from "@/utils/img"
 import {PlusOutlined} from "@/components/"
 import { fetchGoodOrEdit } from '@/utils/api'
+import CateSelect from "../common/CateSelect"
 const { Option } = Select
 const { TextArea } = Input
 const AutoCompleteOption = AutoComplete.Option;
@@ -116,14 +117,7 @@ export default props => {
             { required: true, message: '商品描述是必填!' }
           ]}
         >
-          <Select
-            style={{ width: 200 }}
-            placeholder="选择一个品类"
-          >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
-          </Select>
+             <CateSelect xx ></CateSelect>
         </Form.Item>
 
         <Form.Item

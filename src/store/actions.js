@@ -1,6 +1,7 @@
 import type from './actionTypes'
 import { fetchQqMusic } from '@/utils/api'
 import { fetchGoodList } from '@/utils/api'
+import {fetchCates} from '@/utils/api'
 // action 生成器
 function changeMsgAction(payload) {
   return {
@@ -59,10 +60,22 @@ function Goodlist(params){
   }
 }
 
+function catelist(params){
+  return  function(dispatch){
+    fetchCates(params||{}).then(res=>{
+      dispatch({
+        type:type.Good_cate,
+        payload:res.list
+      })
+    })
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   addJiChuBiaoDan,
-  Goodlist
+  Goodlist,
+  catelist
 }

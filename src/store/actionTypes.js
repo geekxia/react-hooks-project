@@ -8,11 +8,14 @@ const ADD_FOO_COUNT = 'ADD_FOO_COUNT'
 const AJAX_MUSIC_LIST = 'AJAX_MUSIC_LIST'
 const Add_JiChuBiaoDan="Add_JiChuBiaoDan"
 const Good_list="Good_list"
+const Good_cate="Good_cate"
 
 export default {
   CHANGE_MSG,
   ADD_FOO_COUNT,
   AJAX_MUSIC_LIST,
   Good_list,
-  Add_JiChuBiaoDan
+  Add_JiChuBiaoDan,
+  Good_cate
+
 }

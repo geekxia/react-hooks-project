@@ -1,23 +1,95 @@
-import { Table, Tag, Space } from 'antd'
+import { Table, Tag, Space,Row, Col,Button,Input,Modal ,Select   } from 'antd'
+const { confirm } = Modal;
 import React , {useState,useEffect} from "react"
 import {useSelector,useDispatch} from "react-redux"
 import action from "@/store/actions"
+import {fetchGoodDel} from "@/utils/api"
 import imgurl from "@/utils/img"
 import moment from "moment"
+import CateSelect from "../common/CateSelect"
 import "./style.scss"
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 export default props => {
-  let [size,setsize]=useState(2)
-  let [page,setpage]=useState(1)
+  let catelist=useSelector(store=>store.good.arr)
+  let [text,settext]=useState("")
+  let [key,setkey]=useState([])
+  //初始发送值获取商品列表
+  let [params,setparams]=useState(
+    {page:1,
+    size:2,
+    cate:"",
+    text:"",
+    hot:""
+    }
+  )
   let goodlist=useSelector(store=>store.good.list)
    let dispatch =  useDispatch()
+//封装发送方法需要生复制
+  const setfen=(key,value)=>{
+    params[key]=value
+    // if(key=="cate"&&value=="") params.page=1
+    if(key!="page") params.page=1
+    setparams(JSON.parse(JSON.stringify(params)))
+  }    
+  //搜索接口需要深复制
+  const ud=e=>{
+    settext(e)
+      params.text = e
+      setparams(JSON.parse(JSON.stringify(params)))
+      if(e=""){
+        params.text = ""
+       setparams(JSON.parse(JSON.stringify(params)))
+      }
+  }
+  //根据set改变试图改变
    useEffect(()=>{
-     let params={
-      size,
-      page
-     }
     dispatch(action.Goodlist(params))
     return undefined
-   },[size,page]) 
+   },[params]) 
+
+//删除操作
+   const del=row=>{
+    confirm({
+      title: '警告',
+      icon: <ExclamationCircleOutlined />,
+      content: '删除？',
+      okText: '是',
+      okType: 'danger',
+      cancelText: '不',
+      onOk() {
+        fetchGoodDel({id:row._id}).then(
+          setparams(JSON.parse(JSON.stringify(params)))
+        )
+      },
+      onCancel() {
+        console.log(row);
+      },
+    });
+
+
+   }
+//批量删除
+const mulDelete=()=>{
+  confirm({
+    title: '警告',
+    icon: <ExclamationCircleOutlined />,
+    content: '删除？',
+    okText: '是',
+    okType: 'danger',
+    cancelText: '不',
+    onOk() {
+      let id=""
+      id= ";"+ key.join(";")
+      fetchGoodDel({id}).then(()=>{
+        setparams(JSON.parse(JSON.stringify(params)))
+      })
+        },
+    onCancel() {
+      console.log(row);
+    },
+  });
+}
+
   const columns = [
     {
       title: '商品',
@@ -48,6 +120,28 @@ export default props => {
       }
     },
     {
+      title:"品类",
+      dataIndex: 'cate',
+      key:"cate",
+      align: 'center',
+      //需要在状态管理处获取索引
+      render:(text,row,i)=>{
+      //   let carr=catelist.filter(res=>res.cate==text)
+      //   let ii=1
+      //    catelist.map((res,i)=>{
+      //     if(res._id==carr._id) {
+      //       console.log(res._id==carr._id)
+      //       ii=i
+      //       return undefined
+      //     }
+      //   })
+      //   console.log(ii)
+      // return <div>{catelist[ii].cate_zh}</div>
+      const idx = catelist.findIndex(ele=>ele.cate===text)
+        return <span>{idx>=0?catelist[idx].cate_zh:''}</span>
+      }
+    },
+    {
       title: '是否热销',
       dataIndex: 'hot',
       key: 'hot',
@@ -71,35 +165,85 @@ export default props => {
       key: 'tags',
       align: 'center',
       dataIndex: 'tags',
-      render: () => (
+      render: (text,row,i) => (
         <>
-          <a href="">删除</a>
-          <a href="">编辑</a>
+          <a  onClick={()=>del(row)} >删除</a>
+          <a >编辑</a>
         </>
       )
     }
   ]
 
-
+//视图
   return (
     <div className='qf-good-list'>
       <h1>商品列表</h1>
-      <div>
-        查询条件
+      <div style={{margin:"20px 0"}}>
+      <Row align='middle'>
+          <Col span={2}>
+            <span className='filter-label'>名称搜索:</span>
+          </Col>
+          <Col span={6}>
+            <Input
+            onChange={e=>ud(e.target.value)}
+            value={text}
+            allowClear
+            onPressEnter={e=>setfen('text', e.target.value)}
+            placeholder="搜索" />
+          </Col>
+          <Col span={2}>
+            <span className='filter-label'>品类:</span>
+          </Col>
+          <Col span={6}>
+            <CateSelect xx  onChange={cate=>setfen("cate",cate)}/>
+          </Col>
+          <Col offset={1} span={4}>
+            <Select
+              onChange={val=>setfen('hot', val)}
+              style={{width: '100px'}}
+              allowClear
+              defaultValue=''
+            >
+              <Option key='1' value=''>全部</Option>
+              <Option key='2' value={true}>是</Option>
+              <Option key='3' value={false}>否</Option>
+            </Select>
+          </Col>
+
+          <Col offset={1} span={2} style={{textAlign: 'right'}}>
+            <Button
+              size='small'
+              type="primary"
+              onClick={()=>props.history.push('/good/update/0')}
+            >
+              新增
+            </Button>
+          </Col>
+        </Row>
+
       </div>
       <div style={{margin: '20px 0'}}>
         <Table 
         pagination={{
+          current:params.page,
           total: goodlist.total,
-          defaultPageSize: size,
-          onChange: page=>setpage(page),
-          onShowSizeChange: (page, size)=>setsize(size),
+          defaultPageSize: params.size,
+          onChange: page=>setfen("page",page),
+          onShowSizeChange:(text,size)=> setfen("size",size),
           pageSizeOptions: [2,5,10,15,20]
+        }}
+        rowSelection={{
+          type:"checkbox ",
+          onChange:a=>setkey(a)
         }}
         rowKey='_id'
         columns={columns} 
-        dataSource={goodlist.list} />
-
+        dataSource={goodlist.list}
+        footer={()=>{
+          return <Button onClick={()=>mulDelete()} type='danger'>批量删除</Button>
+        }}
+        size='small'
+        />
 
       </div>
     </div>
