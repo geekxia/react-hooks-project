@@ -2,7 +2,8 @@ import type from './actionTypes'
 import { 
   fetchQqMusic,
   fetchFoodList,
-  fetchGoodList 
+  fetchGoodList,
+  fetchCates 
 } from '@/utils/api'
 
 // action 生成器
@@ -74,11 +75,24 @@ function goodListAction(params) {
   }
 }
 
+function cateListAction(params) {
+  return function(dispatch) {
+    fetchCates(params).then(res=>{
+      console.log('fetchCates',res);
+      dispatch({
+        type: type.TT_CATE_LIST,
+        payload: res.list
+      })
+    })
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   foodListAction,
   foodNameAction,
-  goodListAction
+  goodListAction,
+  cateListAction
 }

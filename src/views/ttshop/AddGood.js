@@ -1,42 +1,54 @@
 import {
     Form,
-    Select,
     InputNumber,
     Switch,
     Input,
-    Radio,
-    Slider,
     Button,
-    Upload,
-    Rate,
-    Checkbox,
-    Row,
-    Col,
 } from 'antd';
+
+import TtUpload from './ttcomponents/TtUpload'
 
 import { useState } from 'react'
 
-import { TtUploadIcon } from '@/components'
-
 import { fetchGoodOrEdit } from '@/utils/api'
 
-import img from '@/utils/img';
+import GoodCates from './ttcomponents/GoodCates'
+
+const formItemLayout = {
+    labelCol: {
+        sm:  { span: 4 }
+    },
+    wrapperCol: {
+        sm:  { span: 10 }
+    },
+};  
+
+
+
+const tailFormItemLayout = {
+    wrapperCol: {
+      sm: {
+        span: 16,
+        offset: 4,
+      },
+    }
+}
 
 export default props=>{
 
-    const { Option } = Select;
     const { TextArea } = Input;
 
-    const [imageUrl, setImageUrl] = useState('')
+    // 获取Form的实例
+    const [form] = Form.useForm()
 
+    let [values, setValues] = useState({})
 
-    const formItemLayout = {
-        labelCol: { span: 6 },
-        wrapperCol: { span: 6 },
-    };  
+    // 当Form表单值发生变化时，我们手动取值，赋值给声明式变量 values
+    const formChange = values => {
+        setValues(values)
+    }
 
     const onFinish = values => {
-        values.img = imageUrl
         console.log('提交成功 ', values);
         fetchGoodOrEdit(values).then(()=>{
             // 跳转到列表页
@@ -44,23 +56,22 @@ export default props=>{
         })
     };
 
-    const imgSuccess = e => {
-        console.log('图片上传成功', e);
-        if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
-            setImageUrl(e.fileList[0].response.data.url)
-        }
-    }
+    
     
     return (
         <div>
             <h1>商品新增</h1>
             <Form
+                style={{margin: '25px 0'}}
                 name="validate_other"
+                form={form}
                 {...formItemLayout}
                 onFinish={onFinish}
                 initialValues={{
-                    ['input-number']: 3
+                    ['input-number']: 1,
+                    ['price']: 1
                 }}
+                onValuesChange={(val, values)=>formChange(values)}
             >
                 <Form.Item
                     name="name"
@@ -113,11 +124,7 @@ export default props=>{
                     label="选择品类"
                     rules={[{ required: true, message: '商品描述是必填!' }]}
                 >
-                    <Select placeholder="选择一个品类">
-                        <Option value="服装用品">服装用品</Option>
-                        <Option value="数码用品">数码用品</Option>
-                        <Option value="美妆用品">美妆用品</Option>
-                    </Select>
+                    <GoodCates />
                 </Form.Item>
 
                 <Form.Item name="hot" label="是否热销" valuePropName="checked">
@@ -125,28 +132,16 @@ export default props=>{
                 </Form.Item>
 
                 <Form.Item 
+                    name='img'
                     label="商品图片"
                     rules={[
                         {required: true, message: '商品图片是必填!'}
                     ]}    
                 >
-                    <Upload
-                        name="file"
-                        action={img.uploadUrl}
-                        listType="picture-card"
-                        className="avatar-uploader"
-                        showUploadList={false}
-                        onChange={imgSuccess}
-                    >
-                        {
-                            imageUrl ? 
-                            <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} /> 
-                            : <TtUploadIcon />
-                        }
-                    </Upload>
+                    <TtUpload src={values.img} />
                 </Form.Item>
 
-                <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+                <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">
                         Submit
                     </Button>

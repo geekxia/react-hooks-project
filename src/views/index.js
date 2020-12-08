@@ -49,7 +49,7 @@ export default [
       {
         id: 1312,
         text: '新增商品',
-        path: '/ttgood/add',
+        path: '/ttgood/update/:id',
         component: AddGoods
       }
     ]

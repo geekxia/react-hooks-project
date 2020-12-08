@@ -32,9 +32,28 @@ export function fetchGoodOrEdit(data) {
   })
 }
 
+export function fetchCates(params) {
+  return axios({
+    url: '/api/v1/good/cates',
+    method: 'GET',
+    params
+  })
+}
+
+export function fetchGoodDel(params) {
+  return axios({
+    url: '/api/v1/good/delete',
+    method: 'GET',
+    params
+  })
+}
+
+
 export default {
   fetchQqMusic,
   fetchFoodList,
   fetchGoodList,
-  fetchGoodOrEdit
+  fetchGoodOrEdit,
+  fetchCates,
+  fetchGoodDel
 }
