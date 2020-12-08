@@ -68,7 +68,7 @@ export default props => {
     console.log('values 提交接口', values)
     fetchGoodOrEdit(values).then(()=>{
       // 跳转到列表页
-      props.history.replace('/good/list')
+      props.history.replace('/ListShow')
     })
   }
 
