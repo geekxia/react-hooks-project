@@ -2,22 +2,19 @@ import React,{ useState } from "react"
 import {
     Form,
     Input,
-    Select,
     Button,
     InputNumber,
-    Upload,
     Switch
 } from 'antd'
-import img from "@/utils/img"
-import {
-    QfUploadIcon
-} from "@/components/index"
 //引入接口
 import {
     fetchGoodOrEdit
 } from "@/utils/api"
+//引入select通过组件
+import WshSelect from "./components/WhsSelect"
+//引入upload组件
+import WhsUpload from "./components/WhsUpload"
 
-const { Option } = Select;
 const { TextArea } = Input
 
 const formItemLayout = {
@@ -39,24 +36,19 @@ const tailFormItemLayout = {
 }
 
 const HuhAddorEdit = (props)=>{
-    let [imageUrl,setImageUrl] = useState("")
+    let [imageUrls,setImageUrls]=useState({})
     const [form] = Form.useForm()
 
+    //当form表单值发生变化时,手动赋值
+    const formChange=(values)=>{
+        setImageUrls(values)
+    }
     //表单提交
     const onFinish = values => {
-        values.img = imageUrl
         console.log('表单提交 ', values);
         fetchGoodOrEdit(values).then(res=>{
             props.history.replace('/hucontact')
         })
-    }
-
-    //图片上传
-    const imgSuccess = (e)=>{
-        if( e && e.fileList && e.fileList[0] && e.fileList[0].response){
-            console.log("图片上传成功",e);
-            setImageUrl(e.fileList[0].response.data.url)
-        }
     }
 
     return (
@@ -69,11 +61,8 @@ const HuhAddorEdit = (props)=>{
                     form={form}
                     name="register"
                     onFinish={onFinish}
-                    initialValues={{
-                        residence: ['zhejiang', 'hangzhou', 'xihu'],
-                        prefix: '86',
-                    }}
                     scrollToFirstError
+                    onValuesChange={(val,values)=>formChange(values)}
                 >
                     <Form.Item
                         name="name"
@@ -112,18 +101,10 @@ const HuhAddorEdit = (props)=>{
                         name="cate"
                         label="选择品类"
                         rules={[
-                            { required: true , message: '请输入商品价格！' }
+                            { required: true , message: '请选择商品品类！' }
                         ]}
                     >
-                        <Select
-                            showSearch
-                            style={{ width: 200 }}
-                            placeholder="请选择商品品类"
-                        >
-                            <Option value="jack">Jack</Option>
-                            <Option value="lucy">Lucy</Option>
-                            <Option value="tom">Tom</Option>
-                        </Select>
+                        <WshSelect />
                     </Form.Item>
 
                     <Form.Item
@@ -133,21 +114,7 @@ const HuhAddorEdit = (props)=>{
                             { required: true , message: '请上传商品图片！' }
                         ]}
                     >
-                        <Upload
-                            name="file"
-                            action={img.uploadUrl}
-                            listType="picture-card"
-                            className="avatar-uploader"
-                            showUploadList={false}
-                            onChange={imgSuccess}
-                            fileList={imageUrl}
-                        >
-                            {
-                                imageUrl ? 
-                                <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} /> 
-                                : <QfUploadIcon />
-                            }
-                        </Upload>
+                        <WhsUpload src={imageUrls.img} />
                     </Form.Item>
                     
                     <Form.Item
@@ -159,7 +126,12 @@ const HuhAddorEdit = (props)=>{
                     </Form.Item>
 
                     <Form.Item {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit">
+                        <Button 
+                            type="primary" 
+                            htmlType="submit"
+                            style={{backgroundColor:"#1890ff",borderColor:"#1890ff"}}
+                            size="large"
+                        >
                             提交
                         </Button>
                     </Form.Item>

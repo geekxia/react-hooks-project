@@ -30,6 +30,17 @@
 .HH-list{
     .List-table{
         margin-top: 5px;
+        .table-desc{
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+            text-align: center;
+            max-width: 125px;
+            max-height: 70px;
+            line-height: 35px;
+            margin: 0 auto;
+        }
     }
     .table-img{
         text-align: center;

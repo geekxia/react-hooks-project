@@ -53,6 +53,7 @@ function getGoodList(params) {
   }
 }
 
+//品类列表
 const getCatesAction = params => {
   return dispatch => {
     fetchCates(params||{}).then(res=>{
