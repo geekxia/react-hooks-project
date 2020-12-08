@@ -12,6 +12,10 @@ const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
 const ListHome = loadable(()=>import("./list/ListHome"))
 
+const GoodsList = loadable(()=>import('./goods/GoosdList'))
+const GoodsAdd = loadable(()=>import('./goods/GoodsAdd'))
+const Login = loadable(()=>import('./user/login'))
+
 
 export default [
   {
@@ -55,7 +59,7 @@ export default [
     ]
   },
   {
-    id: 12,
+    id: 131,
     text:"胡辉列表",
     icon:<DribbbleOutlined />,
     children :[
@@ -64,6 +68,39 @@ export default [
         text:"查询表格",
         path:"/hulist",
         component:ListHome
+      }
+    ]
+  },
+  {
+    id:13,
+    text:'LF列表1',
+    icon:<DribbbleOutlined />,
+    children:[
+      {
+        id:1301,
+        text:'商品列表1',
+        path:'/goods/list',
+        component:GoodsList,
+        children:[
+          {
+            id:1302,
+            text:'商品新增1',
+            path:'/goods/add',
+            component:GoodsAdd
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id:14,
+    text:'LF登录',
+    children:[
+      {
+        id:1401,
+        text:'登录',
+        path:'/user/login',
+        component:Login
       }
     ]
   }
