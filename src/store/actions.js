@@ -1,5 +1,11 @@
 import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
+import { 
+  fetchQqMusic,
+  fetchGoodList,
+  fetchGoodCates
+
+} from '@/utils/api'
+
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -39,8 +45,31 @@ function musicListAction(params) {
   }
 }
 
+function goodListAction(params){
+  return function(dispatch){
+    fetchGoodList(params).then(res=>{
+      console.log('---商品列表----',res)
+      dispatch({
+        type:type.GOOD_LIST,
+        payload:res
+      })
+    })
+  }
+}
+
+function goodCatesAction(params){
+  return dispatch=>{
+    fetchGoodCates(params||{}).then(res=>{
+      console.log('品类列表', res)
+      dispatch({type: type.GET_CATE_LIST, payload: res.list})
+    })
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  goodListAction,
+  goodCatesAction
 }
