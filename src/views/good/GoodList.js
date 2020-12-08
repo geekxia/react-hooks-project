@@ -1,7 +1,21 @@
 import { Table, Tag, Space } from 'antd'
-
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import action from '@/store/actions'
+import img from '@/utils/img'
 export default props => {
-
+  const dispatch = useDispatch()
+  const goodData = useSelector(store => store.good.goodData)
+  let [page, setPage] = useState(1)
+  let [size, setSize] = useState(2)
+  useEffect(() => {
+    let params = {
+      size,
+      page
+    }
+    dispatch(action.getGoodList(params))
+    return undefined
+  }, [page, size])
   const columns = [
     {
       title: 'Name',
@@ -13,7 +27,7 @@ export default props => {
       title: 'Age',
       dataIndex: 'age',
       key: 'age',
-      render: text=> <div>{text+'00'}</div>
+      render: text => <div>{text + '00'}</div>
     },
     {
       title: 'Address',
@@ -82,8 +96,19 @@ export default props => {
       <div>
         查询条件
       </div>
-      <div style={{margin: '20px 0'}}>
-        <Table columns={columns} dataSource={data} />
+      <div style={{ margin: '20px 0' }}>
+        <Table columns={columns} dataSource={data}
+          rowKey='_id'
+          columns={columns}
+          dataSource={goodData.list}
+          pagination={{
+            total: goodData.total,
+            defaultPageSize: size,
+            onChange: page => setPage(page),
+            onShowSizeChange: (page, size) => setSize(size),
+            pageSizeOptions: [2, 5, 10, 15, 20]
+          }}
+        />
       </div>
     </div>
   )

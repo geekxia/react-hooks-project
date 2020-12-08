@@ -1,102 +1,107 @@
-import { Form, Input, Button, Select, Switch, Upload } from 'antd';
-// import { ZUploadIcon } from '@/components'
-import {
-    LoadingOutlined,
-    PlusOutlined
-} from '@ant-design/icons'
+import { Form, Input, Button, Select, Switch, Upload, InputNumber } from 'antd';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import img from '@/utils/img'
 import { useState } from 'react';
+import { fetchAddOrEdit } from '@/utils/api';
 const { Option } = Select;
-const layout = {
+const formLayout = {
     labelCol: { span: 2 },
     wrapperCol: { span: 8 },
 };
+// 热销
+function onChangeHot(checked) {
+    console.log(`switch to ${checked}`);
+}
+const swiperLayout = {
+    wrapperCol: { span: 8 }
+}
 // 品类选择
 const areas = [
     { label: 'Beijing', value: 'Beijing' },
     { label: 'Shanghai', value: 'Shanghai' },
 ];
-const tailLayout = {
+const buttonLayout = {
     wrapperCol: { offset: 2, span: 16 },
 };
-
-const onFinish = values => {
-    values.img = imageUrl
-    console.log('values 提交接口', values)
-};
-const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
-};
-
 export default props => {
-    // const { loading, imageUrl } = this.state;
-    let [imageUrl, setImageUrl] = useState('')
-    let { loading } = props
     // 获取Form的实例
     const [form] = Form.useForm()
+    let { loading } = props
+    let [imageUrl, setImageUrl] = useState('')
+    // 价格改变
+    const onChangePrice = () => {
+    }
     // 图片上传成功
-    const imgSuccess = e => {
+    const uploadButton = (
+        <div>
+            {loading ? <LoadingOutlined /> : <PlusOutlined />}
+            <div style={{ marginTop: 8 }}>Upload</div>
+        </div>
+    );
+    const handleChange = e => {
         console.log('图片上传成功', e)
         if (e && e.fileList && e.fileList[0] && e.fileList[0].response) {
             setImageUrl(e.fileList[0].response.data.url)
         }
     }
-    const ZUploadIcon = (
-        <div>
-            {loading ? <LoadingOutlined /> : <PlusOutlined />}
-            <div style={{ marginTop: 8 }}>Upload</div>
-        </div>)
+    // 表单提交
+    const onFinish = values => {
+        values.img = imageUrl
+        console.log('values 提交接口', values)
+        // 入参：从页面来,添加商品时的这些数据
+        fetchAddOrEdit(values).then(() => {
+            props.history.replace('/zjr/list')
+        })
+    };
+
     return (
         <div>
             <h1>商品添加和编辑测试</h1>
             <Form
                 form={form}
-                {...layout}
+                {...formLayout}
                 name="basic"
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
             >
-
+                {/* 名 */}
                 <Form.Item
                     label="商品名"
-                    name="goodname"
+                    name="name"
                     rules={[{ required: true, min: 2, max: 10 }]}
                 >
                     <Input />
                 </Form.Item>
-
-                <Form.Item name='gooddesc' label="商品描述">
+                {/* 描述 */}
+                <Form.Item name='desc' label="商品描述">
                     <Input.TextArea rows={4} />
                 </Form.Item>
-
+                {/* 品类 */}
                 <Form.Item name="cate" label="选择品类" rules={[{ required: true, message: '品类必填' }]}>
                     <Select options={areas} />
                 </Form.Item>
-
-                <Form.Item
-                    label='商品图片'
-                    rules={[
-                        { required: true, message: '商品图片是必填!' }
-                    ]}
-                >
+                <Form.Item name='price' label="商品价格">
+                    <InputNumber min={1} onChange={onChangePrice} />
+                </Form.Item>
+                {/* 图片上传 */}
+                <Form.Item label="上传图片">
                     <Upload
                         name="file"
-                        action={img.uploadUrl}
                         listType="picture-card"
                         className="avatar-uploader"
                         showUploadList={false}
-                        onChange={imgSuccess}
+                        action={img.uploadUrl}
+                        onChange={handleChange}
                     >
-                        {
-                            imageUrl ?
-                                <img src={img.imgBase + imageUrl} alt="avatar" style={{ width: '100%' }} />
-                                : <ZUploadIcon />
-                        }
+                        {imageUrl ? <img src={img.imgBase + imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                     </Upload>
                 </Form.Item>
-
+                {/* 热销 */}
+                <Form.Item label="是否热销" name='hot' valuePropName='checked'>
+                    <Switch />
+                </Form.Item>
                 {/* 提交按钮 */}
-                < Form.Item {...tailLayout} >
+                < Form.Item {...buttonLayout}  >
                     <Button type="primary" htmlType="submit">
                         提交
                     </Button>

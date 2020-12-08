@@ -50,11 +50,11 @@ export default props => {
     console.log('values', values);
   }
 
-  return(
+  return (
     <div>
       <h1>商品新增</h1>
       <Form
-        style={{margin:'25px 0'}}
+        style={{ margin: '25px 0' }}
         {...formItemLayout}
         form={form}
         name="register"
@@ -69,7 +69,7 @@ export default props => {
           name="name"
           label="商品名称"
           rules={[
-            { required: true, message: '商品名称是必填!',},
+            { required: true, message: '商品名称是必填!', },
             { max: 10, message: '商品名称不能超过10个字' },
             { min: 2, message: '商品名称不能少于两个字' }
           ]}
@@ -81,7 +81,7 @@ export default props => {
           name="desc"
           label="商品描述"
           rules={[
-            { required: true, message: '商品描述是必填!',},
+            { required: true, message: '商品描述是必填!', },
             { max: 30, message: '商品描述不能超过10个字' },
             { min: 10, message: '商品描述不能少于两个字' }
           ]}
