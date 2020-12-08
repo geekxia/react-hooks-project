@@ -14,8 +14,8 @@ import {
   Switch,
 } from 'antd';
 
-import {LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import {fetchYjbGood} from '@/utils/api'
+import { PlusOutlined } from '@ant-design/icons';
+import {fetchGoodOrEdit} from '@/utils/api'
 
 const {Option} =Select
 
@@ -23,10 +23,8 @@ import img from '@/utils/img'
 
 export default props=>{
 
-const [componentSize, setComponentSize] = useState('default');
-const onFormLayoutChange = ({ size }) => {
-    setComponentSize(size);
-};
+  // 获取Form的实例
+  const [form] = Form.useForm()
 
 let [imageUrl, setImageUrl] = useState('')
 
@@ -40,7 +38,7 @@ const imgSuccess = e => {
   const onFinish = values => {
     values.img = imageUrl
     console.log('values 提交接口', values)
-    fetchYjbGood(values).then(()=>{
+    fetchGoodOrEdit(values).then(()=>{
       // 跳转到列表页
       props.history.replace('/bolist')
     })
@@ -49,12 +47,10 @@ const imgSuccess = e => {
         <div className="YJBAdd">
             <h1>商品新增</h1>
             <Form
+                form={form}
                 labelCol={{ span: 4 }}
                 wrapperCol={{ span: 14 }}
                 layout="horizontal"
-                initialValues={{ size: componentSize }}
-                onValuesChange={onFormLayoutChange}
-                size={componentSize}
                 onFinish={onFinish}
             >
                 <Form.Item label="表单大小" name="size">
@@ -110,7 +106,10 @@ const imgSuccess = e => {
                 </Form.Item>
 
 
-                <Form.Item label="商品价格">
+                <Form.Item 
+                name="price"
+                label="商品价格"
+                >
                     <InputNumber />
                 </Form.Item>
 
@@ -136,7 +135,11 @@ const imgSuccess = e => {
                     </Upload>
                 </Form.Item>
                 
-                <Form.Item label="是否热销">
+                <Form.Item
+                 label="是否热销"
+                 name='hot'
+                 valuePropName='checked' 
+                >
                     <Switch />
                 </Form.Item>
 
