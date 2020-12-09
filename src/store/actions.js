@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic,fetchGoodList,fetchCates } from '@/utils/api'
+import { fetchQqMusic,fetchGoodList,fetchCates,fetchGoodDetail } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -60,10 +60,29 @@ function cateList(params){
    }
 }
 
+function getGoodDetail(params){
+  return function(dispatch){
+    fetchGoodDetail(params).then(res=>{
+      console.log(res)
+     dispatch({
+       type:type.GET_GOOD_LIST,
+       payload:res
+     })
+    })
+   }
+}
+function clearGoodDetail(){
+  return{
+    type:type.CLEAR_GOOD,
+    payload:{}
+  }
+}
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   detailList,
-  cateList
+  cateList,
+  getGoodDetail,
+  clearGoodDetail
 }

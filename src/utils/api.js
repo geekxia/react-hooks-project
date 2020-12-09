@@ -39,10 +39,20 @@ export function fetchGoodDel(params) {
     params
   })
 }
+// 获取商品详情
+export function fetchGoodDetail(params) {
+  return axios({
+    url: '/api/v1/good/detail',
+    method: 'GET',
+    params
+  })
+}
+
 export default {
   fetchQqMusic,
   fetchGoodList,
   fetchGoodOrEdit,
   fetchCates,
-  fetchGoodDel
+  fetchGoodDel,
+  fetchGoodDetail
 }

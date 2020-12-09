@@ -1,17 +1,20 @@
 .f-table{
     .f-del{
         a:nth-child(1){
-            width: 35px;
-            height: 25px;
-            background: red;
             display: inline-block;
-            margin-left: 10px;
-            color: white;
-            font-size: 14px;
-            
+
+            &>button{
+                width: 55px;
+                height: 25px;
+                background: red;
+                color: white;
+                font-size: 10px;
+                outline: none;
+            }
+           
         }
         a:nth-child(2){
-            width: 35px;
+            width: 55px;
             height: 25px;
             background: blue ;
             display: inline-block;

@@ -21,6 +21,7 @@ const createSelect=props=>{
                     placeholder="选择品类 "
                     optionFilterProp="children"
                     onChange={(val)=>props.onChange && props.onChange(val)}
+                    value={props.value}
                     >
                         {
                             props.has && <Option key="1" value="" >全部</Option>

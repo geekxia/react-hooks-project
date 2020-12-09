@@ -26,7 +26,7 @@ export default [ // eslint-disable-line
       {
         id: 1111,
         text: '学习from',
-        path: '/from',
+        path: '/from/:id',
         component: ReduxText
       }
     ]

@@ -10,7 +10,10 @@ let initState={
             cate:"china",
             cate_zh:"中国"
         }
-    ]
+    ],
+    gooddetail:{
+
+    }
 }
 const Detail=(state=initState,action)=>{
     let newState = JSON.parse(JSON.stringify(state))
@@ -20,7 +23,12 @@ const Detail=(state=initState,action)=>{
             break
         case type.CATE_LIST:
             newState.cates=action.payload
-            console.log("chuande",action.payload)
+            break
+        case type.GET_GOOD_LIST:
+        newState.gooddetail=action.payload
+            break
+        case type.CLEAR_GOOD:
+        newState.gooddetail=action.payload
             break
         default:
            return state
