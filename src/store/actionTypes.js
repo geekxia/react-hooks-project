@@ -9,6 +9,8 @@ const AJAX_MUSIC_LIST = 'AJAX_MUSIC_LIST'
 const Add_JiChuBiaoDan="Add_JiChuBiaoDan"
 const Good_list="Good_list"
 const Good_cate="Good_cate"
+const Good_value="Good_value"
+const Good_clear="Good_clear"
 
 export default {
   CHANGE_MSG,
@@ -16,6 +18,7 @@ export default {
   AJAX_MUSIC_LIST,
   Good_list,
   Add_JiChuBiaoDan,
-  Good_cate
-
+  Good_cate,
+  Good_value,
+  Good_clear
 }

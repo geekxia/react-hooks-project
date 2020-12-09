@@ -1,5 +1,5 @@
-import { useState } from 'react'
-
+import React,{ useState,useEffect } from 'react'
+import {useSelector,useDispatch} from "react-redux"
 import {
   Form,
   Input,
@@ -20,10 +20,10 @@ import img from "@/utils/img"
 import {PlusOutlined} from "@/components/"
 import { fetchGoodOrEdit } from '@/utils/api'
 import CateSelect from "../common/CateSelect"
+import action from "@/store/actions"
 const { Option } = Select
 const { TextArea } = Input
 const AutoCompleteOption = AutoComplete.Option;
-
 const formItemLayout = {
   labelCol: {
     sm: {
@@ -47,6 +47,42 @@ const tailFormItemLayout = {
 
 
 export default props => {
+  let dispatch=useDispatch()
+  let goodarr=useSelector(store=>store.good.arrvalue)
+  let isid=props.match.params.id==0
+  let id=props.match.params.id
+  let [imageUrl,setimageUrl]=useState("")
+
+  //不写[]频繁触发
+  let [flag,setflag]=useState(false)
+  useEffect(()=>{
+      if(!flag) { 
+        form.setFieldsValue(goodarr)
+        if(goodarr&&goodarr.img){
+          setimageUrl(goodarr.img)
+        }
+      }
+    if(goodarr._id){
+      setflag(true)
+    }
+    console.log("触发setFieldsValue")
+    return undefined
+  })
+  //比from实例渲染慢
+  useEffect(()=>{
+    if(id!=0){
+      dispatch(action.goodval({id})) 
+    }
+    return undefined
+  },[])
+
+  //图片上传成功回调
+  const  imgSuccess=(e)=>{
+    console.log(e)
+   if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
+     setimageUrl(e.fileList[0].response.data.url)
+   }
+ }
   const [autoCompleteResult, setAutoCompleteResult] = useState([])
 
   // 获取Form的实例
@@ -56,34 +92,25 @@ export default props => {
   const onFinish = values => {
     console.log('values', values);
     values.img = imageUrl
+    if(id!=0){
+      values.id=id
+    }
     fetchGoodOrEdit(values).then(res=>{
       props.history.replace("/good/list")
     })
 
   }
 
-  //图片上传成功回调
-  let [imageUrl,setimageUrl]=useState("")
-   const  imgSuccess=(e)=>{
-     console.log(e)
-    if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
-      setimageUrl(e.fileList[0].response.data.url)
-    }
-  }
 
   return(
     <div>
-      <h1>商品新增</h1>
+      <h1>  {isid? "商品新增":"商品编辑"}</h1>
       <Form
         style={{margin:'25px 0'}}
         {...formItemLayout}
         form={form}
         name="register"
         onFinish={onFinish}
-        initialValues={{
-          residence: ['zhejiang', 'hangzhou', 'xihu'],
-          prefix: '86',
-        }}
         scrollToFirstError
       >
         <Form.Item
@@ -160,7 +187,7 @@ export default props => {
 
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            提交
+            {id==0?"新增":"修改"}
           </Button>
         </Form.Item>
       </Form>

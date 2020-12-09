@@ -89,7 +89,12 @@ const mulDelete=()=>{
     },
   });
 }
-
+//编辑新增
+const edit=row=>{
+  dispatch(action.goodclear())
+  props.history.push("/good/update/"+(row._id?row._id:0))
+}
+  //列属性
   const columns = [
     {
       title: '商品',
@@ -126,20 +131,18 @@ const mulDelete=()=>{
       align: 'center',
       //需要在状态管理处获取索引
       render:(text,row,i)=>{
-      //   let carr=catelist.filter(res=>res.cate==text)
-      //   let ii=1
-      //    catelist.map((res,i)=>{
-      //     if(res._id==carr._id) {
-      //       console.log(res._id==carr._id)
-      //       ii=i
-      //       return undefined
-      //     }
-      //   })
-      //   console.log(ii)
-      // return <div>{catelist[ii].cate_zh}</div>
-      const idx = catelist.findIndex(ele=>ele.cate===text)
-        return <span>{idx>=0?catelist[idx].cate_zh:''}</span>
+        let carr=catelist.filter(res=>res.cate==text)
+        let ii=1
+        catelist.map((res,i)=>{
+          if(res.cate==carr[0].cate){
+            return ii=i
+          }
+        })
+      return <div> {catelist? catelist[ii].cate_zh:""}</div>
       }
+      // const idx = catelist.findIndex(ele=>ele.cate===text)
+      //   return <span>{idx>=0?catelist[idx].cate_zh:''}</span>
+      // }
     },
     {
       title: '是否热销',
@@ -168,7 +171,7 @@ const mulDelete=()=>{
       render: (text,row,i) => (
         <>
           <a  onClick={()=>del(row)} >删除</a>
-          <a >编辑</a>
+          <a   onClick={()=>edit(row)}  >编辑</a>
         </>
       )
     }
@@ -214,7 +217,7 @@ const mulDelete=()=>{
             <Button
               size='small'
               type="primary"
-              onClick={()=>props.history.push('/good/update/0')}
+              onClick={()=>edit(0)}
             >
               新增
             </Button>
@@ -222,6 +225,7 @@ const mulDelete=()=>{
         </Row>
 
       </div>
+      {/* 表格 */}
       <div style={{margin: '20px 0'}}>
         <Table 
         pagination={{
@@ -230,7 +234,9 @@ const mulDelete=()=>{
           defaultPageSize: params.size,
           onChange: page=>setfen("page",page),
           onShowSizeChange:(text,size)=> setfen("size",size),
-          pageSizeOptions: [2,5,10,15,20]
+          pageSizeOptions: [2,5,10,15,20],
+          showSizeChanger:true,
+          showQuickJumper:true
         }}
         rowSelection={{
           type:"checkbox ",

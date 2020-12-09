@@ -1,7 +1,7 @@
 import type from './actionTypes'
 import { fetchQqMusic } from '@/utils/api'
 import { fetchGoodList } from '@/utils/api'
-import {fetchCates} from '@/utils/api'
+import {fetchCates,fetchGoodDetail} from '@/utils/api'
 // action 生成器
 function changeMsgAction(payload) {
   return {
@@ -51,7 +51,7 @@ function musicListAction(params) {
 function Goodlist(params){
   return function(dispatch){
     fetchGoodList(params).then(res=>{
-      console.log(res)
+      // console.log(res)
       dispatch({
         type:type.Good_list,
         payload:res
@@ -71,11 +71,29 @@ function catelist(params){
   }
 }
 
+function goodval(params){
+  return  function(dispatch){
+    fetchGoodDetail(params).then(res=>{
+      dispatch({
+        type:type.Good_value,
+        payload:res
+      })
+    })
+  }
+}
+function goodclear(){
+     return   {type:type.Good_clear,
+              payload:""}
+}
+
+
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   addJiChuBiaoDan,
   Goodlist,
-  catelist
+  catelist,
+  goodval,
+  goodclear
 }

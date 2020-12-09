@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {AlipayCircleOutlined} from "@ant-design/icons" 
 import {
   useHistory,
   // withRouter
@@ -16,13 +16,16 @@ import {
 
 
 // 一、使用Hooks写法，来解决React无状态组件中没有路由API的问题
-
+const x=()=>{
+  localStorage.removeItem("token")
+  location.reload()
+}
 
 export default props => {
   const history = useHistory()
   return (
     <div className='qf-header'>
-      header
+      <AlipayCircleOutlined style={{color:"white",fontSize:"25px",float:"right"}}  onClick={()=>x()}/>
     </div>
   )
 }

@@ -4,7 +4,6 @@ import {
 } from '@ant-design/icons'
 
 export default props => {
-  console.log(props)
   let { loading } = props
   return (
     <div>

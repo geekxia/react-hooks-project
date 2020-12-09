@@ -1,7 +1,9 @@
 import type from "../actionTypes"
 let initstate={
     list:{},
-    arr:[]
+    arr:[],
+    arrvalue:{}
+
 }
 
 export default (state=initstate,action)=>{
@@ -12,6 +14,12 @@ export default (state=initstate,action)=>{
             break;
             case  type.Good_cate:
             newstate.arr= action.payload  
+            break;
+            case  type.Good_value:
+            newstate.arrvalue= action.payload  
+            break;
+            case  type.Good_clear:
+            newstate.arrvalue= action.payload  
             break;
     }
     return newstate

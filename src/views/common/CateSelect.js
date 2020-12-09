@@ -20,7 +20,8 @@ export default props=>{
             allowClear
             style={{ width: 200 }}
             placeholder="选择一个品类"
-            onChange={val=>props.xx&&props.onChange(val)}
+            onChange={val=>props.onChange(val)} 
+            value={props.value}
           >
                 {props.jj&&<Option value="" key="00">全部</Option>}
               {list.map(res=>(
