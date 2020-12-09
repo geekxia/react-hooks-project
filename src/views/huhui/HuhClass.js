@@ -60,8 +60,8 @@ const HuhClass =(props)=>{
     }
 
     //跳转商品新增页面
-    const GoodAddOrEdit=()=>{
-        props.history.push("/hucontact/gooduptate")
+    const GoodAddOrEdit=(id)=>{
+        props.history.push("/hucontact/gooduptate/"+id)
     }
     
     //点击删除按钮
@@ -70,6 +70,7 @@ const HuhClass =(props)=>{
             case "del":
                 const name = <span style={{color:"red"}}>{record.name}</span>
                 confirm({
+                    centered:true,
                     title: '提示',
                     icon: <ExclamationCircleOutlined />,
                     content: <div>你确定要删除 {name} 吗？</div>,
@@ -85,7 +86,9 @@ const HuhClass =(props)=>{
                     },
                   })
                 break;
-        
+            case "red":
+                GoodAddOrEdit(record._id)
+                break;
             default:
                 break;
         }
@@ -181,6 +184,7 @@ const HuhClass =(props)=>{
                     <Button 
                         type="primary" 
                         style={{backgroundColor:"#1890ff",borderColor:"#1890ff"}}
+                        onClick={()=>handle("red",record)}
                     >编辑</Button>
                     <Button 
                         danger
@@ -238,7 +242,7 @@ const HuhClass =(props)=>{
                     <Col offset="5" span="4" style={{textAlign:"right"}}>
                         <Button 
                             type="primary" 
-                            onClick={()=>GoodAddOrEdit()}
+                            onClick={()=>GoodAddOrEdit("0")}
                             style={{backgroundColor:"#1890ff",borderColor:"#1890ff"}}
                         >新增商品</Button>
                     </Col>

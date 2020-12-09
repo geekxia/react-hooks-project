@@ -132,7 +132,7 @@ const HuhAddorEdit = (props)=>{
                             style={{backgroundColor:"#1890ff",borderColor:"#1890ff"}}
                             size="large"
                         >
-                            提交
+                            提交编辑
                         </Button>
                     </Form.Item>
                 </Form>

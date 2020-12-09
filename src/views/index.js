@@ -83,7 +83,7 @@ export default [
           {
             id:131311,
             text:"商品新增",
-            path:"/hucontact/gooduptate",
+            path:"/hucontact/gooduptate/:id",
             component:HuhAddorEdit
           }
         ]
