@@ -133,8 +133,9 @@ export default props=>{
                 </Form.Item>
                     
                 <Form.Item
+                    name='imgArr'
                     label='商品图片'
-                    rules={[
+                    rules={[ 
                         { required: true, message: '商品图片必填!'},
                      ]}
                 >
@@ -144,13 +145,12 @@ export default props=>{
                         listType="picture-card"
                         className="avatar-uploader"
                         showUploadList={false}
-                        onChange={imgSuccess}
                     >
                         {
                             imageUrl ? 
                             <img src={img.imgBase + imageUrl} alt="avatar" style={{ width: '100%' }} /> 
                             : <QfUploadIcon />
-                        }
+                        } 
                     </Upload>
                 </Form.Item>
             
