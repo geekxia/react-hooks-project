@@ -16,14 +16,14 @@ export default props=>{
 
         <div>
             <Select 
-                
+                style={{width:180}}
                 placeholder="选择品类"
                 onChange={val=>props.onChange && props.onChange(val)}
                 
             >
-                {/* {
+                {
                     props.hasAll && <Option key='0' value=''>全部</Option>
-                } */}
+                }
                 {
                     cates.map(ele=>(
                     <Option key={ele._id} value={ele.cate}>{ele.cate_zh}</Option>

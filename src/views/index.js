@@ -50,7 +50,7 @@ export default [
         children:[
           {
             id:131010,
-            path:'/detail',
+            path:'/detail/:id',
             component:GoodDetail
           }
 

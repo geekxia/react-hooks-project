@@ -8,7 +8,7 @@ import CateSelect from './components/CateSelect'
 const { TextArea } = Input;
 const {Option} =Select
 export default props=>{
-
+    // console.log('props',props);
   let [imageUrl, setImageUrl] = useState('')
   const layout = {
       labelCol: {
@@ -25,12 +25,13 @@ export default props=>{
       },
     };
 
-     
+    
 
        // 获取Form的实例
   const [form] = Form.useForm()
 
-      
+    const id =props.match.params.id
+    const isAdd=id==0
 
   const imgSuccess = e => {
     console.log('图片上传成功', e)
@@ -49,6 +50,7 @@ export default props=>{
       
     return (
         <div>
+            <h1>{isAdd?'商品新增':'商品编辑'}</h1>
             <Form
             {...layout}
             name="register"

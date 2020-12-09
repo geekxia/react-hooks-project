@@ -4,3 +4,9 @@
   display: block;
   margin: 0 auto;
 }
+
+.qf-good-list .filter-label {
+  text-align: right;
+  display: block;
+  padding-right: 10px;
+}

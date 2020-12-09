@@ -1,0 +1,22 @@
+.hg-login{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgba(36, 41, 46, 1);
+    &>div{
+        position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 520px;
+    margin-left: -260px;
+    background: white;
+    box-sizing: border-box;
+    padding: 25px;
+    padding-right: 90px;
+    height: 250px;
+    margin-top: -125px;
+    border-radius: 5px;
+    }
+}
