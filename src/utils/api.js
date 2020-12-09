@@ -93,6 +93,13 @@ export function fetchDelCart (params) {
     params
   })
 }
+export function fetchDelGOOD (params) {
+  return fetch({
+    url: '/api/v1/good/delete',
+    method: 'GET',
+    params
+  })
+}
 // 修改购物车商品数量
 // { id: 同上, num: 修改后的数量 }
 export function UpdCart (data) {

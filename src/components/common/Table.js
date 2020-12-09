@@ -12,7 +12,7 @@ import {
   Switch, } from 'antd';
 const { TextArea } = Input
 import { useDispatch, useSelector } from 'react-redux'
-import { cateListAction,fetchDelCartAction, goodListAction, goodDtailAction } from '@/store/actions'
+import { cateListAction,fetchDelCartAction,fetchDelGOODAction, goodListAction, goodDtailAction } from '@/store/actions'
 import { fetchGoodList, getCartList,GoodAddOrEdit  } from '@/utils/api.js'
 import { LoadingOutlined } from '@ant-design/icons'
 import UploadS  from '@/components/common/upload'
@@ -148,7 +148,7 @@ export default props => {
   // rowdel
   const delRow = (_,b) => {
     // console.log(b)
-    dispatch(fetchDelCartAction({ id: b._id }))
+    dispatch(fetchDelGOODAction({ id: b._id }))
   }
 
   // tab checked
@@ -171,7 +171,7 @@ export default props => {
   // someRowdel 
   const delSome = () => {
     if (selectID.length > 0) {}
-    dispatch(fetchDelCartAction({ id: selectID }))
+    dispatch(fetchDelGOODAction({ id: selectID }))
   } 
   return (
     <>

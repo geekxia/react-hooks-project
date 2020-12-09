@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic, fetchGoodList, getCartList, fetchDelCart, getGoodDetail } from '@/utils/api'
+import { fetchQqMusic, fetchGoodList, getCartList, fetchDelCart,fetchDelGOOD, getGoodDetail } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -62,6 +62,20 @@ export function fetchDelCartAction(params) {
     })
   }
 }
+export function fetchDelGOODAction(params) {
+  return function() {
+    fetchDelGOOD(params).then(res=>{
+      console.log(res)
+      // console.log(res)
+      // 这才是真正地把后端数据，发送到store中
+      // dispatch({
+      //   type: type.AJAX_GOOD_CATE_LIST,
+      //   payload: res.list
+      // })
+    })
+  }
+}
+fetchDelGOOD
 export function cateListAction(params) {
   return function(dispatch) {
     getCartList(params).then(res=>{
@@ -93,5 +107,6 @@ export default  {
   cateListAction,
   goodListAction,
   fetchDelCartAction,
-  goodDtailAction
+  goodDtailAction,
+  fetchDelGOODAction
 }
