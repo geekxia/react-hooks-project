@@ -14,12 +14,15 @@ import thunk from 'redux-thunk'
 import study from './modules/study'
 import music from './modules/music'
 import list from './modules/goodlist'
+import cate from './modules/cate'
+
 
 
 export default createStore(combineReducers({
   study,
   music,
-  list
+  list,
+  cate
 }), applyMiddleware(thunk))
 
 // 如何使用redux？

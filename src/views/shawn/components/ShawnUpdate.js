@@ -6,10 +6,10 @@ import img from '@/utils/img'
 
 
 export default props=> {
+  let { loading } = props
   const handleChange=(e)=>{
     if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
       props.onChange && props.onChange(e.fileList[0].response.data.url)
-      console.log('图片上传成功', e)
     }
   }
   const uploadButton = (

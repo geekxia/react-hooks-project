@@ -13,6 +13,16 @@ code {
 }
 
 .shawngood_list{
+  .shawngood_search{
+    margin:20px auto;
+    .shawngood_searchtxt{
+      text-align: right;
+      padding-top: 5px;
+    }
+    .shawngood_add{
+      text-align: right;
+    }
+  }
   .shawngood_img{
     text-align: center;
     &>img {

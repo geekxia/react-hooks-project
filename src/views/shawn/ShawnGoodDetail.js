@@ -3,14 +3,11 @@ import {
   Form, 
   Input, 
   Button, 
-  Upload, 
-  message,
   InputNumber,
-  Switch,
-  Select 
+  Switch
 } from 'antd';
-const { Option } = Select;
 import ShawnUpdate from './components/ShawnUpdate'
+import ShawnCateSelect from './components/ShawnCateSelect'
 import { useState } from 'react'
 import { fetchShawnGood } from '@/utils/api'
 
@@ -31,8 +28,8 @@ const tailLayout = {
 
 
 export default props => {
-
   let [values, setValues] = useState({})
+  
   const [form] = Form.useForm()
 
   const formChange = values => {
@@ -40,10 +37,10 @@ export default props => {
   }
 
   const onFinish = (values) => {
-    console.log('Success:', values);
-    fetchShawnGood(values).then(()=>{
-      console.log('===============')
-      // props.history.replace('/good/list')
+    // console.log('values 提交接口', values)
+    fetchShawnGood(values).then((res)=>{
+      // console.log(res)
+      props.history.replace('/shawngoodlist')
     })
   };
 
@@ -61,11 +58,12 @@ export default props => {
       name="basic"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
+      onValuesChange={(val,values)=>formChange(values)}
     >
 
       <Form.Item
         label="商品名称"
-        name="username"
+        name="name"
         rules={[
           {
             required: true,
@@ -124,30 +122,27 @@ export default props => {
       <Form.Item 
         label="选择品类"
         name="cate"
-        rules={[
-          { required: true, message: '商品描述是必填!' }
-        ]}
+        // rules={[
+        //   { required: true, message: '商品描述是必填!' }
+        // ]}
       >
-        <Select placeholder='请选择一个品类' style={{ width: 150 }} allowClear>
-          <Option value="lucy">Lucy</Option>
-          <Option value="jack">jack</Option>
-        </Select>
+        <ShawnCateSelect />
       </Form.Item>
+
 
 
       <Form.Item 
         label="上传图片"
         name="img"
-        // rules={[
-        //   {
-        //     required: true,
-        //     message: 'Please update your img!',
-        //   },
-        // ]}
+        rules={[
+          {
+            required: true,
+            message: 'Please update your img!',
+          },
+        ]}
       >
         <ShawnUpdate src={values.img}/>
       </Form.Item>
-
 
       <Form.Item 
         label="是否热销"
@@ -156,7 +151,7 @@ export default props => {
       >
        <Switch />
       </Form.Item>
-
+      
 
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">

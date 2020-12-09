@@ -43,8 +43,8 @@ export default [
         children: [
           {
             id: 4443,
-            text: '测试redux',
-            path: '/shawngoodlist/detail',
+            text: '详情',
+            path: '/shawngoodlist/detail/:id',
             component: ShawnGoodDetail
           }
         ]
