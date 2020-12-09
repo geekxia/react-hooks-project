@@ -79,7 +79,10 @@ export default props => {
   useEffect(()=>{
     // 当是编辑时，触发action调接口获取商品详情
     if(!isAdd) dispatch(action.getGoodDetail({id}))
-    return undefined
+    return ()=>{
+      // 当前组件被销毁前，清空redux中的缓存数据
+      dispatch(action.clearGoodDetail())
+    }
   }, [])
 
   // 表单提交
