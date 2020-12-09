@@ -15,15 +15,15 @@ import {
   Switch,
 } from 'antd';
 
-import {
-    QfUploadIcon
-  } from '@/components'
 
-import img from '@/utils/img'
+
 
 import { fetchGoodQtp } from '@/utils/api'
 
 import { QuestionCircleOutlined } from '@ant-design/icons';
+
+import CateSelect from './components/CateSelect'
+import QtpUpload from './components/QtpUpload'
 
 
 const { Option } = Select;
@@ -58,16 +58,20 @@ const tailFormItemLayout = {
 export default props =>{
 
     let [imageUrl, setImageUrl] = useState('')
+    let [values,setValues] = useState({})
 
 
     // 获取From的实例
     const [form] = Form.useForm();
 
+    // const formChange = values => {
+    //     setValues(values)
+    //   }
 
     // 表单提交
     const onFinish = values => {
         console.log('Received values of form: ', values);
-        values.img = imageUrl
+        
         fetchGoodQtp(values).then(()=>{
             // 跳转到页面
             props.history.replace('/qtp/list')
@@ -76,13 +80,7 @@ export default props =>{
 
 
     
-    // 图片上传成功
-      const imgSuccess = e =>{
-        console.log('图片上传成功',e)
-        if(e && e.fileList && e.fileList[0] && e.fileList[0].response){
-            setImageUrl(e.fileList[0].response.data.url)
-        }
-      }
+    
     
      
     
@@ -95,8 +93,12 @@ export default props =>{
             form={form}
             name="register"
             onFinish={onFinish}
-            
-            scrollToFirstError
+            // initialValues={{
+            // residence: ['zhejiang', 'hangzhou', 'xihu'],
+            // prefix: '86',
+            // }}
+            // scrollToFirstError
+            // onValuesChange={(val, values)=>formChange(values)}
             >
             <Form.Item
                 name="name"
@@ -156,17 +158,7 @@ export default props =>{
                 }
                 ]}
             >
-                <Select
-                    style={{ width: 200 }}
-                    placeholder="选择一个品类"
-                    style={{ width: '100%' }}
-                >
-                    
-                    <Option key='1'>jack</Option>
-                    <Option key='2'>lucy</Option>
-                    <Option key='3'>tom</Option>
-
-                </Select>
+                <CateSelect />
             </Form.Item>
 
             <Form.Item
@@ -178,21 +170,8 @@ export default props =>{
                 }
                 ]}
             >
-        
-                <Upload
-                    name="file"
-                    action={img.uploadUrl}
-                    listType="picture-card"
-                    className="avatar-uploader"
-                    showUploadList={false}
-                    onChange={imgSuccess}
-                >
-                    {
-                    imageUrl ?
-                    <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} />
-                    : <QfUploadIcon />
-                    }
-                </Upload>
+                <QtpUpload src={values.img} />
+                
 
             </Form.Item>
 

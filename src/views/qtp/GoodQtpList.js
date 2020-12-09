@@ -7,12 +7,13 @@ import {
     Select,
     Table, 
     Tag, 
-    Space
+    Space,
+    Pagination
   } from 'antd'
   
   import { useDispatch,useSelector } from 'react-redux'
 
-  import { useEffect } from 'react'
+  import { useEffect,useState } from 'react'
 
 
   import action from '@/store/actions'
@@ -23,6 +24,8 @@ import {
 
   import moment from 'moment'
 
+  import CateSelect from './components/CateSelect'
+
 export default props =>{
 
 
@@ -30,13 +33,17 @@ export default props =>{
   const goodData = useSelector(store=>store.qtp.goodData)
 
 
+  let [page,setPage] = useState(1)
+  let [size,setSize] = useState(5)
+
   useEffect(()=>{
     let params = {
-
+      size,
+      page
     }
     dispatch(action.getQtpList(params))
     return undefined
-  },[])
+  },[page,size])
 
 
 
@@ -113,7 +120,8 @@ export default props =>{
         <div className="qtp-list">
             <h1>鹏鹏商品列表</h1>
                
-                  <Row align='middle'>
+                 <div>
+                 <Row align='middle'>
                   <Col span={2}>
                     <span className='filter-label'>名称搜索:</span>
                   </Col>
@@ -128,10 +136,7 @@ export default props =>{
                   </Col>
 
                   <Col span={6}>
-                  <Select defaultValue="lucy" style={{ width: 120 }} >
-                    <Option value="jack">Jack</Option>
-                    <Option value="lucy">Lucy</Option>
-                  </Select>
+                  <CateSelect hasAll />
                   </Col>
 
                   <Col offset={5} span={2} style={{textAlign: 'right'}}>
@@ -144,15 +149,23 @@ export default props =>{
 
 
                   </Row>
+                 </div>
                 
                 
+  
                   <Table 
                   rowKey='_id'
                   columns={columns} 
                   dataSource={goodData.list}
-                   />
+                  pagination={{
+                  total: goodData.total,
+                  defaultPageSize: size,
                   
-      
+                  onChange: page=>setPage(page),
+                  onShowSizeChange: (page, size)=>setSize(size),
+                  pageSizeOptions:[2,5,10,20]
+                  }}        
+                   />
 
 
           

@@ -54,11 +54,21 @@ function getQtpList(params){
 }
 
 // 品类列表
+// const getCatesAction = params=>{
+//   return dispatch=>{
+//     fetchCates(params||{}).then(res=>{
+//       console.log('品类列表',res)
+//       dispatch({type: type.GET_CATE_LIST,payload: res.list})
+//     })
+//   }
+// }
+
 const getCatesAction = params=>{
   return dispatch=>{
-    fetchCates(params||{}).then(res=>{
-      console.log('品类列表',res)
-      dispatch({type: type.GET_CATE_LIST,payload: res.list})
+    fetchCates(params || {}).then(res=>{
+      dispatch({
+        type: type.GET_CATE_LIST,payload:res.list
+      })
     })
   }
 }
