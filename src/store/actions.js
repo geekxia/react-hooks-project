@@ -2,7 +2,8 @@ import type from './actionTypes'
 import {
   fetchQqMusic,
   fetchGoodList,
-  fetchCates
+  fetchCates,
+  fetchGoodDetail
 } from '@/utils/api'
 
 // action 生成器
@@ -33,7 +34,7 @@ function addFooCountAction(payload) {
 function musicListAction(params) {
   return function(dispatch) {
     fetchQqMusic(params).then(res=>{
-      console.log('-----', res)
+      // console.log('-----', res)
       // 这才是真正地把后端数据，发送到store中
       dispatch({
         type: type.AJAX_MUSIC_LIST,
@@ -69,7 +70,7 @@ function getGoodList(params){
 function getCateList(params){
   return function(dispatch){
     fetchCates(params).then(res=>{
-      console.log('actions--品类列表',res)
+      // console.log('actions--品类列表',res)
       dispatch({
        type: type.GET_CATE_LIST,payload:res.list
       })
@@ -77,11 +78,23 @@ function getCateList(params){
   }
 }
 
+//编辑信息列表
+function getGoodDetail(params){
+  return function(dispatch){
+    fetchGoodDetail(params).then(res=>{
+      console.log('action---商品详情',res)
+      dispatch({
+        type:type.GET_GOOD_DETAIL, payload: res
+      })
+    })
+  }
+}
 
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   getGoodList,
-  getCateList
+  getCateList,
+  getGoodDetail
 }

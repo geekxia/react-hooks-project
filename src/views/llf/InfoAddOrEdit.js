@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState,useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 import { 
     Form,
     Input, 
@@ -11,6 +12,9 @@ import ImgCrop from 'antd-img-crop';
 import img from '@/utils/img'
 import { fetchGoodOrEdit } from '@/utils/api'
 import CateSelect from './component/CateSelect'
+import action from '@/store/actions'
+import { formatCountdown } from 'antd/lib/statistic/utils';
+
 //form表单布局
 const layout = {
     labelCol: {
@@ -30,17 +34,30 @@ const tailLayout = {
 //文本框
 const { TextArea } = Input;
 
-
-
 const InfoAddOrEdit=props=>{
+    const dispatch = useDispatch()
+    const goodInfo = useSelector(store=>store.good.goodInfo)
     let [imageUrl, setImageUrl] = useState('')
-
+   
     const imgSuccess = e =>{
         // console.log("图片上传成功",e)
         if(e && e.fileList && e.fileList[0] && e.fileList[0].response){
             setImageUrl(e.fileList[0].response.data.url)
         }
     }
+
+    //编辑
+    //判断是编辑还是新增
+
+
+    const id = props.match.params.id
+    const isAdd = id==='0'
+    // console.log('------idAdd', isAdd)
+    useEffect(()=>{
+     if(!isAdd) dispatch(action.getGoodDetail({id}))
+     return undefined
+    },[])
+
 
      //表单提交
     const onFinish = (values) => {

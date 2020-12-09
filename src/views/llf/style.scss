@@ -13,4 +13,14 @@
         text-align: right;
         padding-right:10px ;
     }
+    .table-btn{
+        &>span{
+            cursor: pointer;
+            padding-right:5px;
+           
+        }
+        .del{
+            color:red
+        }
+    }
 }

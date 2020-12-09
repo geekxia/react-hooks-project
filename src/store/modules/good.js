@@ -32,7 +32,11 @@ export default(state=initState,action)=>{
     case type.GET_CATE_LIST:
        newState.cates=action.payload
        break
+    case type.GET_GOOD_DETAIL:
+        newState.goodInfo = action.payload
+        break
     default:
+
   }
   console.log('......cateList',newState)
   return newState

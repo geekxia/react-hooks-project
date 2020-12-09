@@ -9,9 +9,10 @@ import {
      Col,
      Input,
      Select,
-     
+     Modal,
     } from 'antd';
-import { PlusOutlined} from '@ant-design/icons'
+
+import { PlusOutlined,ExclamationCircleOutlined} from '@ant-design/icons'
 import{ useSelector,useDispatch}from 'react-redux'
 import{ useEffect,useState}from 'react'
 import action from '@/store/actions'
@@ -19,33 +20,87 @@ import img from '@/utils/img'
 import './style.scss'
 import moment from 'moment'
 import CateSelect from './component/CateSelect'
+import {fetchGoodDel } from '@/utils/api'
 
 const { Option } = Select;
+const { confirm } = Modal;
 
 const InfoList =(props)=>{
 
-  let [page,setPage]=useState(1)
-  let [size,setSize]=useState(3)
   let [text,setText]=useState('')
-  let [cate,setCate]=useState('')
+  let [keys,setKeys]=useState('')
+  let [alldata,setAllDate]=useState({
+    size:3,
+    page:1,
+    text:"",
+    cate:"",
+    hot:""
+  })
   const dispatch =useDispatch()
   const goodData =useSelector(store=>store.good.goodData)
+  const cates=useSelector(store=>store.good.cates)
   //  console.log('goodDate---',goodData)
+
+
+  //获取页面列表，触发action掉后端接口
   useEffect(()=>{
-    let params={
-      size,
-      page,
-      text
-    }
-    dispatch(action.getGoodList(params))
+    dispatch(action.getGoodList(alldata))
     return undefined
-  },[page,size,text])
+  },[alldata])
   
+  //关键字搜索
   const textChange=(val)=>{
     // console.log('搜索关键字',val)
     setText(val)
+    if(!val){
+      alldata.text=''
+      setAllDate(JSON.parse(JSON.stringify(alldata)))
+    }
 
   }
+  //bug：如果不在第一页，其他页面选择品类筛选时页面会跑到其他页面去，就不会显示筛选结果
+  //使page和cata有关系，可以把所有的参数封装，放在一个对象中
+/*   const cateChange=(val)=>{
+    console.log('.......品类更改',val)
+    setCate(val)
+  } */
+  const alldataChange=(key,val)=>{
+    alldata[key]=val
+    if(key!='page') alldata.page=1
+    setAllDate(JSON.parse(JSON.stringify(alldata)))
+    console.log(alldata)
+  }
+
+  //删除
+  const handel=row=>{
+    const ele = <span style={{color: 'red'}}>{row.name}</span>
+    console.log(row)
+    confirm({
+      title: '警告',
+      icon: <ExclamationCircleOutlined />,
+    content: <div>你确定要{ele}删除吗？</div>,
+      onOk() {
+        fetchGoodDel({id:row._id}).then(()=>{
+          setAllDate(JSON.parse(JSON.stringify(alldata)))
+        })
+      },
+    });
+  }
+  //批量删除
+  const mulDelete=()=>{
+    let id=''
+    keys.map(ele=>{id +=(';'+ele)})
+    fetchGoodDel({id}).then(()=>{
+      setAllDate(JSON.parse(JSON.stringify(alldata)))
+    })
+  }
+
+  //跳转到新增页、编辑页
+const skipToEdit =row =>{
+  props.history.push('/llfAddOrEdit/'+(row?row._id:0))
+}
+  
+  
   //表格标题与表格内容
   const columns = [
     {
@@ -73,12 +128,18 @@ const InfoList =(props)=>{
       dataIndex: 'cate',
       key: 'cate',
       align:'center',
+      render:cate=>{
+        const index=cates.findIndex(ele=>ele.cate===cate)
+        return <span>{index>=0?cates[index].cate_zh:0}</span>
+      }
     },
     {
       title: '价格',
       dataIndex: 'price',
       key: 'price',
       align:'center',
+      sorter: (a, b) => a.price - b.price,
+    render:text=><div>{'￥'+text}</div>
     },
     {
       title: '是否热销',
@@ -110,11 +171,11 @@ const InfoList =(props)=>{
       dataIndex: 'tags',
       key: 'tags',
       align:'center',
-      render:()=>(
-        <>
-         <span>删除</span>
-         <span>编辑</span>
-       </>
+      render:(text,row)=>(
+        <div className='table-btn'>
+         <span className="del" onClick={()=>handel(row)}>删除</span>
+         <span onClick={()=>skipToEdit(row)}>编辑</span>
+       </div>
       )
     },
   ];
@@ -130,7 +191,7 @@ const InfoList =(props)=>{
                   placeholder="请输入关键字" 
                   value={text}
                   onChange={e=>textChange(e.target.value)}
-                  onPressEnter={e=>setText(e.target.value)}
+                  onPressEnter={e=> alldataChange('text',e.target.value)}
                   allowClear
                   />
                 </Col>
@@ -139,6 +200,8 @@ const InfoList =(props)=>{
                   <CateSelect
                     hasAll
                     allowClear
+                    onChange={cate=>alldataChange('cate',cate)}
+                    
                   />
                 </Col>
                 <Col span={4}><span className="list-lable">状态</span></Col>
@@ -146,12 +209,13 @@ const InfoList =(props)=>{
                   <Select
                     showSearch
                     style={{ width: 100 }}
-                    placeholder="状态"
+                    placeholder="全部"
                     allowClear={true}
+                    onChange={hot=>alldataChange('hot',hot)}
                   >
-                    <Option value="jack">Jack</Option>
-                    <Option value="lucy">Lucy</Option>
-                    <Option value="tom">Tom</Option>
+                    <Option value="">全部</Option>
+                    <Option value="true">是</Option>
+                    <Option value="false">否</Option>
                   </Select>
                 </Col>
                 <Col span={2}>
@@ -160,7 +224,7 @@ const InfoList =(props)=>{
                   type="primary" 
                   shape="circle" 
                   icon={<PlusOutlined />} 
-                  href="http://localhost:9000/#/llfAddOrEdit" 
+                  onClick={()=>props.history.push('/llfAddOrEdit/0')}
                   style={{paddingTop:'8px'}}
                   />
                 </Tooltip>
@@ -174,15 +238,20 @@ const InfoList =(props)=>{
                 columns={columns}
                 dataSource={goodData.list}
                 pagination={{
-                  current:page,
+                  current:alldata.page,
                   showSizeChanger:true,
                   total:goodData.total,
                   pageSizeOptions:[2,5,10,15,20],
-                  defaultPageSize:size,
-                  onChange:page=>setPage(page),
-                  onShowSizeChange: (page, size)=>setSize(size),
+                  defaultPageSize:alldata.size,
+                  onChange:page=>alldataChange('page',page),
+                  onShowSizeChange: (page, size)=>alldataChange("size",size),
                   showQuickJumper:true
                 }}
+                rowSelection={{
+                  type: 'checkbox',
+                  onChange:keys=>setKeys(keys)
+                }}
+                footer={() =><Button size='small' onClick={()=>mulDelete()} type='danger'>批量删除</Button>}
                />
             </div>
            

@@ -85,7 +85,7 @@ export default [
           {
             id:5530101,
             text:"商品添加与编辑",
-            path:"/llfAddOrEdit",
+            path:"/llfAddOrEdit/:id",
             component:InfoAddOrEdit
           }
         ]
