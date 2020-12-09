@@ -1,6 +1,10 @@
 import type from './actionTypes'
 import { fetchQqMusic } from '@/utils/api'
-import {fetchGoodList,goodCates} from '@/utils/zhaoty/api'
+import {
+  fetchGoodList,
+  goodCates,
+  goodDetail,
+} from '@/utils/zhaoty/api'
 // action 生成器
 function changeMsgAction(payload) {
   return {
@@ -58,10 +62,21 @@ function ztyGetGoodCates(params){
     })
   }
 }
+function ztyGetGoodDetail(params){
+  return dispatch=>{
+    goodDetail(params).then(res=>{
+      dispatch({
+        type:type.ZTY_GOOD_DETAIL,
+        payload:res
+      })
+    })
+  }
+}
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   ztyGetGoodList,
-  ztyGetGoodCates
+  ztyGetGoodCates,
+  ztyGetGoodDetail,
 }

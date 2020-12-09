@@ -48,7 +48,7 @@ export default [ // eslint-disable-line
         children:[
           {
             id:3000900310,
-            path:'/zhao/good/update',
+            path:'/zhao/good/update/:id',
             component:ztyGoodUpdate
           }
         ]

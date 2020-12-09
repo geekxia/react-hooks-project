@@ -28,9 +28,24 @@ export function goodCates(params){
     params
   })
 }
+export function goodDetail(params){
+  return axios({
+    url:'api/v1/good/detail',
+    method:'GET',
+    params
+  })
+}
+export function delGood(params){
+  return axios({
+    url:'api/v1/good/delete',
+    method:'GET',
+    params
+  })
+}
 export default {
   fetchQqMusic,
   fetchGoodList,
   goodUpdate,
-  goodCates
+  goodCates,
+  delGood
 }

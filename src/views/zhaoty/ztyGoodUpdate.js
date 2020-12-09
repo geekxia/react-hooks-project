@@ -1,28 +1,20 @@
-
-
 import React, { useState,useEffect } from 'react';
+
 import {
   Form,
   Input,
-  Tooltip, 
-  Select,
   Button,
-  AutoComplete,
   InputNumber,
   Upload,
   Switch
 } from 'antd';
 
-
-import { QuestionCircleOutlined } from '@ant-design/icons';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import myImg from '@/utils/zhaoty/img'
 import {goodUpdate} from '@/utils/zhaoty/api'
 import {useDispatch,useSelector} from 'react-redux'
 import action from '@/store/actions'
 
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 import SelectCate from './components/cateSelect'
 
 const { TextArea } = Input
@@ -44,20 +36,31 @@ const tailFormItemLayout = {
   },
 };
 
-console.log('myImg',myImg)
 export default props => {
   const dispatch = useDispatch()
-const goodCates = useSelector(store=>store.ztyGood.cateArr)
+  let goodDetail = useSelector(store=>store.ztyGood.goodDetail)
+  let [values,setValues]=useState({})
+  console.log('goodDetail' ,goodDetail)
   const [form] = Form.useForm();
   const [imageUrl,setImageUrl]=useState('')
+  const urlId = props.match.params.id
+  const isAdd = (urlId==0)
+  
   const onFinish = values => {
     values.img  = imageUrl
-    console.log('Received values of form: ', values);
-    goodUpdate(values).then(
+    if(!isAdd){
+      values.id=goodDetail._id
+    }
+    goodUpdate(values).then(res=>{
+      console.log('..........',values)
       props.history.replace('/zhao/good/list')
-    )
+    })
 
   };
+  const formChange=values=>{
+    setValues(values)
+    console.log('formChange----',values)
+  }
   const { loading } = props;
   const uploadButton = (
     <div>
@@ -71,15 +74,24 @@ const goodCates = useSelector(store=>store.ztyGood.cateArr)
       }
   }
   useEffect(()=>{
-    dispatch(action.ztyGetGoodCates({}))
+     if(!isAdd){//编辑数据
+      dispatch(action.ztyGetGoodDetail({id:urlId}))
+     }
     return undefined
   },[])
+  useEffect(()=>{
+    form.setFieldsValue(goodDetail)
+    console.log('--=-=-=-=-==-=')
+    return undefined
+  })
   return (
     <Form
       {...formItemLayout}
       form={form}
       name="register"
       onFinish={onFinish}
+      onValuesChange={(val,values)=>formChange(values)}
+     
     >
       <Form.Item
         name="name"
@@ -114,20 +126,12 @@ const goodCates = useSelector(store=>store.ztyGood.cateArr)
         name='cate'
         label='选择品类'
       >
-        {/* <Select
-            style={{ width: 200 }}
-            placeholder="选择品类"
-        >
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
-        </Select> */}
         <SelectCate 
-                allowClear 
-                cateArr = {goodCates}
-                />
+        allowClear 
+        />
       </Form.Item>
       <Form.Item
+       name='img'
        label='商品图片'
       >
       <Upload
@@ -148,11 +152,11 @@ const goodCates = useSelector(store=>store.ztyGood.cateArr)
         label='是否热销'
         valuePropName='checked'
       >
-         <Switch  />
+         <Switch />
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
-            提交
+            {isAdd?'添加商品':'编辑完成'}
         </Button>
       </Form.Item>
     </Form>
@@ -173,12 +177,3 @@ const goodCates = useSelector(store=>store.ztyGood.cateArr)
 
 
 
-
-
-// export default props=>{
-//     return (
-//         <div>
-//             <h1>这是商品更新页</h1>
-//         </div>
-//     )
-// }

@@ -2,22 +2,23 @@
 import '@/assets/css/zhaoty/ztyGoodList.scss'
 import React,{useState,useEffect} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 import {
   Table,
   Row,
   Col,
   Input,
-  Select,
-  Button
+  Button,
+  Modal,
 } from 'antd'
 import SelectCate from './components/cateSelect'
 import action from '@/store/actions'
 import moment from 'moment'
 import myImg from '@/utils/zhaoty/img'
+import {delGood } from '@/utils/zhaoty/api'
 export default props=>{
     const dispatch = useDispatch()
     const goodData = useSelector(store=>store.ztyGood.goodData)
-    const goodCates = useSelector(store=>store.ztyGood.cateArr)
     const [filter,setFilter] = useState({
       page:1,
       size:2,
@@ -25,6 +26,12 @@ export default props=>{
       cate:''
     })
     const [text,setText]=useState('')
+    const [keys,setKeys]=useState([])
+    const rowSelection = {
+      onChange: key => {
+        setKeys(key)
+      }}
+      const [selectionType, setSelectionType] = useState('checkbox')
    let params={
      page:filter.page,
      size:filter.size,
@@ -37,6 +44,39 @@ export default props=>{
        filter.text=''
        setFilter(JSON.parse(JSON.stringify(filter)))
      }
+   }
+   const toDel=row=>{
+    Modal.confirm({
+      title: '删除商品',
+      icon: <ExclamationCircleOutlined />,
+      content: '你确定要删除这个商品吗',
+      okText: '确认',
+      cancelText: '取消',
+      onOk(){
+        delGood({id:row._id}).then(()=>{
+        setFilter(JSON.parse(JSON.stringify(filter)))
+    })
+      }
+    });
+   }
+   const delGoods=()=>{
+    Modal.confirm({
+      title: '删除多个商品',
+      icon: <ExclamationCircleOutlined />,
+      content: '你确定要删除这些商品吗',
+      okText: '确认',
+      cancelText: '取消',
+      onOk(){
+        let str = ''
+        keys.map(ele=>{
+          str+= ';'+ele
+        })
+        console.log(str)
+        delGood({id:str}).then(()=>{
+        setFilter(JSON.parse(JSON.stringify(filter)))
+    })
+      }
+    });
    }
     useEffect(()=>{
         dispatch(action.ztyGetGoodList(params))
@@ -51,9 +91,21 @@ export default props=>{
       setFilter(JSON.parse(JSON.stringify(filter)))
       console.log(filter)
     }
-    const skipToUpdateGood=()=>{
-      props.history.push('/zhao/good/update')
+    const skipToUpdateGood=(row)=>{
+      if(row){
+        // console.log('编辑',row._id)
+        props.history.push('/zhao/good/update/'+row._id)
+      }else{
+        console.log('新增')
+        props.history.push('/zhao/good/update/0')
+      }
+      
     }
+    const footer =()=>(
+    <div>
+      <Button type="primary" onClick={()=>delGoods()}>批量操作</Button>
+    </div>
+    )
       const columns = [
         {
           title: '商品名称',
@@ -89,7 +141,27 @@ export default props=>{
             title:'上架时间',
             dataIndex:'create_time',
             key:'create_time',
-            render:text=><div>{moment(text).format('YYYY MM DD')}</div>
+            render:text=>(
+              <div>
+                <div style={{marginBottom:'10px'}}>{moment(text).format('YYYY年MM月DD日' )}</div>
+                <div>{moment(text).format('HH时mm分ss秒' )}</div>
+              </div>
+            )
+        },
+        {
+          title:'操作',
+          dataIndex:'op',
+          key:'op',
+          render:(text,row)=>(
+            <div>
+               <Button type="primary" size='small' 
+               style={{marginRight:'10px'}}
+               onClick={()=>skipToUpdateGood(row)}
+               >编辑</Button>
+                <Button size='small' 
+                onClick={()=>toDel(row)}>删除</Button>
+            </div>
+          )
         }
       ];
     return (
@@ -115,7 +187,6 @@ export default props=>{
                 <SelectCate 
                 allowClear 
                 onChange={cate=>filterChange('cate',cate)}
-                cateArr = {goodCates}
                 />
               </Col>
               <Col offset={2} span={4}>
@@ -126,6 +197,11 @@ export default props=>{
             dataSource={goodData.list} 
             columns={columns} 
             rowKey='_id'
+            rowSelection={{
+              type: selectionType,
+              ...rowSelection,
+            }}
+            footer={() =>footer()}
             pagination={{
             total: goodData.total,
             defaultPageSize: filter.size,
