@@ -62,6 +62,7 @@ const HuhClass =(props)=>{
     //跳转商品新增页面
     const GoodAddOrEdit=(id)=>{
         props.history.push("/hucontact/gooduptate/"+id)
+        action.clearGoodDetail()
     }
     
     //点击删除按钮

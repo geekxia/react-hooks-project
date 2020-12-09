@@ -1,4 +1,5 @@
-import React,{ useState } from "react"
+import React,{ useState,useEffect } from "react"
+import { useDispatch,useSelector } from "react-redux"
 import {
     Form,
     Input,
@@ -14,16 +15,18 @@ import {
 import WshSelect from "./components/WhsSelect"
 //引入upload组件
 import WhsUpload from "./components/WhsUpload"
+//引入状态管理Api
+import action from "@/store/actions"
 
 const { TextArea } = Input
 
 const formItemLayout = {
     labelCol: {
-      sm: { span: 8 },
+      sm: { span: 8 }
     },
     wrapperCol: {
-      sm: { span: 12 },
-    },
+      sm: { span: 12 }
+    }
 }
 
 const tailFormItemLayout = {
@@ -37,7 +40,13 @@ const tailFormItemLayout = {
 
 const HuhAddorEdit = (props)=>{
     let [imageUrls,setImageUrls]=useState({})
+    let [flag,setFlag] = useState(false) //是否已经填充表单
     const [form] = Form.useForm()
+    const dispatch = useDispatch()
+    //获取编辑页删除id
+    const id = props.match.params.id
+    const isAdd = id === "0"
+    const goodDetails = useSelector(store=>store.good.goodInfo)
 
     //当form表单值发生变化时,手动赋值
     const formChange=(values)=>{
@@ -46,14 +55,29 @@ const HuhAddorEdit = (props)=>{
     //表单提交
     const onFinish = values => {
         console.log('表单提交 ', values);
+        if(!isAdd) values.id = goodDetails._id
         fetchGoodOrEdit(values).then(res=>{
             props.history.replace('/hucontact')
         })
     }
+    //设置form表单默认值
+    useEffect(()=>{
+        if(!flag) form.setFieldsValue(goodDetails)
+        if(goodDetails._id) setFlag(true)
+        return undefined
+    })
+
+    useEffect(()=>{
+        //调列表接口
+        if(!isAdd) dispatch(action.getGoodDetail({id}))
+        return ()=>{
+            dispatch(action.clearGoodDetail())
+        }
+    },[])
 
     return (
         <div className="HH-AddorEdit">
-            <h1>商品新增</h1>
+            <h1>{ id!="0" ? "商品编辑" : "商品新增"}</h1>
             <hr/>
             <div className="AddorEdit-main" style={{paddingTop:"20px"}}>
                 <Form
@@ -114,7 +138,7 @@ const HuhAddorEdit = (props)=>{
                             { required: true , message: '请上传商品图片！' }
                         ]}
                     >
-                        <WhsUpload src={imageUrls.img} />
+                        <WhsUpload src={imageUrls.img || goodDetails.img} />
                     </Form.Item>
                     
                     <Form.Item
@@ -130,9 +154,11 @@ const HuhAddorEdit = (props)=>{
                             type="primary" 
                             htmlType="submit"
                             style={{backgroundColor:"#1890ff",borderColor:"#1890ff"}}
-                            size="large"
+                            size="middle"
                         >
-                            提交编辑
+                            {
+                                id!="0" ? "提交编辑" : "新增商品"
+                            }
                         </Button>
                     </Form.Item>
                 </Form>

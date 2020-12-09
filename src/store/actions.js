@@ -64,6 +64,7 @@ const getCatesAction = params => {
   }
 }
 
+//商品详情
 const getGoodDetail = params => {
   return dispatch=>{
     fetchGoodDetail(params).then(res=>{

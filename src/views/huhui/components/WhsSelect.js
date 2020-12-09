@@ -22,6 +22,7 @@ const whsSelect = (props)=>{
             <Select
                 style={{ width: props.cate ? 140 : 200}}
                 placeholder="请选择商品品类"
+                value={props.value || ""}
                 onChange={value=>props.onChange && props.onChange(value)}
                 allowClear={props.allowClear}
                 defaultValue={ props.category}
