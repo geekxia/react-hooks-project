@@ -51,7 +51,7 @@ export default [
           {
             id: 121010,
             text: '商品新增与编辑',
-            path: '/good/update',
+            path: '/good/update/:id',
             component: GoodAddOrEdit
           }
         ]
