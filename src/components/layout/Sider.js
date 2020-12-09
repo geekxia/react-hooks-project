@@ -34,11 +34,13 @@ export default props=>{
 
   return (
     <div className='qf-sider'>
-
-    <Menu
-      mode="inline"
-      theme="red"
-    >
+      <div className='logo'>
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1607430714945&di=531e09e60e7502f9c2619a04cca832dc&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fw%3D580%3B%2Fsign%3D45186d14d92a283443a636036b8ec8ea%2F2fdda3cc7cd98d1024a871382c3fb80e7bec90be.jpg" alt=""/>
+      </div>
+      <Menu
+        mode="inline"
+        theme="red"
+      >
       { createNavLink()}
     </Menu>
     </div>

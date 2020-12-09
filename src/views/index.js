@@ -38,7 +38,7 @@ export default [ // eslint-disable-line
       {
         id:1212,
         text:'页面2',
-        path:'/pagetwo',
+        path:'/pagetwo/:id',
         component:PageTwo
       },
       
@@ -58,7 +58,7 @@ export default [ // eslint-disable-line
           {
             id: 1311,
             text: '商品新增与编辑',
-            path: '/good/update',
+            path: '/good/update/:id',
             component: PageTwo
           }
         ]

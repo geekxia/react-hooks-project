@@ -15,10 +15,13 @@ export default props=>{
     const dispatch = useDispatch() // 派发，派发的是actions
     let [a,setA]=useState("")
     let [page, setPage] = useState(1)
+    let [title,setTitle]=useState([])
     const changemusic=(e)=>{
         if(e.keyCode===13){
         dispatch(action.changeMusicList(e.target.value))
+        setPage(1)
         console.log(list)
+        setTitle(list.map(ele=>ele.album.title))
         console.log(list[0].album.name)
         }
     }
@@ -33,6 +36,13 @@ export default props=>{
             title: '相关信息',
             dataIndex: 'lyric'?'lyric':keyword,
             key:'lyric'?'lyric':keyword,
+            align: 'center',
+            // render: text => <a>{text}</a>,
+        },
+        {
+            title: '专辑',
+            dataIndex:'album[id]',
+            key: '',
             align: 'center',
         },
         {
@@ -50,8 +60,8 @@ export default props=>{
     }
     const search=()=>{
         console.log(a);
-
         dispatch(action.changeMusicList(a))
+        setPage(1)
     }
     const changePage=flag=>{
         if(flag==='prev'&&page<=1)return false
@@ -79,6 +89,17 @@ export default props=>{
                 onBlur={(e)=>changevalue(e)}
             />
         <button className='search' onClick={()=>search()}>搜索</button>
+        <div className='singerBox'>
+            <div className='imgbox'>
+                <img src="//y.gtimg.cn/music/photo_new/T001R150x150M0000039EKtl4ec7wv.jpg?max_age=2592000" alt=""/>
+            </div>
+            <div className='singerDetail'>
+                <span>歌手:  {keyword}</span>
+                <span>单曲 <i>247</i></span>
+                <span>专辑 <i>41</i></span>
+                <span>MV <i>107</i></span>
+            </div>
+        </div>
         <Table 
             columns={columns} 
             dataSource={list} 

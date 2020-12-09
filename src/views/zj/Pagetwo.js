@@ -16,6 +16,7 @@ import {
   Switch,
 } from "antd";
 import { QfUploadIcon } from "@/components";
+import CateSelect from './components/CateSelect'
 
 import img from "@/utils/img";
 import { fetchGoodOrEdit } from "@/utils/api";
@@ -121,11 +122,7 @@ export default (props) => {
           label="选择品类"
           rules={[{ required: true, message: "商品选择必选!" }]}
         >
-          <Select style={{ width: 200 }} placeholder="选择一个品类">
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="tom">Tom</Option>
-          </Select>
+          <CateSelect/>
         </Form.Item>
 
         <Form.Item
