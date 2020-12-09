@@ -54,7 +54,7 @@ const HuhAddorEdit = (props)=>{
     }
     //表单提交
     const onFinish = values => {
-        console.log('表单提交 ', values);
+        // console.log('表单提交 ', values);
         if(!isAdd) values.id = goodDetails._id
         fetchGoodOrEdit(values).then(res=>{
             props.history.replace('/hucontact')

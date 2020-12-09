@@ -1,96 +1,90 @@
-import { useEffect } from 'react'
+import React,{ useEffect } from "react"
 import { Form, Input, Button, Checkbox } from 'antd'
-import './style.scss'
-import api from '@/utils/api'
-import { useHistory } from 'react-router-dom'
+import Api from "@/utils/api"
+import { useHistory } from "react-router-dom"
 
 const layout = {
-  labelCol: { span: 4 },
-  wrapperCol: { span: 19 }
+    labelCol: {span: 8},
+    wrapperCol: {span: 12}
 }
 
 const tailLayout = {
-  wrapperCol: { offset: 4, span: 19 }
+    wrapperCol: { offset: 0, span: 24 }
 }
 
-export default props => {
+const HHlogin =(props)=>{
+    const history = useHistory()
+    //提交表单
+    const onFinish = values => {
+        console.log('Success:', values)
+        Api.fetchLogin(values).then(res=>{
+            console.log("登录成功",res);
+            if( res && res.token){
+                localStorage.setItem("token",res.token)
+                //跳转至首页
+                history.replace("/")
+                //改变父组件 的 isToken 状态
+                props.onLogin()
+            }
+        })
+    }
 
-  const history = useHistory()
+    useEffect(()=>{
+        location.href="/#/login"
+        return undefined
+    },[])
 
-  // 登录提交
-  const onFinish = (values) => {
-    console.log('Success:', values)
-    api.fetchLogin(values).then(res=>{
-      console.log('登录成功', res)
-      if(res && res.token) {
-        // 把登录状态（鉴权）存储起来
-        localStorage.setItem('token', res.token)
-        // 跳转到首页
-        // location.href='/#/'
-        history.replace('/')
-        // 调用App组件传递过来的onLogin方法，刷新 isLogin
-        props.onLogin()
-      }
-    })
-  }
+    return(
+        <div className="HH-login">
+            <div className="login-main">
+                <Form
+                    {...layout}
+                    name="basic"
+                    initialValues={{
+                        remember: true,
+                    }}
+                    horizontal="true"
+                    onFinish={onFinish}
+                >
+                    <Form.Item
+                        label="用户名"
+                        name="username"
+                        rules={[
+                        {
+                            required: true,
+                            message: 'Please input your username!',
+                        },
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
 
-  useEffect(()=>{
-    location.href = '/#/login'
-    return undefined
-  }, [])
+                    <Form.Item
+                        label="密 码"
+                        name="password"
+                        rules={[
+                        {
+                            required: true,
+                            message: 'Please input your password!',
+                        },
+                        ]}
+                    >
+                        <Input.Password />
+                    </Form.Item>
 
-  return (
-    <div className='qf-login'>
-      <div>
-        <Form
-          {...layout}
-          name="basic"
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-        >
-          <Form.Item
-            label="用户名"
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your username!',
-              },
-              {
-                pattern: /^[a-zA-Z][a-zA-Z]{1,19}$/,
-                message: '用户名格式有误'
-              }
-            ]}
-          >
-            <Input />
-          </Form.Item>
+                    <Form.Item {...tailLayout} name="remember" valuePropName="checked">
+                        <Checkbox>记住密码</Checkbox>
+                    </Form.Item>
 
-          <Form.Item
-            label="密 码"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your password!',
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-
-          <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-            <Checkbox>记住密码</Checkbox>
-          </Form.Item>
-
-          <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
-              登录
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
-    </div>
-  )
+                    <Form.Item {...tailLayout}>
+                        <Button type="primary" htmlType="submit">
+                        登录
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </div>
+        </div>
+    )
 }
+
+export default HHlogin

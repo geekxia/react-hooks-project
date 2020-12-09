@@ -52,7 +52,7 @@ export function fetchGoodDetail(params) {
     params
   })
 }
-
+//登录接口
 export function fetchLogin(data) {
   return axios({
     url: '/api/v1/user/login',
