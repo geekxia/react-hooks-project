@@ -1,6 +1,7 @@
-import {useState} from 'react';
-import img from '@/utils/img';
+import {useState,useEffect} from 'react';
 import api from '@/utils/api';
+import {useDispatch,useSelector} from 'react-redux';
+import action from '@/store/actions'
 import { 
   Form, 
   Input, 
@@ -36,23 +37,32 @@ const validateMessages = {
   required: '${label}是必填',
 };
 
-function beforeUpload(file) {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-  if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!');
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
-  }
-  return isJpgOrPng && isLt2M;
-}
+// function beforeUpload(file) {
+//   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+//   if (!isJpgOrPng) {
+//     message.error('You can only upload JPG/PNG file!');
+//   }
+//   const isLt2M = file.size / 1024 / 1024 < 2;
+//   if (!isLt2M) {
+//     message.error('Image must smaller than 2MB!');
+//   }
+//   return isJpgOrPng && isLt2M;
+// }
 
 export default props=>{
-  const [imageUrl,setImageUrl] = useState('')
+  const dispatch = useDispatch();
   const [loading,setLoading] = useState('');
   let [values,setValues] = useState({});
+  const goodInfo = useSelector(store=>store.good.goodInfo);
 
+  // 获取Form的实例
+  const [form] = Form.useForm()
+
+  // 是否已经填充表单
+  let [flag,setFlag] = useState(false);
+
+  let id = props.match.params.id;
+  const isAdd = id === '0';
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -62,9 +72,24 @@ export default props=>{
   
   // 当Form表单值发生变化时，我们手动取值，赋值给声明式变量 values
   const formChange = values=>{
-    console.log('form-values', values);
+    console.log('form------------values', values);
     setValues(values)
   }
+  useEffect(()=>{
+    // 当是编辑时，触发action调接口获取商品详情
+    if(!isAdd) dispatch(action.getGoodDetail({id}))
+    return dispatch(action.clearGoodDetail())
+  },[])
+
+  useEffect(()=>{
+    console.log('好久好久')
+    if(!flag) form.setFieldsValue(goodInfo);
+    // 解决当前useEffect反复运行的问题
+    if(goodInfo._id) {
+      setFlag(true);
+    }
+    return undefined
+  })
   // //图片上传成功
   // const imgSuccess = e=>{
   //   console.log('图片上传成功', e);
@@ -81,12 +106,10 @@ export default props=>{
       props.history.replace('/good/list')
     })
   };
-  // 获取Form的实例
-  const [form] = Form.useForm()
 
   return(
     <div className='al-good-add'>
-      <h1>商品新增</h1>
+      <h1>{isAdd ? '商品新增':'商品编辑'}</h1>
       <Form 
         {...layout} 
         form = {form}
@@ -113,7 +136,7 @@ export default props=>{
             {required:true}
           ]}
         >
-          <GoodUpload src={values.img}/>
+          <GoodUpload src={values.img || goodInfo.img}/>
         </Form.Item>
         <Form.Item 
           name='desc' 
@@ -156,7 +179,7 @@ export default props=>{
         </Form.Item>
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            {isAdd ? '提交' : '确定修改'}
           </Button>
         </Form.Item>
     </Form>

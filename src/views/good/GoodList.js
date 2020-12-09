@@ -20,7 +20,7 @@ export default props=>{
     size:2,
     page:1,
     text:'',
-    hot:''
+    hot:'',
   })
 let [keys,setKeys] = useState([])
   // 删除操作
@@ -68,7 +68,12 @@ let [keys,setKeys] = useState([])
     setFilter(JSON.parse(JSON.stringify(filter)))
     console.log('filter', filter)
   }
-
+  const skipToEdit = row=>{
+    console.log('eidt------props',props,row._id)
+    dispatch(action.clearGoodDetail())
+    props.history.push('/good/updata/'+(row?row._id:0))
+    
+  }
   useEffect(()=>{
     dispatch(action.getGoodList(filter))
     return undefined
@@ -134,7 +139,7 @@ let [keys,setKeys] = useState([])
       key:'tags',
       render: (text, row) => {
         return <Space size="middle">
-          <a>编辑</a>
+          <a onClick={()=>skipToEdit(row)}>编辑</a>
           <a onClick={()=>handelDel(row)} style={{color:'red'}}>删除</a>
         </Space>
       },

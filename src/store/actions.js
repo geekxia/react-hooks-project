@@ -2,7 +2,8 @@ import type from './actionTypes'
 import { 
   fetchQqMusic,
   fetchGoodList,
-  fetchCates
+  fetchCates,
+  fetchGoodDetail
 } from '@/utils/api'
 
 // action 生成器
@@ -72,11 +73,31 @@ const getCatesAction = params => {
     })
   }
 }
+
+// 获取商品详情
+const getGoodDetail = params =>{
+  return dispatch =>{
+    fetchGoodDetail(params).then(res=>{
+      console.log('商品详情', res)
+      dispatch({type:type.GET_GOOD_DETAIL,payload:res})
+    })
+  }
+}
+
+//清除上次残留商品详情
+const clearGoodDetail = ()=>{
+  return{
+    type:type.CLEAR_GOOD_DETAIL,
+    payload: {}
+  }
+}
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   selectFriendAction,
   getGoodList,
-  getCatesAction
+  getCatesAction,
+  getGoodDetail,
+  clearGoodDetail
 }

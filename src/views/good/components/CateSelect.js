@@ -14,6 +14,7 @@ export default props =>{
   return(
     <Select 
       placeholder="选择一个品类" 
+      value={ props.value}
       style={{ width: 200 }}
       onChange={val=>props.onChange && props.onChange(val)}
     >
