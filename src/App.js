@@ -5,17 +5,17 @@ import { Layout,Login } from '@/components'
 import { Provider } from 'react-redux'
 import store from '@/store'
 
+import {useState} from 'react'
+
 function App() {
-  const id = localStorage.getItem('token')
+  const [isLogin,setIsLogin] = useState(localStorage.getItem('token'))
   return (
     <HashRouter>
       <Provider store={store}>
         <div className="app">
           {
-            id?<Layout />:<Login/>
+            isLogin?<Layout />:<Login onLogin={()=>setIsLogin(true)}/>
           }
-          {/* <Layout />
-          <Login/> */}
         </div>
       </Provider>
     </HashRouter>

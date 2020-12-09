@@ -4,6 +4,7 @@ import {
   useHistory,
   // withRouter
 } from 'react-router-dom'
+import {LogoutOutlined} from '@ant-design/icons'
 
 // 问题：没有被Route组件直接包裹的React组件中，是没有路由API的。
 // 那该怎么办？
@@ -13,18 +14,21 @@ import {
 // withRouter 是一个高阶组件，让那些没有被Route组件直接包裹的React组件拥有路由API
 // useHistory 是ReactRouter提供的Hooks API，帮助我们在无状态组件中使用路由API
 
-
-
 // 一、使用Hooks写法，来解决React无状态组件中没有路由API的问题
-
 
 export default props => {
   const history = useHistory()
   // console.log('---header props', props)
   // console.log('---header history', history)
+  const onLogout = ()=>{
+    localStorage.removeItem('token')
+    location.reload()
+  }
   return (
     <div className='qf-header'>
-      header
+      <div className='qf-logout'>
+        <LogoutOutlined onClick={()=>onLogout()}/>
+      </div>
     </div>
   )
 }

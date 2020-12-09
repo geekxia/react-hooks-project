@@ -4,7 +4,9 @@ import {
 	Button, 
 	Checkbox 
 } from 'antd';
-import {fetchLogin} from '@/utils/api'
+import api from '@/utils/api'
+import {useHistory} from 'react-router-dom'
+import { useEffect } from 'react';
 
 const layout = {
 	labelCol: { span: 8 },
@@ -14,11 +16,28 @@ const tailLayout = {
 	wrapperCol: { offset: 8, span: 16 },
 };
 
-export default props =>{
 
+export default props =>{
+	const history = useHistory()
+
+	// 登录提交
 	const onFinish = values => {
 			console.log('Success:', values);
+			api.fetchLogin(values).then(res=>{
+				console.log('登陆成功',res)
+				if(res && res.token){
+					localStorage.setItem('token',res.token)
+					history.replace('/wyk/AllGoodList')
+					// 调用App组件传递过来的onLogin方法，刷新 isLogin
+					props.onLogin()
+				}
+			})
 		};
+
+		useEffect(()=>{
+			location.href='/#/login'
+			return undefined
+		},[])
 
 	return (
 		<div className='qf-login'>
