@@ -4,6 +4,7 @@ import {
   useHistory,
   // withRouter
 } from 'react-router-dom'
+import { ExportOutlined } from '@ant-design/icons'
 
 // 问题：没有被Route组件直接包裹的React组件中，是没有路由API的。
 // 那该怎么办？
@@ -20,11 +21,18 @@ import {
 
 export default props => {
   const history = useHistory()
-  console.log('---header props', props)
-  console.log('---header history', history)
+  // console.log('---header props', props)
+  // console.log('---header history', history)
+  const logout = ()=> {
+    localStorage.removeItem('token')
+    location.reload()
+  }
   return (
-    <div className='qf-header'>
-      header
+    <div className='qf-header' style={{textAlign:'right'}}>
+      <ExportOutlined
+        style={{color: 'white', fontSize: '26px'}}
+        onClick={()=>logout()}
+      />
     </div>
   )
 }

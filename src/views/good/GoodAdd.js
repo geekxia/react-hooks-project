@@ -1,25 +1,18 @@
-import React,{ useState } from 'react'
-
-import img from '@/utils/img'
-import {
-  QfUploadIcon
-} from '@/components'
-import {
-  fetchGoodOrEdit
-} from '@/utils/api'
+import React,{ useState,useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import GoodUpload from './components/GoodUpload'
+import { fetchGoodOrEdit } from '@/utils/api'
 import CateSelect from './components/CateSelect'
+import actions from '@/store/actions'
 
 import { 
   Form, 
   Input, 
   Button, 
   InputNumber,
-  Select,
   Switch,
-  Upload
 } from 'antd'
 const { TextArea } = Input
-const { Option } = Select
 
 const layout = {
   labelCol: { span: 4 },
@@ -29,40 +22,58 @@ const tailLayout = {
   wrapperCol: { offset: 4, span: 16 },
 }
 
-export default props => {
-  let [imageUrl, setImageUrl] = useState('')
-  // 获取表单实例
-  const [form] = Form.useForm()
+
+export default props => {  
+  const dispatch = useDispatch()
+  let [values, setValues] = useState({})
+  
+  // 当Form表单值发生变化时，我们手动取值，赋值给声明式变量 values
+  const formChange = values => {
+    setValues(values)
+    console.log('values',values)
+  }
+
+  const id = props.match.params.id
+  const isAdd = id === '0'
+  const goodInfo = useSelector(store=>store.good.goodInfo)
+    
+  let [flag, setFlag] = useState(false)  
+  const [form] = Form.useForm() // 获取表单实例
+  
+  useEffect(()=>{
+    // 判断是编辑还是新增
+    if(!isAdd) dispatch(actions.goodDetailAction({id}))
+    return ()=>{
+      // 当前组件被销毁前，清空redux中的缓存数据,走actions.js、goods.js
+      dispatch(actions.clearGoodDetail())
+    }
+  }, [])
+  useEffect(()=>{
+    // 给表单赋初始值
+    if(!flag) form.setFieldsValue(goodInfo)
+    // 解决当前useEffect反复运行的问题
+    if(goodInfo._id) setFlag(true)
+    return undefined
+  })
+
   // 表单提交
   const onFinish = values => {
-    values.img = imageUrl
     console.log('提交接口', values);
+    if(!isAdd) values.id = goodInfo._id
     fetchGoodOrEdit(values).then(()=>{
       // 跳转到商品列表页
       props.history.replace('/good/list')
     })
   }
-  // 图片上传成功
-  const imgSuccess = e => {
-    console.log('图片上传成功', e)
-    if(e.fileList[0].response) {
-      setImageUrl(e.fileList[0].response.data.url)
-    }
-  }
-
+  
+  // 商品价格变化
   function onChange(value) {
     console.log('changed', value);
-  }
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
-  function onChangeswitch(checked) {
-    console.log(`switch to ${checked}`);
   }
 
   return (
     <div>
-      <h1>商品新增</h1>
+      <h1>{isAdd? '商品新增' : '商品编辑'}</h1>
       <hr/>
       <div>
         <Form
@@ -70,8 +81,9 @@ export default props => {
           {...layout}          
           form={form}
           name="basic"
-          initialValues={{ remember: true }}
           onFinish={onFinish}
+          scrollToFirstError
+          onValuesChange={(val, values)=>formChange(values)}
         >
           <Form.Item
             label="商品名称"
@@ -114,21 +126,12 @@ export default props => {
 
           <Form.Item
             label="商品图片"
+            name="img"
+            rules={[
+              { required: true, message: '商品图片是必填!' }
+            ]}
           >
-            <Upload
-              name="file"
-              action={img.uploadUrl}
-              listType="picture-card"
-              className="avatar-uploader"
-              showUploadList={false}
-              onChange={imgSuccess}
-            >
-              {
-                imageUrl ?
-                <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} />
-                : <QfUploadIcon />
-              }
-            </Upload>
+            <GoodUpload src={values.img||goodInfo.img}/>
           </Form.Item> 
 
           <Form.Item
@@ -141,7 +144,7 @@ export default props => {
 
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit">
-              提交
+              { isAdd? '确认提交' : '确认修改' }
             </Button>
           </Form.Item>
         </Form>

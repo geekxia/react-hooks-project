@@ -89,6 +89,9 @@ export default props => {
       }
     })    
   }
+  const skipToEdit = row => {
+    props.history.push('/good/update/'+row._id)
+  }
 
   const columns = [
     {
@@ -159,7 +162,7 @@ export default props => {
         <>
           <div className="operation">
             <a onClick={()=>handleDel(row)} className="del">删除</a>
-            <a>编辑</a>
+            <a onClick={()=>skipToEdit(row)}>编辑</a>
           </div>
         </>
       ),
@@ -210,7 +213,7 @@ export default props => {
           </Col>
 
           <Col span={2} offset={2} style={{textAlign:"right"}}>
-            <Button value="default" shape="round" onClick={()=>{props.history.push('/good/update')}}>新增</Button>
+            <Button value="default" shape="round" onClick={()=>{props.history.push('/good/update/0')}}>新增</Button>
           </Col> 
         </Row>               
       </div>
