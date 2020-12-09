@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic,fetchGoodList,fetchCates } from '@/utils/api'
+import { fetchQqMusic,fetchGoodList,fetchCates,fetchGoodDetail } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -71,16 +71,35 @@ function YuGetGoodList(params){
     })
   }
 }
-
+//获取品类
 const getCatesAction =params=>{
   return dispatch=>{
     fetchCates(params).then(res=>{
-      console.log('品类',res)
+      // console.log('品类',res)
       dispatch({
         type:type.GET_CATE_LIST,
         payload:res.list
       })
     })
+  }
+}
+//获取商品详情
+const getGoodDetail =params=>{
+  return dispatch=>{
+    fetchGoodDetail(params).then(res=>{
+      // console.log('详情 ',res)
+      dispatch({
+        type:type.GET_GOOD_DETAIL,
+        payload:res
+      })
+    })
+  }
+} 
+
+const clearGoodInfo=payload=>{
+  return {
+    type:type.CLEAR_GOOD_DETIL,
+    payload
   }
 }
 
@@ -92,5 +111,7 @@ export default {
   handleDelete,
   handleAdd,
   YuGetGoodList,
-  getCatesAction
+  getCatesAction,
+  getGoodDetail,
+  clearGoodInfo
 }

@@ -7,7 +7,7 @@ const { Option } = Select
 export default props=>{
     const dispatch = useDispatch()
     const cates=useSelector(store=>store.study.cates)
-    console.log(cates)
+    // console.log(cates)
     useEffect(()=>{
         dispatch(action.getCatesAction())
         return undefined
@@ -17,6 +17,7 @@ export default props=>{
             <Select
                 style={{ width: 200 }}
                 placeholder="选择一个品类"
+                value={props.value}
                 allowClear={props.allowClear}
                 onChange={(val)=>props.onChange(val)}/*隐藏的onChange,option的值就是val,传给父组件 */
             >

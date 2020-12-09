@@ -54,7 +54,7 @@ export default [
       },{
         id:1303,
         text:'添加商品',
-        path:'/form/add',
+        path:'/form/add/:id',
         component:GoodAddOrEdit
       }
     ]

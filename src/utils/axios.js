@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { message} from 'antd';
 
 // 浏览器同源策略，只是限制ajax跨域
 const baseURL = 'http://localhost:9000'
@@ -21,12 +22,17 @@ instance.interceptors.response.use(function (response) {
   // console.log(response)
   let res = null
   if(response.status === 200) {
-    if(response.data.err===0&&response.data.data){
+    if(response.data.err===-1){
+      window.location.href='/#/login'
+    }else if(
+      response.data.err===0&&response.data){
       res=response.data.data
       // console.log('商品列表',res)
-    }
-    if(response.data && response.data.code===0) {
+    }else if(
+      response.data && response.data.code===0) {
       res = response.data.data
+    }else{
+      message.warning(response.data.msg);
     }
   }
   return res

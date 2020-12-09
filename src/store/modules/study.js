@@ -11,7 +11,8 @@ let initState = {
   },
   loading:true,
   data:[],
-  cates: []
+  cates: [],
+  goodInfo:[]
  
 }
 export default (state=initState, action) => {
@@ -47,6 +48,12 @@ export default (state=initState, action) => {
       break
     case type.GET_CATE_LIST:
       newState.cates = action.payload
+      break
+    case type.GET_GOOD_DETAIL:
+      newState.goodInfo=action.payload
+      break
+    case type.CLEAR_GOOD_DETIL:
+      newState.goodInfo=[]
       break
     default:
       return state

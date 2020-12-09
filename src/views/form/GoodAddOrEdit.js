@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
     Form,
@@ -15,10 +15,11 @@ import {
     Upload,
     Switch
 } from 'antd'
-import { fetchGoodOrEdit } from '@/utils/api'
 import CateSelect from './components/CateSelect'
 import GoodUpload from './components/GoodUpload'
-
+import action from '@/store/actions'
+import api from '@/utils/api'
+import {useDispatch,useSelector} from 'react-redux'
 const { Option } = Select
 const { TextArea } = Input
 const AutoCompleteOption = AutoComplete.Option;
@@ -45,28 +46,48 @@ const formItemLayout = {
 }
 
 export default props=>{
-
-    const [autoCompleteResult, setAutoCompleteResult] = useState([])
+    const dispatch=useDispatch()
+    // console.log(props.match.params.id)
+    const id=props.match.params.id
+    const isAdd=id==0
     let [imageUrl, setImageUrl] = useState('')
     let [values, setValues] = useState({})
-  
+    let [flag,setFlag]=useState(false)
+    let goodInfo=useSelector(store=>store.study.goodInfo)
+    // console.log(goodInfo)
+    useEffect(()=>{
+        if(!isAdd)dispatch(action.getGoodDetail({id}))
+        return ()=>{
+            dispatch(action.clearGoodInfo())
+        }
+    },[])
+    useEffect(()=>{
+        if(!flag)form.setFieldsValue(goodInfo)
+        if(goodInfo._id) setFlag(true)
+        return undefined
+    })
     // 获取Form的实例
     const [form] = Form.useForm()
     
     // 当Form表单值发生变化时，我们手动取值，赋值给声明式变量 values
     const formChange=values=>setValues(values)
+    // console.log(values)
 
      // 表单提交
     const onFinish = (values) => {
         console.log('values 提交接口', values)
-        fetchGoodOrEdit(values).then(()=>{
+        if(!isAdd) values.id=id
+        api.fetchGoodOrEdit(values).then(()=>{
         // 跳转到列表页
+        
         props.history.replace('/form/advanced-form')
         })
+        
+        console.log(values)
     }
     return (
         <div>
-            <h1>商品新增</h1>
+            <h1>{isAdd?'商品新增':'商品编辑'}</h1>
             <Form
                 style={{margin:'25px 0'}}
                 {...formItemLayout}
@@ -132,7 +153,7 @@ export default props=>{
                         { required: true, message: '商品图片是必填!' }
                     ]}
                 >
-                    <GoodUpload src={values.img} />
+                    <GoodUpload src={values.img||goodInfo.img} />
                 </Form.Item>
 
                 <Form.Item
@@ -145,7 +166,7 @@ export default props=>{
 
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">
-                        提交
+                        {isAdd?'添加商品':'提交修改'}
                     </Button>
                 </Form.Item>
             </Form>

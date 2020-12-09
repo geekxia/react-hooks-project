@@ -98,7 +98,7 @@ export default props=>{
             render: (text, record) => 
                 data.list.length >= 1 ? (
                     <Space>
-                        <a>编辑</a>
+                        <a onClick={()=>props.history.push('/form/add/'+record._id)}>编辑</a>
                             <a onClick={()=>handleDel(record)}>删除</a>
                     </Space>
                     
@@ -259,7 +259,7 @@ export default props=>{
             <div style={{'paddingBottom':100+'px','background':'white','padding':10+'px'}}>
                 <Row style={{'borderBottom':1+'px'}}>成员管理</Row>
                 <Col offset={2} span={2} style={{textAlign: 'right'}}>
-                    <Button size='small' type='primary' onClick={()=>props.history.push('/form/add')}>
+                    <Button size='small' type='primary' onClick={()=>props.history.push('/form/add/0')}>
                         新增
                     </Button>
                 </Col>
@@ -278,7 +278,7 @@ export default props=>{
                     }}
                 />
                 <Row>
-                    <Col span={24} className='col' onClick={()=>props.history.push('/form/add')}>
+                    <Col span={24} className='col' onClick={()=>props.history.push('/form/add/0')}>
                         新增成员
                     </Col>
                 </Row>
