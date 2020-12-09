@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import {useDispatch,useSelector} from 'react-redux'
 import {
   Form,
   Input,
@@ -17,7 +18,8 @@ import {
 } from "antd";
 import { QfUploadIcon } from "@/components";
 import CateSelect from './components/CateSelect'
-
+import GoodUpload from './components/GoodUpload'
+import action from '@/store/actions'
 import img from "@/utils/img";
 import { fetchGoodOrEdit } from "@/utils/api";
 
@@ -53,21 +55,35 @@ const tailFormItemLayout = {
 
 export default (props) => {
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-  let [imageUrl, setImageUrl] = useState("");
+  const dispatch=useDispatch()
+  let [values,setValues]=useState({})
+  const id=props.match.params.id
+  const isAdd=id==0
+  const goodInfo=useSelector(store=>store.good.goodInfo)
+  console.log('--------------props',props)
+  const formChange=values=>{
+    setValues(values)
+  }
   // 获取Form的实例
+  const [flag,setFlag]=useState(false)
   const [form] = Form.useForm();
 
-  const imgSuccess = (e) => {
-    console.log("图片上传成功", e);
-    if (e && e.fileList && e.fileList[0] && e.fileList[0].response) {
-      setImageUrl(e.fileList[0].response.data.url);
-    }
-  };
-
+  useEffect(()=>{
+    // 给表单赋初始值
+    if(!flag) form.setFieldsValue(goodInfo)
+    // 解决当前useEffect反复运行的问题
+    if(goodInfo._id)setFlag(true)
+    return undefined
+  })
+  useEffect(()=>{
+    // 当是编辑状态时，触发action掉接口获取商品详情
+    if(!isAdd) dispatch(action.getGoodDetail({id}))
+    return undefined
+  },[])
   // 表单提交
   const onFinish = (values) => {
     values.img = imageUrl;
-    console.log("values 提交接口: ", values, props.history);
+    // console.log("values 提交接口: ", values, props.history);
     fetchGoodOrEdit(values).then(() => {
       props.history.replace("/good/list");
     });
@@ -75,7 +91,7 @@ export default (props) => {
 
   return (
     <div className="twoone">
-      <h1>商品新增与编辑</h1>
+      <h1>{isAdd?'商品新增':'商品编辑'}</h1>
       <hr />
       <Form
         style={{ margin: "25px 0" }}
@@ -83,11 +99,8 @@ export default (props) => {
         form={form}
         name="register"
         onFinish={onFinish}
-        initialValues={{
-          residence: ["zhejiang", "hangzhou", "xihu"],
-          prefix: "86",
-        }}
         scrollToFirstError
+        onValuesChange={(val,values)=>formChange(values)}
       >
         <Form.Item
           name="name"
@@ -129,24 +142,7 @@ export default (props) => {
           label="商品图片"
           rules={[{ required: true, message: "商品图片必选!" }]}
         >
-          <Upload
-            name="file"
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            action={img.uploadUrl}
-            onChange={imgSuccess}
-          >
-            {imageUrl ? (
-              <img
-                src={img.imgBase + imageUrl}
-                alt="avatar"
-                style={{ width: "100%" }}
-              />
-            ) : (
-              <QfUploadIcon />
-            )}
-          </Upload>
+          <GoodUpload src={values.img||goodInfo.img} />
         </Form.Item>
 
         <Form.Item name="hot" label="是否热销" valuePropName="checked">
@@ -155,7 +151,7 @@ export default (props) => {
 
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            提交
+            {isAdd?'添加商品':'确认修改'}
           </Button>
         </Form.Item>
       </Form>

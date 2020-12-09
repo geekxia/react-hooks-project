@@ -1,7 +1,7 @@
 import React from 'react'
 import { Breadcrumb } from 'antd';
 import { HomeOutlined, UserOutlined } from '@ant-design/icons';
-
+import {useSelector} from 'react-redux'
 
 // 问题：没有被Route组件直接包裹的React组件中，是没有路由API的。
 // 那该怎么办？
@@ -17,6 +17,8 @@ import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 
 
 export default props=>{
+    const username=useSelector(store=>store.login.username)
+    console.log(username)
   return(
       <div className='qf-header'>
           <Breadcrumb>
@@ -29,6 +31,7 @@ export default props=>{
               </Breadcrumb.Item>
               <Breadcrumb.Item>Application</Breadcrumb.Item>
           </Breadcrumb>
+          {/* <span>{username}</span> */}
       </div>
   )
 }

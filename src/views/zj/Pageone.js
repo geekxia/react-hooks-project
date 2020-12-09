@@ -20,9 +20,9 @@ export default props=>{
         if(e.keyCode===13){
         dispatch(action.changeMusicList(e.target.value))
         setPage(1)
-        console.log(list)
+        // console.log(list)
         setTitle(list.map(ele=>ele.album.title))
-        console.log(list[0].album.name)
+        // console.log(list[0].album.name)
         }
     }
     const columns = [
@@ -56,10 +56,10 @@ export default props=>{
     ];
     const changevalue=(e)=>{
         setA(e.target.value)
-        console.log(list);
+        // console.log(list);
     }
     const search=()=>{
-        console.log(a);
+        // console.log(a);
         dispatch(action.changeMusicList(a))
         setPage(1)
     }

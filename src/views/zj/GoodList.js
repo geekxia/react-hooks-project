@@ -38,7 +38,7 @@ export default props => {
   })
 
   const textChange = val => {
-    console.log('value text', val)
+    // console.log('value text', val)
     setText(val)
     if(!val) {
       filter.text = ''
@@ -49,7 +49,7 @@ export default props => {
     filter[key] = val
     if(key!=='page') filter.page = 1
     setFilter(JSON.parse(JSON.stringify(filter)))
-    console.log('filter', filter)
+    // console.log('filter', filter)
   }
   // 删除操作
   const handleDel = row => {
@@ -75,6 +75,12 @@ export default props => {
     api.fetchGoodDel({id}).then(()=>{
       setFilter(JSON.parse(JSON.stringify(filter)))
     })
+  }
+  // 编辑跳转
+  const skipToEdit=row=>{
+    // store中记录了上次修改的商品信息，先清空，再跳转
+    dispatch(action.clearGoodDetail())
+    props.history.push('/pagetwo/'+(row?row._id:0))
   }
   useEffect(()=>{
     dispatch(action.getGoodList(filter))
@@ -139,8 +145,24 @@ export default props => {
       dataIndex: 'tags',
       render: (text,row) => (
         <div className='table-btn'>
-          <a onClick={()=>handleDel(row)}>删除</a>
-          <a >编辑</a>
+          <Button 
+            type="primary" 
+            shape="round"  
+            danger
+            // size={size}
+            style={{marginRight:'5px'}}
+            onClick={()=>handleDel(row)}
+          >
+          删除
+        </Button>
+        <Button 
+            type="primary" 
+            shape="round"  
+            // size={size}
+            onClick={()=>skipToEdit(row)}
+        >
+          编辑
+        </Button>
         </div>
       )
     }
@@ -192,7 +214,7 @@ export default props => {
             <Button
                 size='small'
                 type="primary"
-                onClick={()=>props.history.push('/pagetwo/0')}
+                onClick={()=>skipToEdit()}
             >
                 新增
             </Button>

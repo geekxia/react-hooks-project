@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic,fetchGoodList ,fetchCates} from '@/utils/api'
+import { fetchQqMusic,fetchGoodList ,fetchCates,fetchGoodDetail} from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -49,7 +49,7 @@ function musicListAction(params) {
 function getGoodList(params) {
   return dispatch=>{
     fetchGoodList(params).then(res=>{
-      console.log('商品列表', res)
+      // console.log('商品列表', res)
       dispatch({type: type.GET_GOOD_LIST, payload: res})
     })
   }
@@ -57,9 +57,29 @@ function getGoodList(params) {
 const getCatesAction=params=>{
   return dispatch=>{
     fetchCates(params||{}).then(res=>{
-      console.log('品类列表',res)
+      // console.log('品类列表',res)
       dispatch({type:type.GET_CATE_LIST,payload:res.list})
     })
+  }
+}
+const clearGoodDetail=()=>{
+  return {
+    type:type.CLEAR_GOOD_DETAIL,
+    payload:{}
+  }
+}
+const getGoodDetail=params=>{
+  return dispatch=>{
+    fetchGoodDetail(params).then(res=>{
+      console.log('商品详情',res)
+      dispatch({type:type.GET_GOOD_DETAIL,payload:res})
+    })
+  }
+}
+const getUsername=(payload)=>{
+  return{
+    type:type.GET_USER_NAME,
+    payload
   }
 }
 export default {
@@ -68,5 +88,8 @@ export default {
   musicListAction,
   changeMusicList,
   getGoodList,
-  getCatesAction
+  getCatesAction,
+  clearGoodDetail,
+  getGoodDetail,
+  getUsername
 }
