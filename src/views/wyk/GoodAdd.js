@@ -152,7 +152,7 @@ export default props =>{
                 
                 <Form.Item
                     name="hot"
-                    value='是否热销'
+                    label='是否热销'
                     valuePropName='checked'
                 >
                     <Switch />

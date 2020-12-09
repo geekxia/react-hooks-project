@@ -1,16 +1,21 @@
 import { HashRouter } from 'react-router-dom'
-import { Layout } from '@/components'
+import { Layout,Login } from '@/components'
 
 // react-redux
 import { Provider } from 'react-redux'
 import store from '@/store'
 
 function App() {
+  const id = localStorage.getItem('token')
   return (
     <HashRouter>
       <Provider store={store}>
         <div className="app">
-          <Layout />
+          {
+            id?<Layout />:<Login/>
+          }
+          {/* <Layout />
+          <Login/> */}
         </div>
       </Provider>
     </HashRouter>

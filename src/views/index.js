@@ -79,7 +79,7 @@ export default [
       {
         id:3401,
         text:'新增商品',
-        path:'/wyk/addGood',
+        path:'/wyk/addGood/:id',
         component:GoodAdd
       },
       {

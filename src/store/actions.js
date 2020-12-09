@@ -33,7 +33,7 @@ function addFooCountAction(payload) {
 function musicListAction(params) {
   return function(dispatch) {
     fetchQqMusic(params).then(res=>{
-      console.log('-----', res)
+      // console.log('-----', res)
       // 这才是真正地把后端数据，发送到store中
       dispatch({
         type: type.AJAX_MUSIC_LIST,
@@ -47,7 +47,7 @@ function musicListAction(params) {
 function getGoodList(params){
   return dispatch=>{
     fetchGoodList(params).then(res=>{
-      console.log('商品列表',res)
+      // console.log('商品列表',res)
       dispatch({type:type.GET_GOOD_LIST,payload:res})
     })
   }
@@ -57,7 +57,7 @@ function getGoodList(params){
 const  getCatesAction=params=>{
   return dispatch=>{
     fetchCates(params || {}).then(res=>{
-      console.log('商品种类',res)
+      // console.log('商品种类',res)
       dispatch({type:type.GET_GOOD_CATES,payload:res.list})
     })
   }

@@ -21,7 +21,7 @@ class Home extends React.Component {
     this.props.getList(params)
   }
   render() {
-    console.log('test redux props', this.props)
+    // console.log('test redux props', this.props)
     let { list } = this.props
     return (
       <div>

@@ -35,9 +35,29 @@ export function fetchCates(params) {
   })
 }
 
+// 删除商品
+export function fetchGoodDel(params) {
+  return axios({
+    url: '/api/v1/good/delete',
+    method: 'GET',
+    params
+  })
+}
+
+// 用户登录
+export function fetchLogin(data) {
+  return axios({
+    url: '/api/v1/user/login',
+    method: 'POST',
+    data
+  })
+}
+
 export default {
   fetchQqMusic,
   fetchGoodOrEdit,
   fetchGoodList,
-  fetchCates
+  fetchCates,
+  fetchGoodDel,
+  fetchLogin
 }
