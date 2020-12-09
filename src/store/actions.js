@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic, fetchGoodList, fetchCates } from '@/utils/api'
+import { fetchQqMusic, fetchGoodList, fetchCates,fetchGoodDetail } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -29,7 +29,7 @@ function addFooCountAction(payload) {
 function musicListAction(params) {
   return function(dispatch) {
     fetchQqMusic(params).then(res=>{
-      console.log('-----', res)
+      // console.log('-----', res)
       // 这才是真正地把后端数据，发送到store中
       dispatch({
         type: type.AJAX_MUSIC_LIST,
@@ -42,7 +42,7 @@ function musicListAction(params) {
 export function getGoodList(params) {
   return dispatch => {
     fetchGoodList(params).then(res => {
-      console.log('商品列表', res)
+      // console.log('商品列表', res)
       dispatch({
         type:type.GET_GOOD_LIST,
         payload:res
@@ -55,7 +55,7 @@ export function getGoodList(params) {
 const getCatesList= params => {
   return dispatch => {
     fetchCates(params || {}).then(res => {
-      console.log('品类列表', res)
+      // console.log('品类列表', res)
       dispatch({
         type: type.GET_CATE_LIST,
         payload: res.list
@@ -64,10 +64,30 @@ const getCatesList= params => {
   }
 }
 
+// 编辑商品
+const getGoodDetail = params => {
+  return dispatch => {
+    fetchGoodDetail(params).then(res => {
+      console.log('商品详情', res)
+      dispatch({type: type.GET_GOOD_DETAIL, payload: res})
+    })
+  }
+}
+
+// 清空缓存数据
+const clearGoodDetail = () => {
+  return {
+    type: type.CLEAR_GOOD_DETAIL,
+    payload: {}
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   getGoodList,
-  getCatesList
+  getCatesList,
+  getGoodDetail,
+  clearGoodDetail
 }

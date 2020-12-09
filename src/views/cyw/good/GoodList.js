@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Table,  Space, Row, Col, Input, Button, Select } from 'antd'
+import { Table,  Space, Row, Col, Input, Button, Select,Modal } from 'antd'
 import moment from 'moment'
 import action from '@/store/actions'
 import img from '@/utils/img'
 import './style.scss'
 import CateSelect from '../components/CateSelect'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
+import api from "@/utils/api"
 
 const { Option } = Select
+const { confirm } = Modal
 
 export default props => {
     const dispatch = useDispatch()
     const goodData = useSelector(store=>store.good.goodData)
-    console.log('goodData', goodData)
-    let [size, setSize] = useState(5)
-    let [page, setPage] = useState(2)
-
+    // console.log('goodData', goodData)
     let [text, setText] = useState('')
     
     let [filter, setFilter] = useState({
@@ -32,6 +32,36 @@ export default props => {
             filter.text = ''
             setFilter(JSON.parse(JSON.stringify(filter)))
         }
+    }
+
+    const filterChange = (key, val) => {
+        filter[key] = val
+        if (key !== 'page') filter.page = 1
+        setFilter(JSON.parse(JSON.stringify(filter)))
+        // console.log('filter', filter)
+    }
+
+    // 删除操作
+    const handleDel = row => {
+        confirm({
+            title: '警告！',
+            icon: <ExclamationCircleOutlined />,
+            content: <div>你确定要删除吗？</div>,
+            okText: '确定',
+            cancelText: '取消',
+            onOk() {
+                api.fetchGoodDel({ id: row._id }).then(() => {
+                    setFilter(JSON.parse(JSON.stringify(filter)))
+                })
+            }
+        })
+    }
+
+    // 跳转至编辑页
+    const skipToEdit = row => {
+        // 需要清空状态管理中的goodInfo
+        // 再跳转到详情页
+        props.history.push('/good/update/'+(row?row._id:0))
     }
     
     useEffect(() => {
@@ -91,13 +121,15 @@ export default props => {
         },
         {
             title: '操作',
-            key: 'action',
+            key: 'tags',
             align: 'center',
-            dataIndex: 'action',
-            render: () => (
+            dataIndex: 'tags',
+            render: (text,row) => (
                 <Space size="middle">
-                    <a>编辑</a>
-                    <a>删除</a>
+                    <a onClick={()=>skipToEdit(row)}>编辑</a>
+                    <a onClick={() => handleDel(row)}
+                        style={{display:'inline-block', paddingLeft: '10px'}}
+                    >删除</a>
                 </Space>
             )
         }
@@ -168,10 +200,11 @@ export default props => {
                     columns={columns}
                     dataSource={goodData.list}
                     pagination={{
+                        current: filter.page,
                         total: goodData.total,
-                        defaultPageSize: size,
-                        onChange: page => setPage(page),
-                        onShowSizeChange: (page, size) => setSize(size),
+                        defaultPageSize: filter.size,
+                        onChange: page => filterChange('page', page),
+                        onShowSizeChange: (page, size) => filterChange('size', size),
                         pageSizeOptions: [5,10,15,20]
                     }}
                 />

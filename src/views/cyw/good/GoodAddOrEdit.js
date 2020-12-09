@@ -1,22 +1,18 @@
-import React, { useState }  from 'react'
+import React, { useState, useEffect }  from 'react'
 import {
     Form,
     Input,
-    Select,
     Button,
     InputNumber,
-    Upload,
     Switch 
 } from 'antd'
-import { UploadIcon } from '@/components'
-import img from '@/utils/img'
 
 import { fetchGoodOrEdit } from '@/utils/api'
-
+import action from '@/store/actions'
 import CateSelect from '../components/CateSelect'
+import GoodUpdate from '../components/GoodUpdate'
+import { useDispatch, useSelector } from 'react-redux'
 
-const { Option } = Select
-  
 const formItemLayout = {
     labelCol: { sm: { span: 8 } },
     wrapperCol: { sm: { span: 16 } }
@@ -31,30 +27,44 @@ const tailFormItemLayout = {
 }
 
 export default props => {  
+    // 获取From的实例
     const [form] = Form.useForm()
     let [values, setValues] = useState({})
-    
-    let [imageUrl, setImageUrl] = useState('')
+    const [flag,setFlag] = useState(false)
+    const dispatch = useDispatch()
+    // 判断是新增还是编辑
+    // console.log('------props', props)
+    const id = props.match.params.id
+    const isAdd = id === '0'
+
+    const goodInfo = useSelector(store=>store.good.goodInfo)
+    useEffect(() => {
+        // 给表单赋初始值
+        if (!flag) form.setFieldsValue(goodInfo)
+        // 解决当前useEffect一直运行的问题
+        if(goodInfo._id) setFlag(true)
+        return undefined
+    })
+
+    useEffect(() => {
+        if(!isAdd) dispatch(action.getGoodDetail({id}))
+        // 当前组件被销毁前，清空redux中的缓存数据
+        return () => {
+            dispatch(action.clearGoodDetail())
+        }
+    }, [])
+
+    // 当form表单值发生变化的时候，我们手动取值，赋值给声明式变量 values
+    const formChange = values => {
+        console.log('----------',values)
+        setValues(values)
+    }
+
     const onFinish = values => {
-        values.img = imageUrl
-        // console.log('values 提交', values)
         fetchGoodOrEdit(values).then(()=>{
             // 跳转到列表页
             props.history.replace('/good/list')
         })
-    }
-
-    // 当form表单值发生变化的时候，我们手动取值，赋值给声明式变量 values
-    const formChange = values => {
-        setValues(values)
-    }
-
-    // 图片上传成功
-    const imgSuccess = e => {
-        console.log('图片上传成功', e)
-        if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
-            setImageUrl(e.fileList[0].response.data.url)
-        }
     }
 
     return (
@@ -119,26 +129,13 @@ export default props => {
                     </Form.Item>
 
                     <Form.Item
-                        name='imgForm'
+                        name='img'
                         label='商品图片'
                         rules={[
                             {required:true, message:'商品图片是必填项！'}
                         ]}
                     >
-                        <Upload
-                            name="file"
-                            listType="picture-card"
-                            className="avatar-uploader"
-                            showUploadList={false}
-                            action={img.imgUrl}
-                            onChange={imgSuccess}
-                        >
-                            {
-                                imageUrl ?
-                                <img src={img.baseUrl+imageUrl} alt="avatar" style={{ width: '100%' }} />
-                                : <UploadIcon/>
-                            }
-                        </Upload>
+                        <GoodUpdate src={ values.img}/>
                     </Form.Item>
 
                     <Form.Item

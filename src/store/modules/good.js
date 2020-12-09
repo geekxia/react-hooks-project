@@ -2,7 +2,8 @@ import type from '../actionTypes'
 
 const initState = {
   goodData: {},
-  cates: []
+  cates: [],
+  goodInfo:{}
 }
 
 export default (state=initState, action) => {
@@ -14,8 +15,14 @@ export default (state=initState, action) => {
     case type.GET_CATE_LIST:
       newState.cates = action.payload
       break
+    case type.GET_GOOD_DETAIL:
+      newState.goodInfo = action.payload
+      break
+    case type.CLEAR_GOOD_DETAIL:
+      newState.goodInfo = {}
+      break
     default:
   }
-  console.log('========',newState)
+  // console.log('========',newState)
   return newState
 }
