@@ -16,73 +16,23 @@ import img from '@/utils/img'
 import './style.scss'
 import moment from 'moment'
 import CateSelect from './components/CateSelect'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
-import api from '@/utils/api'
-const { Option } = Select
-const { confirm } = Modal
 
 export default props => {
 
   const dispatch = useDispatch()
   const goodData = useSelector(store=>store.good.goodData)
-  const cates = useSelector(store=>store.good.cates)
 
-  let [text, setText] = useState('')
-  let [keys, setKeys] = useState([])
-
-  let [filter, setFilter] = useState({
-    size: 2,
-    page: 1,
-    text: '',
-    hot: ''
-  })
-
-  const textChange = val => {
-    console.log('value text', val)
-    setText(val)
-    if(!val) {
-      filter.text = ''
-      setFilter(JSON.parse(JSON.stringify(filter)))
-    }
-  }
-  const filterChange = (key, val) => {
-    filter[key] = val
-    if(key!=='page') filter.page = 1
-    setFilter(JSON.parse(JSON.stringify(filter)))
-    console.log('filter', filter)
-  }
-
-  // 删除操作
-  const handleDel = row => {
-    const ele = <span style={{color: 'red'}}>{row.name}</span>
-    confirm({
-      title: '警告',
-      icon: <ExclamationCircleOutlined />,
-      content: <div>你确定要删除 {ele} 吗？</div>,
-      okText: '确定',
-      cancelText: '取消',
-      onOk() {
-        api.fetchGoodDel({id:row._id}).then(()=>{
-          setFilter(JSON.parse(JSON.stringify(filter)))
-        })
-      }
-    })
-  }
-
-  // 批量删除
-  const mulDelete = () => {
-    let id = ''
-    keys.map(ele=>id+=(';'+ele))
-    // 向后端传递由 id 组成的字符串，不能传数组
-    api.fetchGoodDel({id}).then(()=>{
-      setFilter(JSON.parse(JSON.stringify(filter)))
-    })
-  }
+  let [page, setPage] = useState(1)
+  let [size, setSize] = useState(2)
 
   useEffect(()=>{
-    dispatch(action.getGoodList(filter))
+    let params = {
+      size,
+      page
+    }
+    dispatch(action.getGoodList(params))
     return undefined
-  }, [filter])
+  }, [page, size])
 
   const columns = [
     {
@@ -98,16 +48,6 @@ export default props => {
           </div>
         )
       },
-    },
-    {
-      title: '品类',
-      dataIndex: 'cate',
-      key: 'cate',
-      align: 'center',
-      render: cate=>{
-        const idx = cates.findIndex(ele=>ele.cate===cate)
-        return <span>{idx>=0?cates[idx].cate_zh:''}</span>
-      }
     },
     {
       title: '商品描述',
@@ -150,59 +90,33 @@ export default props => {
       key: 'tags',
       align: 'center',
       dataIndex: 'tags',
-      render: (text,row) => (
-        <div className='table-btn'>
-          <a onClick={()=>handleDel(row)}>删除</a>
-          <a>编辑</a>
-        </div>
+      render: () => (
+        <>
+          <a href="">删除</a>
+          <a href="">编辑</a>
+        </>
       )
     }
   ]
-
+  const style = { background: '#0092ff', padding: '8px 0' };
   return (
     <div className='qf-good-list'>
       <h1>商品列表</h1>
       <div style={{margin: '25px 0'}}>
-        {/*第一行*/}
         <Row align='middle'>
           <Col span={2}>
-            <span className='filter-label'>搜索:</span>
+            <span className='filter-label'>名称搜索:</span>
           </Col>
-          <Col span={4}>
-            <Input
-              value={text}
-              onChange={e=>textChange(e.target.value)}
-              placeholder="搜索"
-              allowClear
-              onPressEnter={e=>filterChange('text', e.target.value)}
-            />
+          <Col span={6}>
+            <Input placeholder="搜索" />
           </Col>
           <Col span={2}>
             <span className='filter-label'>品类:</span>
           </Col>
           <Col span={6}>
-            <CateSelect
-              hasAll
-              onChange={cate=>filterChange('cate', cate)}
-              allowClear
-            />
+            <CateSelect hasAll />
           </Col>
-          <Col span={2}>
-            <span className='filter-label'>状态:</span>
-          </Col>
-          <Col span={4}>
-            <Select
-              onChange={val=>filterChange('hot', val)}
-              style={{width: '100px'}}
-              allowClear
-              defaultValue=''
-            >
-              <Option key='1' value=''>全部</Option>
-              <Option key='2' value={true}>是</Option>
-              <Option key='3' value={false}>否</Option>
-            </Select>
-          </Col>
-          <Col offset={2} span={2} style={{textAlign: 'right'}}>
+          <Col offset={6} span={2} style={{textAlign: 'right'}}>
             <Button
               size='small'
               type="primary"
@@ -214,25 +128,17 @@ export default props => {
         </Row>
       </div>
       <div style={{margin: '20px 0'}}>
-        {/*current 要受控起来*/}
         <Table
           rowKey='_id'
           columns={columns}
           dataSource={goodData.list}
           pagination={{
-            current: filter.page,
             total: goodData.total,
-            defaultPageSize: filter.size,
-            onChange: page=>filterChange('page', page),
-            onShowSizeChange: (page, size)=>filterChange('size', size),
+            defaultPageSize: size,
+            onChange: page=>setPage(page),
+            onShowSizeChange: (page, size)=>setSize(size),
             pageSizeOptions: [2,5,10,15,20]
           }}
-          rowSelection={{
-            type: 'checkbox',
-            onChange: keys=>setKeys(keys)
-          }}
-          footer={() => <Button size='small' onClick={()=>mulDelete()} type='danger'>批量删除</Button>}
-          size='small'
         />
       </div>
     </div>

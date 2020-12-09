@@ -1,70 +1,43 @@
 import loadable from '@loadable/component'
-import {
-  DotChartOutlined,
-  DribbbleOutlined
-} from '@ant-design/icons'
+import {DotChartOutlined} from '@ant-design/icons'
 
-const TestRedux = loadable(()=>import('./home/TestRedux'))
 const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
+const TestRedux = loadable(()=>import('./home/TestRedux'))
 
 const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
-const ListHome = loadable(()=>import("./list/ListHome"))
-
-
 export default [
   {
-    id: 11,
-    text: '概况管理',
-    icon: <DotChartOutlined />,
+    id: 10,
+    text: '列表管理',
+    icon: <DotChartOutlined/>,
     children: [
       {
-        id: 1110,
-        text: 'TestRedux',
+        id: 1010,
+        text: '列表1',
         path: '/',
-        component: TestRedux
+        component:TestReduxHook
       },
       {
-        id: 1111,
-        text: 'TestReduxHook',
-        path: '/redux/hook',
-        component: TestReduxHook
+        id:1011,
+        text:'列表2',
+        path:'/redux/hook',
+        component:TestRedux
       }
     ]
   },
   {
-    id: 12,
-    text: '商品管理',
-    icon: <DotChartOutlined />,
-    children: [
+    id:11,
+    text:'商品管理',
+    icon:<DotChartOutlined />,
+    children:[
       {
-        id: 1210,
-        text: '商品列表',
-        path: '/good/list',
+        id:1110,
+        text:'商品列表',
+        path:'/good/list',
         component: GoodList,
-        children: [
-          {
-            id: 121010,
-            text: '商品新增与编辑',
-            path: '/good/update/:id',
-            component: GoodAddOrEdit
-          }
-        ]
       }
     ]
   },
-  {
-    id: 13,
-    text:"胡辉列表",
-    icon:<DribbbleOutlined />,
-    children :[
-      {
-        id:1211,
-        text:"查询表格",
-        path:"/hulist",
-        component:ListHome
-      }
-    ]
-  }
 ]
