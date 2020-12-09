@@ -16,7 +16,7 @@ import {useEffect,useState} from 'react'
 import action from '@/store/actions'
 import '@/assets/css/goodlist.scss'
 import CateSelect from './components/CateSelect.js'
-
+import api from '@/utils/api'
 const { Search } = Input;
 const { Option } = Select;
 
@@ -38,6 +38,8 @@ export default props=>{
   },[page,size])
 
   let[text,setText]=useState('')
+  let [keys, setKeys] = useState([])
+
 
   let[filter,setFilter]=useState({
     size:2,
