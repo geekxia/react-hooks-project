@@ -44,10 +44,30 @@ export function fetchCates(params) {
   })
 }
 
+// 获取商品详情
+export function fetchGoodDetail(params) {
+  return axios({
+    url: '/api/v1/good/detail',
+    method: 'GET',
+    params
+  })
+}
+
+// 登录
+export function fetchLogin(data) {
+  return axios({
+    url: '/api/v1/user/login',
+    method: 'POST',
+    data
+  })
+}
+
 export default {
   fetchQqMusic,
   fetchGoodOrEdit,
   fetchGoodList,
   fetchGoodDel,
-  fetchCates
+  fetchCates,
+  fetchGoodDetail,
+  fetchLogin
 }

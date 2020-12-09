@@ -6,7 +6,7 @@ import App from './App'
 import 'antd/dist/antd.less'
 
 ReactDOM.render(
-  <App />,
+    <App />,
   document.getElementById('root')
 )
 

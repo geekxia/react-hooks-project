@@ -1,14 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
-import action from '@/store/actions'
-import img from '@/utils/img'
-import './style.scss'
-import moment from 'moment'
-import api from '@/utils/api'
-import CateSelect from './components/CateSelect'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
-const { Option } = Select
-const { confirm } = Modal
 import { 
   Table, 
   Input,
@@ -18,7 +7,17 @@ import {
   Button,
   Modal
 } from 'antd'
-
+const { Option } = Select
+const { confirm } = Modal
+import CateSelect from '../components/CateSelect'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import action from '@/store/actions'
+import img from '@/utils/img'
+import './style.scss'
+import moment from 'moment'
+import api from '@/utils/api'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 
 export default props => {
 
@@ -67,6 +66,15 @@ export default props => {
       }
     })
   }
+
+  //跳转到新增页编辑页
+  const goodEdit = row =>{
+    // 先清空状态管理中的goodInfo
+    dispatch(action.clearGoodDetail())
+    // 再跳转到详情页
+    props.history.push('/zhappy/song/'+(row?row._id:0))
+  }
+
   //批量删除商品
   const mulDelete = () =>{
     let id = ''
@@ -143,7 +151,7 @@ export default props => {
       render: (text,row) => (
         <div className='table-btn'>
           <Button onClick={()=>handleDel(row)} type='danger' size='small'>删除</Button>
-          <Button size='small' style={{margin:'10px'}}>编辑</Button>
+          <Button onClick={()=>goodEdit(row)} size='small' style={{margin:'10px'}}>编辑</Button>
         </div>
       )
     }
@@ -196,7 +204,7 @@ export default props => {
             <Button
               size='middle'
               type="primary"
-              onClick={()=>props.history.push('/zhappy/song')}
+              onClick={()=>goodEdit()}
               style={{backgroundColor:"blue",borderColor:'blue'}}
             >
               新增

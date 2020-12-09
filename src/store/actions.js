@@ -4,6 +4,7 @@ import {
   fetchGoodList,
   fetchCates
 } from '@/utils/api'
+import { fetchGoodDetail } from '../utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -57,17 +58,33 @@ function getGoodList(params) {
 const getCatesAction = params => {
   return dispatch => {
     fetchCates(params||{}).then(res=>{
-      console.log('品类列表', res)
+      // console.log('品类列表', res)
       dispatch({type: type.GET_CATE_LIST, payload: res.list})
     })
   }
 }
+//
+const getGoodDetail = params => {
+  return dispatch => {
+    fetchGoodDetail(params).then(res=>{
+      dispatch({type:type.GET_GOOD_DETAIL,payload:res})
+    })
+  }
+}
 
+const clearGoodDetail = () => {
+  return {
+    type: type.CLEAR_GOOD_DETAIL,
+    payload: {}
+  }
+}
 
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   getGoodList,
-  getCatesAction
+  getCatesAction,
+  getGoodDetail,
+  clearGoodDetail
 }

@@ -16,11 +16,10 @@ import {
 const ListHome = loadable(()=>import("./list/ListHome"))
 const Ming = loadable(()=>import('./zhappy/Zregist'))
 const Yue = loadable(()=>import('./zhappy/ZRo'))
-const Song = loadable(()=>import('./zhappy/ZCreate'))
-const Jian = loadable(()=>import('./zhappy/ZRoot'))
+const Song = loadable(()=>import('./zhappy/zgood/ZCreate'))
 const Zhao = loadable(()=>import('./zhappy/Zhao'))
 const Zintel = loadable(()=>import('./zhappy/Internation'))
-const ZDisplay = loadable(()=>import('./zhappy/ZDisplay'))
+const ZDisplay = loadable(()=>import('./zhappy/zgood/ZDisplay'))
 
 export default [
   {
@@ -94,18 +93,6 @@ export default [
         component: Yue
       },
       {
-        id: 2017202103,
-        text: '商品新增',
-        path: '/zhappy/song',
-        component: Song
-      },
-      {
-        id: 2017202104,
-        text: '用户信息',
-        path: '/zhappy/jian',
-        component:Jian
-      },
-      {
         id: 2017202105,
         text: '可编辑',
         path: '/zhappy/zhao',
@@ -121,7 +108,14 @@ export default [
         id:2017202107,
         text:'商品展示',
         path:'/zhappy/display',
-        component:ZDisplay
+        component:ZDisplay,
+        children:[
+          {
+            id: 2017202103,
+            path: '/zhappy/song/:id',
+            component: Song
+          },
+        ]
       }
     ]
   }
