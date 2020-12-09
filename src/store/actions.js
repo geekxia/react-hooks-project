@@ -55,5 +55,6 @@ function getGoodList(params) {
 export default {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  getGoodList
 }

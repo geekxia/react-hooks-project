@@ -1,7 +1,9 @@
 import { Form, Input, Button, Select, Switch, Upload, InputNumber } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import img from '@/utils/img'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import action from '@/store/actions'
 import { fetchAddOrEdit } from '@/utils/api';
 const { Option } = Select;
 const formLayout = {
