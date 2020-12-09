@@ -16,19 +16,19 @@
     width: 150px;
     background: #001529;
     overflow: auto;
-    &>div {
+    & > div {
       text-align: center;
       line-height: 40px;
       cursor: pointer;
       border-bottom: 1px solid #aaa;
-      &>a {
+      & > a {
         text-decoration: none;
         display: block;
         width: 100%;
         height: 100%;
         color: white;
       }
-      &>a.on {
+      & > a.on {
         background: orange;
       }
     }
@@ -40,8 +40,12 @@
     left: 150px;
     right: 0;
     padding: 15px;
-    background-color: #fff;
+    background: #001529;
     line-height: 24px;
+    color: white;
+    .ant-breadcrumb-separator {
+      color: white;
+    }
   }
   .qf-main {
     position: absolute;
@@ -51,7 +55,7 @@
     right: 0;
     background-color: #eee;
     padding: 15px;
-    &>div {
+    & > div {
       position: absolute;
       top: 15px;
       left: 15px;

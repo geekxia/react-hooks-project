@@ -41,14 +41,14 @@ export default (props) => {
   // const path = "#" + list[0].children[0].path;
   // console.log("pathName:", path);
   return (
-    <div className="qf-header">
-      <Breadcrumb>
-        <Breadcrumb.Item href="">
-          <HomeOutlined />
+    <div className="qf-header" style={{ color: "white" }}>
+      <Breadcrumb style={{ color: "white" }}>
+        <Breadcrumb.Item href="" style={{ color: "white" }}>
+          <HomeOutlined style={{ color: "white" }} />
         </Breadcrumb.Item>
-        <Breadcrumb.Item>
-          <UserOutlined />
-          <span>list[0].text</span>
+        <Breadcrumb.Item style={{ color: "white" }}>
+          <UserOutlined style={{ color: "white" }} />
+          <span style={{ color: "white" }}>list[0].text</span>
         </Breadcrumb.Item>
         {/* <Breadcrumb.Item>{a.length === 0 ? "" : a[0].text}</Breadcrumb.Item> */}
       </Breadcrumb>

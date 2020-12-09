@@ -14,11 +14,11 @@ import action from "@/store/actions";
 export default (props) => {
   const pathName = useSelector((store) => store.gtitle.pathName);
   // pathName = pathName.push(routes)
-  console.log("pathName:", pathName);
+  // console.log("pathName:", pathName);
   const dispatch = useDispatch();
   const getTitle = (e) => {
-    console.log(e);
-    dispatch(action.getTitleName(e.target.innerText));
+    // console.log(e);
+    // dispatch(action.getTitleName(e.target.innerText));
   };
   // 用于生成菜单
   const createNavLink = () => {

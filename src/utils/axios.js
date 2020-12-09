@@ -1,7 +1,8 @@
+import { message } from "antd";
 import axios from "axios";
 
 // 浏览器同源策略，只是限制ajax跨域
-const baseURL = "http://localhost:9000";
+const baseURL = "http://10.20.158.73:9000";
 
 const instance = axios.create({
   baseURL,
@@ -24,11 +25,19 @@ instance.interceptors.response.use(
     // 数据过滤
     let res = null;
     if (response.status === 200) {
+
+      // QQ音乐服务器的数据过滤
       if (response.data && response.data.code === 0) {
         res = response.data.data;
       }
       if (response.data && response.data.err === 0) {
         res = response.data.data;
+      } else if (response.data.err === -1) {
+        // 如果后端验证token失败， 会返回 -1，跳转到登录页
+        window.location.href = '/#/login'
+      } else {
+        // 当发生业务错误时，把后端的提示文字弹出
+        message.error(response.data.msg)
       }
     }
     return res;

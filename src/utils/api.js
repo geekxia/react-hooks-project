@@ -13,6 +13,7 @@ export function fetchGoodOrEdit(data) {
   return axios({
     url: "/api/v1/good/addOrEdit",
     method: "POST",
+    data,
   });
 }
 
@@ -25,8 +26,48 @@ export function fetchGoodList(params) {
   });
 }
 
+// 获取品类类别
+export function fetchCates(params) {
+  return axios({
+    url: "/api/v1/good/cates",
+    method: "GET",
+    params,
+  });
+}
+
+// 获取商品详情
+export function fetchGoodDetail(params) {
+  return axios({
+    url: "/api/v1/good/detail",
+    method: "GET",
+    params,
+  });
+}
+
+// 校验登录数据
+export function fetchLogin(data) {
+  return axios({
+    url: '/api/v1/user/login',
+    method: 'POST',
+    data
+  })
+}
+
+// 删除商品
+export function fetchGoodDel(params) {
+  return axios({
+    url: '/api/v1/good/delete',
+    method: 'GET',
+    params
+  })
+}
+
 export default {
   fetchQqMusic,
   fetchGoodOrEdit,
   fetchGoodList,
+  fetchCates,
+  fetchGoodDetail,
+  fetchLogin,
+  fetchGoodDel
 };
