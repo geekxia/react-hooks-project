@@ -15,6 +15,8 @@ export default (state=initState,action)=>{
         break
         case type.GOOD_DETAIL:newState.goodDetail = action.payload
         break
+        case type.CLEAR_GOOD_DETAIL:newState.goodDetail = {}
+        break
         default:return state
     }
     // console.log(newState)

@@ -24,6 +24,7 @@ export default props=>{
             optionFilterProp="children"
             size = 'small'
             style={{fontSize:'12px',width:'200px'}}
+            value={props.value?props.value:''}
             onChange={e=>props.onChange?props.onChange(e):''}
         >
             {

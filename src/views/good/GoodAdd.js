@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import UploadButton from '@/components/uploadButton'
+import GoodUpload from './components/GoodUpload'
 import img from '@/utils/img'
 import api from '@/utils/api'
 import {
@@ -38,33 +38,45 @@ const tailFormItemLayout = {
 };
 
 export default props=>{
+        let [values, setValues] = useState({})
         let [loading,setLoading] = useState(false)
         let [imageUrl,setImageUrl] = useState('')
         const [form] = Form.useForm();
         const dispatch = useDispatch()
         const goodDetail = useSelector(store=>store.good.goodDetail)
+        const id = props.match.params.id
+        const isEdit = id==0 ? false:true
+        let [ flag, setFlag] = useState(false)
       
         const onFinish = values => {
-            values.img = imageUrl
+            if(isEdit) values.id=id
         //   console.log('Received values of form: ', values);
           api.fetchAddGood(values).then(res=>{
             props.history.replace('/good/list')
           })
         };
 
-        const uploadChange = (e)=>{
-            // console.log(e)
-            if(e.fileList[0].response && e.fileList[0].response.data){
-                setImageUrl(e.fileList[0].response.data.url)
-            }
+        
+
+        // 当Form表单值发生变化时，我们手动取值，赋值给声明式变量 values
+        const formChange = values => {
+            setValues(values)
         }
 
         useEffect(()=>{
-            dispatch(action.initGoodEdit(props.match.params))
-            console.log(goodDetail)
-            form.setFieldsValue(goodDetail)
+            if(isEdit){
+                dispatch(action.initGoodEdit({id}))
+            }
             return undefined
         },[])
+
+        useEffect(()=>{
+            if(!flag) form.setFieldsValue(goodDetail)
+            if(goodDetail._id) setFlag(true)
+            // console.log(goodDetail)
+            
+            return undefined
+        })
 
 
     return (
@@ -76,6 +88,7 @@ export default props=>{
                 name="good"
                 onFinish={onFinish}
                 scrollToFirstError
+                onValuesChange={(val, values)=>formChange(values)}
             >
                 <Form.Item
                     name="name"
@@ -122,25 +135,13 @@ export default props=>{
                 </Form.Item>
 
                 <Form.Item
+                    name='img'
                     label='商品图片'
                     rules={[
                         { required:true}
                     ]}
                 >
-                    <Upload
-                        name="file"
-                        listType="picture-card"
-                        className="avatar-uploader"
-                        showUploadList={false}
-                        action={img.imgUploadUrl}
-                        onChange = {uploadChange}
-                    >
-                        {
-                            imageUrl ? 
-                            <img src={img.imgBaseUrl+imageUrl} alt="avatar" style={{ width: '100%' }} />
-                            : <UploadButton loading={loading}/>
-                         }
-                    </Upload>
+                    <GoodUpload src={values.img||goodDetail.img} />
                 </Form.Item>
 
                 <Form.Item

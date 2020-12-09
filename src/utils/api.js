@@ -52,11 +52,21 @@ export function FetchGoodEdit(params){
   })
 }
 
+//登录 获取token
+export function fetchGetLoginToken(data){
+  return axios({
+    method:'POST',
+    data,
+    url:'/api/v1/user/login'
+})
+}
+
 export default {
   fetchQqMusic,
   fetchAddGood,
   fetchGoodList,
   fetchDelGood,
   fetchGoodCates,
-  FetchGoodEdit
+  FetchGoodEdit,
+  fetchGetLoginToken
 }

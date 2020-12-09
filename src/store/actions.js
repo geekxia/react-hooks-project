@@ -83,6 +83,14 @@ const initGoodEdit = (params)=>{
   }
 }
 
+//清空编辑/添加页的默认数据渲染
+const clearGoodDetail = ()=>{
+  return {
+    type:type.CLEAR_GOOD_DETAIL,
+    payload:{}
+  }
+}
+
 
 export default {
   changeMsgAction,
@@ -91,5 +99,6 @@ export default {
   advAnalyze,
   getGoodListAction,
   getGoodCatesAction,
-  initGoodEdit
+  initGoodEdit,
+  clearGoodDetail
 }

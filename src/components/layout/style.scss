@@ -46,7 +46,15 @@
     height: 60px;
     left: 150px;
     right: 0;
-    padding: 15px;
+    text-align: right;
+    color: white;
+    padding-right: 15px;
+    &>p{
+      cursor: pointer;
+      &>span{
+        margin-right: 5px;
+      }
+    }
   }
   .qf-main {
     position: absolute;

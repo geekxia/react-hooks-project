@@ -15,6 +15,8 @@ const GOOD_CATES = 'GOOD_CATES'
 
 const GOOD_DETAIL = 'GOOD_DETAIL'
 
+const CLEAR_GOOD_DETAIL = 'CLEAR_GOOD_DETAIL'
+
 export default {
   CHANGE_MSG,
   ADD_FOO_COUNT,
@@ -22,5 +24,6 @@ export default {
   ADV_ANALYZE,
   GOOD_LIST,
   GOOD_CATES,
-  GOOD_DETAIL
+  GOOD_DETAIL,
+  CLEAR_GOOD_DETAIL
 }

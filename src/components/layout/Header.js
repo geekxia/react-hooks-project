@@ -1,4 +1,5 @@
 import React from 'react'
+import { LogoutOutlined } from '@ant-design/icons';
 
 import {
   useHistory,
@@ -20,11 +21,19 @@ import {
 
 export default props => {
   const history = useHistory()
+
+  const logout=()=>{
+    localStorage.removeItem('token')
+    location.reload()
+  }
   // console.log('---header props', props)
   // console.log('---header history', history)
   return (
     <div className='qf-header'>
-      header
+      <p onClick={()=>logout()}>
+        <span>退出登录</span>
+        <LogoutOutlined style={{fontSize:'18px'}} />
+      </p>
     </div>
   )
 }

@@ -167,7 +167,9 @@ export default props=>{
       }
 
       const skipToAdd = row=>{
-        props.history.push('/good/add/'+row._id)
+        dispatch(action.clearGoodDetail())
+        row ? props.history.push('/good/add/'+row._id):props.history.push('/good/add/0')
+        
       }
 
       const filterChange = (key,val)=>{
@@ -226,7 +228,7 @@ export default props=>{
                 </Col>
 
                 <Col span={4}>
-                  <CatesSelect allCate onChange={e=>filterChange('cate',e)}/>
+                  <CatesSelect allCate onChange={e=>filterChange('cate',e)} value={filter.cate}/>
                 </Col>
 
                 <Col span={3}>
@@ -251,7 +253,7 @@ export default props=>{
                   <Button 
                     type="primary" 
                     size='small'
-                    onClick = {()=>props.history.push('/good/add/0')}
+                    onClick = {()=>skipToAdd()}
                   >
                     添加
                   </Button>
