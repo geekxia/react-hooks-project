@@ -1,5 +1,5 @@
-import { useState } from 'react'
-
+import { useState ,useEffect} from 'react'
+import { useDispatch,useSelector } from 'react-redux'
 import {
   Form,
   Input,
@@ -22,6 +22,7 @@ import CateSelect from './components/CateSelect'
 import GoodUpload from './components/GoodUpload'
 
 import { QuestionCircleOutlined } from '@ant-design/icons';
+import action from '@/store/actions'
 const { Option } = Select
 const { TextArea } = Input
 const AutoCompleteOption = AutoComplete.Option;
@@ -51,6 +52,31 @@ export default props => {
   const [autoCompleteResult, setAutoCompleteResult] = useState([])
   let [imageUrl, setImageUrl] = useState('')
   let [values, setValues] = useState({})
+  const dispatch = useDispatch()
+
+
+  const id = props.match.params.id
+  const isAdd = id==='0'
+  const goodInfo = useSelector(store=>store.good.goodInfo)
+
+  const [flag, setFlag] = useState(false)
+
+useEffect(()=>{
+    // 给表单赋初始值
+    if(!flag) form.setFieldsValue(goodInfo)
+    // 解决当前useEffect反复运行的问题
+    if(goodInfo._id) setFlag(true)
+   
+    return undefined
+  })
+
+useEffect(()=>{
+  if(!isAdd) dispatch(action.getGoodDetail({id}))
+  return ()=>{
+    dispatch(action.clearGoodDetail())
+  }
+},[])
+
 
   // 获取Form的实例
   const [form] = Form.useForm()
@@ -63,7 +89,8 @@ export default props => {
   // 表单提交
   const onFinish = () => {
     console.log('values 提交接口', values)
-    fetchGoodOrEdit(values).then(()=>{
+    if(!isAdd) values.id = goodInfo._id
+    AddGoods(values).then(()=>{
       // 跳转到列表页
       props.history.replace('/good/list')
     })
@@ -78,10 +105,6 @@ export default props => {
         form={form}
         name="register"
         onFinish={onFinish}
-        initialValues={{
-          residence: ['zhejiang', 'hangzhou', 'xihu'],
-          prefix: '86',
-        }}
         scrollToFirstError
         onValuesChange={(val, values)=>formChange(values)}
       >
@@ -149,7 +172,7 @@ export default props => {
 
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            提交
+          { isAdd ? '添加商品' : '确定修改' }
           </Button>
         </Form.Item>
       </Form>

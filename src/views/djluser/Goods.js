@@ -183,6 +183,14 @@ export default props => {
     })
   }
 
+  //跳转到编辑页
+  const skipToEdit = row=>{
+    props.history.push('/goodadd/'+(row?row._id:0))
+  }
+
+
+
+
   useEffect(()=>{
     dispatch(action.getGoodList(filter))
     return undefined
@@ -257,7 +265,7 @@ export default props => {
       render: (text,row) => (
         <div className='table-btn'>
           <a onClick={()=>handleDel(row)}>删除</a>
-          <a>编辑</a>
+          <a onClick={()=>skipToEdit(row)}>编辑</a>
         </div>
       )
     }
