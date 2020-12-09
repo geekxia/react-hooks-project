@@ -33,17 +33,23 @@ export default props =>{
   const goodData = useSelector(store=>store.qtp.goodData)
 
 
-  let [page,setPage] = useState(1)
-  let [size,setSize] = useState(5)
+
+  let [text,setText] = useState('')
+
+  let [filter,setFilter] = useState({
+    size: 2,
+    page: 1,
+    text: ''
+  })
+
+  const filterChange = (key,val)=>{
+    filter[key] = val
+  }
 
   useEffect(()=>{
-    let params = {
-      size,
-      page
-    }
-    dispatch(action.getQtpList(params))
+    dispatch(action.getQtpList(filter))
     return undefined
-  },[page,size])
+  },[filter])
 
 
 
@@ -127,7 +133,11 @@ export default props =>{
                   </Col>
 
                   <Col span={6}>
-                    <Input placeholder="搜索" />
+                    <Input placeholder="搜索" 
+                    value={text}
+                    onChange={e=>setText(e.target.value)}    
+                    onPressEnter={e=>filterChange('text',e.target,value)}          
+                    />
                   </Col>
 
 
