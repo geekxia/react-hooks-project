@@ -8,7 +8,7 @@ let initState = {
 export default function reducer(state=initState,action) {
     let newState = JSON.parse(JSON.stringify(state))
     switch (action.type) {
-        case type.Get_GOOD_LIST:
+        case type.GET_GOOD_LIST:
             newState.goodData = action.payload
             break
         case type.GET_CATE_LIST:
