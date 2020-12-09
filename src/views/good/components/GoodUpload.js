@@ -22,7 +22,7 @@ export default props => {
         {
           props.src ?
           <img
-            src={img.imgBase+props.src}
+            src={img.imgBase+(props.src)}
             alt="good"
             style={{ width: '100%' }}
           />

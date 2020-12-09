@@ -52,7 +52,7 @@ export default props => {
     console.log('filter', filter)
   }
 
-  // 删除操作
+  // 单条删除
   const handleDel = row => {
     const ele = <span style={{color: 'red'}}>{row.name}</span>
     confirm({
@@ -77,6 +77,14 @@ export default props => {
     api.fetchGoodDel({id}).then(()=>{
       setFilter(JSON.parse(JSON.stringify(filter)))
     })
+  }
+
+  // 跳转到新增、编辑页
+  const skipToEdit = row => {
+    // 先清空状态管理中的goodInfo
+    dispatch(action.clearGoodDetail())
+    // 再跳转到详情页
+    props.history.push('/good/update/'+(row?row._id:0))
   }
 
   useEffect(()=>{
@@ -153,7 +161,7 @@ export default props => {
       render: (text,row) => (
         <div className='table-btn'>
           <a onClick={()=>handleDel(row)}>删除</a>
-          <a>编辑</a>
+          <a onClick={()=>skipToEdit(row)}>编辑</a>
         </div>
       )
     }
@@ -206,7 +214,7 @@ export default props => {
             <Button
               size='small'
               type="primary"
-              onClick={()=>props.history.push('/good/update/0')}
+              onClick={()=>skipToEdit()}
             >
               新增
             </Button>
