@@ -79,6 +79,13 @@ import {
       })
     }
   
+    //跳转到新增、编辑页
+    const skipToEdit = row => {
+        // 先清空状态管理中的goodInfo
+        // dispatch(action.clearGoodDetail())
+        // 再跳转到详情页
+        props.history.push('/good/update/'+(row?row._id:0))
+    }
     useEffect(()=>{
       dispatch(action.getGoodList(filter))
       return undefined
@@ -153,7 +160,7 @@ import {
         render: (text,row) => (
           <div className='table-btn'>
             <a onClick={()=>handleDel(row)}>删除</a>
-            <a>编辑</a>
+            <a onClick={()=>skipToEdit(row)}>编辑</a>
           </div>
         )
       }

@@ -4,6 +4,7 @@ import {
   fetchGoodList,
   fetchCates
 } from '@/utils/api'
+import { fetchLogin } from '../utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -61,7 +62,6 @@ const getCatesAction = params => {
       })
     }
   }
-
 
 
 export default {

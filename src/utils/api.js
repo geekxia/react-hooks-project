@@ -44,10 +44,28 @@ export function fetchGoodDel(params) {
   })
 }
 
+export function fetchGoodDetail(params) {
+    return axios({
+        url:'/api/v1/user/detail',
+        method:'GET',
+        data
+    })
+}
+
+export function fetchLogin(data) {
+    return axios({
+        url:'/api/v1/user/login',
+        method:'POST',
+        data
+    })
+}
+
 export default {
   fetchQqMusic,
   fetchGoodOrEdit,
   fetchGoodList,
   fetchCates,
-  fetchGoodDel
+  fetchGoodDel,
+  fetchGoodDetail,
+  fetchLogin
 }

@@ -56,17 +56,20 @@ export default [
     text: 'JDT列表',
     icon: <GithubOutlined />,
     children: [
-      {
-        id: 1410,
-        text: '商品添加',
-        path: '/add',
-        component: Add
-      },
+      
       {
         id: 1411,
         text: '商品列表',
         path: '/productlist',
-        component: ProductList
+        component: ProductList,
+        children: [
+            {
+                id:141010,
+                text:'商品新增与编辑',
+                path:'/productlist/update/:id',
+                component: Add
+            }
+        ]
       }
     ]
   }
