@@ -26,17 +26,6 @@ export function fetchGoodList(params) {
   })
 }
 
-<<<<<<< HEAD
-//添加商品yjb
-export function fetchYjbGood(data){
-  return axios({
-    url:'/api/v1/good/addOrEdit',
-    method:'POST',
-    data
-  })
-}
-
-=======
 // 获取品类列表
 export function fetchCates(params) {
   return axios({
@@ -63,17 +52,12 @@ export function fetchGoodDetail(params) {
     params
   })
 }
->>>>>>> 7bc4c54b4240d9ba77ea55d5f2705ea82e8a7926
 
 export default {
   fetchQqMusic,
   fetchGoodOrEdit,
   fetchGoodList,
-<<<<<<< HEAD
-  fetchYjbGood
-=======
   fetchCates,
   fetchGoodDel,
   fetchGoodDetail
->>>>>>> 7bc4c54b4240d9ba77ea55d5f2705ea82e8a7926
 }

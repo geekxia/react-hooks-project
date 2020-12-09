@@ -25,16 +25,10 @@ export default props => {
 
   const dispatch = useDispatch()
   const goodData = useSelector(store=>store.good.goodData)
-<<<<<<< HEAD
-  console.log('商品goodData',goodData)
-  let [page, setPage] = useState(1)
-  let [size, setSize] = useState(2)
-=======
   const cates = useSelector(store=>store.good.cates)
 
   let [text, setText] = useState('')
   let [keys, setKeys] = useState([])
->>>>>>> 7bc4c54b4240d9ba77ea55d5f2705ea82e8a7926
 
   let [filter, setFilter] = useState({
     size: 2,

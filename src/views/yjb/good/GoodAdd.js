@@ -16,6 +16,8 @@ import {
 
 import { PlusOutlined } from '@ant-design/icons';
 import {fetchGoodOrEdit} from '@/utils/api'
+import CateSelect from './component/CateSelect'
+
 
 const {Option} =Select
 
@@ -95,14 +97,7 @@ const imgSuccess = e => {
                     { required: true, message: '商品描述是必填!' }
                 ]}
                 >
-                    <Select
-                        style={{ width: 200 }}
-                        placeholder="选择一个品类"
-                    >
-                        <Option key='1' value="pat">宠物</Option>
-                        <Option key='2' value="car">汽车</Option>
-                        <Option key='3' value="elec">电器</Option>
-                    </Select>
+                    <CateSelect />
                 </Form.Item>
 
 
