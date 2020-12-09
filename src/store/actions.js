@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic } from '@/utils/api'
+import { fetchQqMusic, fetchGoodList, getCartList, fetchDelCart, getGoodDetail } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -38,9 +38,60 @@ function musicListAction(params) {
     })
   }
 }
+export function goodListAction(params) {
+  return function(dispatch) {
+    fetchGoodList(params).then(res=>{
+      // 这才是真正地把后端数据，发送到store中
+      dispatch({
+        type: type.AJAX_GOOD_LIST,
+        payload: res
+      })
+    })
+  }
+}
+export function fetchDelCartAction(params) {
+  return function() {
+    fetchDelCart(params).then(res=>{
+      console.log(res)
+      // console.log(res)
+      // 这才是真正地把后端数据，发送到store中
+      // dispatch({
+      //   type: type.AJAX_GOOD_CATE_LIST,
+      //   payload: res.list
+      // })
+    })
+  }
+}
+export function cateListAction(params) {
+  return function(dispatch) {
+    getCartList(params).then(res=>{
+      // console.log(res)
+      // 这才是真正地把后端数据，发送到store中
+      dispatch({
+        type: type.AJAX_GOOD_CATE_LIST,
+        payload: res.list
+      })
+    })
+  }
+}
+export function goodDtailAction(params) {
+  return function(dispatch) {
+    getGoodDetail(params).then(res=>{
+      // 这才是真正地把后端数据，发送到store中
+      dispatch({
+        type: type.AJAX_GOOD_DETAIL,
+        payload: res
+      })
+    })
+  }
+}
 
-export default {
+export default  {
   changeMsgAction,
   addFooCountAction,
-  musicListAction
+  musicListAction,
+  cateListAction,
+  goodListAction,
+  fetchDelCartAction,
+  goodDtailAction
 }

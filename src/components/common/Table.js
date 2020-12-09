@@ -11,127 +11,89 @@ import {
   InputNumber,
   Switch, } from 'antd';
 const { TextArea } = Input
-import { fetchGoodList, getCartList,GoodAddOrEdit  } from '@/utils/api.js';
-import { LoadingOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux'
+import { cateListAction,fetchDelCartAction, goodListAction, goodDtailAction } from '@/store/actions'
+import { fetchGoodList, getCartList,GoodAddOrEdit  } from '@/utils/api.js'
+import { LoadingOutlined } from '@ant-design/icons'
 import UploadS  from '@/components/common/upload'
-const columns = [
-  {
-    title: '商品名称',
-    dataIndex: 'name',
-    sorter: true,
-    render: name  => <span>{name}</span>,
-    width: '20%'
-  },
-  {
-    title: '图片',
-    dataIndex: 'img',
-    render: img =>
-      (<img style={{display:"block",width: "60px",height:"50px"}} src={'http://10.20.158.29:9999' + img} />)
-    
-  },
-  {
-    title: '描述',
-    dataIndex: 'desc',
-    render: desc  => <span>{desc}</span>,
-    width: '20%'
-  },
-  {
-    title: '价格',
-    render: price  => <span>{price}</span>,
-    dataIndex: 'price'
-  },
-  {
-    title: '品类',
-    dataIndex: 'cate',
-    render: cate  => <span>{cate}</span>
-  },
-  {
-    title: '操作',
-    dataIndex: 'do',
-    render: ()  => <><span style={{color:"blue",cursor:'pointer'}}>编辑</span ><span style={{color:"red",cursor:'pointer'}}>删除</span></>
-  }
-]
-// const pagination = {
-//   current: 1,
-//   pagesize: 10,
-//   pageSizeOptions: [2, 5, 10, 20],
-//   total: total
-// }
 
 export default props => {
-  // { size, page, cate, hot, text }
-  const [cates, setCates] = useState([])
-  const [data, setDate] = useState([])
-  const [total, setTotal] = useState(0)
+  // 表头
+  const columns = [
+    {
+      title: '商品名称',
+      dataIndex: 'name',
+      sorter: true,
+      render: name  => <span>{name}</span>,
+      width: '20%'
+    },
+    {
+      title: '图片',
+      dataIndex: 'img',
+      render: img =>
+        (<img style={{display:"block",width: "60px",height:"50px"}} src={'http://10.20.158.29:9999' + img} />)
+      
+    },
+    {
+      title: '描述',
+      dataIndex: 'desc',
+      render: desc  => <span>{desc}</span>,
+      width: '20%'
+    },
+    {
+      title: '价格',
+      render: price  => <span>{price}</span>,
+      dataIndex: 'price'
+    },
+    {
+      title: '品类',
+      dataIndex: 'cate',
+      render: cate  => <span>{cate}</span>
+    },
+    {
+      title: '操作',
+      dataIndex: 'do',
+      render: (a,b,c)  => <><span style={{color:"blue",cursor:'pointer'}} onClick={()=>editRow(a,b,c)}>编辑</span ><span style={{color:"red",cursor:'pointer'}} onClick={() => delRow(a,b,c)}>删除</span></>
+    }
+  ]
+  var timer = null
+  const dispatch = useDispatch()
+  const good = useSelector(state => state.good)
   const [spins, setSpins] =useState(false)
   const [params, setParams] = useState({
     page: 1,
     size: 10,
-    text: '',
-    
+     ...props.fillters
   })
-  // let [filters, setFilters] = useState({})
-  var filters = null
-  // if (props.fillters.cate === '') {
-  //   filters = props.fillters
-  // }
-  let [pagination, setPagination ]  = useState({
-    current: 1,
-    pageSize: 10,
-    pageSizeOptions: [2, 5, 10, 20]
-  })
+  var [code,setCode ]  =  useState(-1)
   const [loading, setLoadinge] = useState(false)
   useEffect(()=> {
-    fetchGoodList(params).then((res) =>{
-      setDate(res.list)
-      setTotal(res.total)
-      setSpins(false)
-      // pagination.total = res.total
-    })
-    return undefined
-  },[params])
-  useEffect(() => {
-    setParams({
-      page: 1,
-      size: 10,
-      ...props.fillters
-    })
-    return undefined
-  }, [filters])
-  useEffect(()=> {
-    getCartList({}).then((res) =>{
-      if(res.list) {
-        setCates(res.list)
+      if (Object.keys(props.fillters).length == 0 || code == 0) {
+        setSpins(false)
+        dispatch(goodListAction(params))
+        setCode(-1)
       }
-    })
     return undefined
-  },[])
-  var timer = null
+  }, [params])
+  useEffect(()=> {
+    dispatch(goodListAction(props.fillters))
+    return undefined
+  },[props.fillters])
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }}  />
   function handleTableChange (v) {
     setParams({
       page: v.current,
-      size: v.pageSize,
-      text: ''
+      size: v.pageSize
     })
-    setPagination({
-      current: v.current,
-      pageSize: v.pageSize,
-      pageSizeOptions: [2, 5, 10, 20]
-    })
+    setCode(0)
   }
   function reset () {
-    setSpins(true);
+    setSpins(true)
     setParams({
       page: 1,
-      size: 10,
-      text: ''
+      size: 10
     })
-    setPagination({
-      current: 1,
-      pagesize: 10,
-      pageSizeOptions: [2, 5, 10, 20]
-    })
+    setCode(0)
   }
   // model
   const [visible, setVisible] = useState(false)
@@ -141,28 +103,76 @@ export default props => {
     setVisible(true)
   }
   const handleOk = () => {
+    setCode1(1)
+    clearTimeout(timer)
     setModalText('The modal will be closed after two seconds')
     setConfirmLoading(true)
-    setTimeout(() => {
+    timer = setTimeout(() => {
       setVisible(false)
       setConfirmLoading(false)
     }, 2000)
   };
   const handleCancel = () => {
-    setTimeout(() => setVisible(false) )
+    setCode1(1)
+    clearTimeout(timer)
+    timer = setTimeout(() => setVisible(false) )
   }
+  //form 
+  const [componentSize, setComponentSize] = useState('default')
+  const [form] = Form.useForm()
+  const [code1, setCode1] = useState(1)
+  const onFormLayoutChange = ({ size }) => {
+    setComponentSize(size)
+  }
+  useEffect(() => {
+    // if (code1 == 0 && good.goodDetail._id && good.goodDetail.img.indexOf('http') ==-1) {
+    if (code1 == 0 && good.goodDetail._id) {
+      form.setFieldsValue({ user: good.goodDetail, id: good.goodDetail._id })
+      setVisible(true)
+    }
+    return undefined
+  })
   const onFinish = (v) => {
     if (!v.user.hot) {
       v.user.hot = false
     }
-    console.log(v.user)
-    GoodAddOrEdit(v.user).then(res => console.log(res))
+    v.user.id = v.id
+    GoodAddOrEdit(v.user)
   }
-  //form 
-  const [componentSize, setComponentSize] = useState('default')
-  const onFormLayoutChange = ({ size }) => {
-    setComponentSize(size)
+  // eitd
+  const editRow = (_,b,) => {
+    setCode1(0)
+    dispatch(goodDtailAction({id: b._id}))
+    // console.log(b)
   }
+  // rowdel
+  const delRow = (_,b) => {
+    // console.log(b)
+    dispatch(fetchDelCartAction({ id: b._id }))
+  }
+
+  // tab checked
+  const [selectID, setSelectID ] = useState('')
+  const [checkStrictly, setCheckStrictly] = React.useState(false)
+  const rowSelection = {
+    onChange: (selectedRowKeys, _selectedRows) => {
+      if (selectedRowKeys.length > 0)
+      setSelectID({id : selectedRowKeys.join(';')})
+      // 
+      // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows)
+    },
+    onSelect: (record, selected, selectedRows) => {
+      // console.log(record, selected, selectedRows)
+    },
+    onSelectAll: (selected, selectedRows,changeRows) => {
+      // 所有被选择的行的 id
+    },
+  }
+  // someRowdel 
+  const delSome = () => {
+    if (selectID.length > 0) {}
+    dispatch(fetchDelCartAction({ id: selectID }))
+  } 
   return (
     <>
       <div className='header'>
@@ -179,14 +189,18 @@ export default props => {
             >
               <p>{modalText}</p>
               <Form
+                form={form}
                 labelCol={{ span: 4 }}
                 wrapperCol={{ span: 14 }}
                 layout="horizontal"
-                initialValues={{ size: componentSize }}
+                // initialValues={{ size: componentSize }}
                 onValuesChange={onFormLayoutChange}
                 size={componentSize}
                 onFinish={onFinish}
               >
+                <Form.Item name="id" style={{height:0}}>
+                  <span></span>
+                </Form.Item>
                 <Form.Item label="Form Size" name="size">
                   <Radio.Group>
                     <Radio.Button value="small">Small</Radio.Button>
@@ -202,15 +216,13 @@ export default props => {
                 </Form.Item>
                  <Form.Item label="Select" name={['user', 'cate']}>
                   <Select>
-                    { cates.map(ele => {
-                      return (
-                      <Select.Option key={ele._id} value={ele.cate}>{ele.cate_zh}</Select.Option>
-                      )
+                    { good.cate.map(ele => {
+                        return(<Select.Option key={ele._id} value={ele.cate}>{ele.cate_zh}</Select.Option>)
                     })}
                   </Select>
                 </Form.Item>
                 <Form.Item label="你的帅照" name={['user', 'img']}>
-                  <UploadS ></UploadS>
+                  <UploadS img={'http://10.20.158.29:9999'} ></UploadS>
                 </Form.Item>
                 <Form.Item label="InputNumber"  name={['user', 'price']}>
                   <InputNumber min={1} max={99999} placeholder='3' />
@@ -232,10 +244,17 @@ export default props => {
         columns={columns}
         // rowKey={record => record.login.uuid}
         rowKey = '_id'
-        dataSource={data}
-        pagination={{ total, ...pagination }}
+        dataSource={good.goodlist.list}
+        pagination={{ 
+          total: good.goodlist.total,
+          pageSizeOptions: [2, 5, 10, 20],
+          current :params.page,
+          pageSize: params.size
+          }}
         loading={loading}
+        rowSelection={{ ...rowSelection, checkStrictly }}
         onChange={handleTableChange}
+        footer={()=> <Button onClick={()=> delSome() }>部分删除</Button>} 
       />
     </>
   )

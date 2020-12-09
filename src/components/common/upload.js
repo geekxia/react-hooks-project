@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 export default props => {
   let  [loading, setLoading] = useState(false)
   let [imageUrl, setImageUrl]　= useState('')
+  // console.log(imageUrl)
   const uploadButton = (
     <div>
       {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -13,7 +14,7 @@ export default props => {
   )
   function handleChange (v) {
     if (v.file.response && v.file.response.err===0) {
-      setImageUrl("http://10.20.158.29:9999" + v.file.response.data.url)
+      setImageUrl(v.file.response.data.url)
       props.onChange(v.file.response.data.url)
     }
     // console.log(v)
@@ -29,7 +30,7 @@ export default props => {
         // beforeUpload={beforeUpload}
         onChange={handleChange}
       >
-        {imageUrl ? <img src={imageUrl} alt="img" style={{ width: '100%' }} /> : uploadButton}
+        { props.value !==undefined ?  <img src={props.img + props.value} alt="img" style={{ width: '100%' }} /> :(imageUrl ? <img src={props.img + imageUrl} alt="img" style={{ width: '100%' }} /> : uploadButton)}
       </Upload>
   )
 }

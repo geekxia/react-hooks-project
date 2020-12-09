@@ -1,13 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Row, Col, Input, Button, Select, } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import { useDispatch, useSelector } from 'react-redux'
 import { Tabs, Breadcrumb } from 'antd'
-import Table from '@/components/common/Table'
+import { cateListAction } from '@/store/actions'
+import TableS from '@/components/common/Table'
 const { Option } = Select
 export default prosp => {
+  const dispatch = useDispatch()
   const [expand, setExpand] = useState(false);
   const [form] = Form.useForm()
   const [fillters, setFillters] = useState({})
+  const good = useSelector(state => state.good)
+  useEffect(() => {
+    dispatch(cateListAction())
+    return undefined
+  }, [])
   const inputInit = [
     {name: "商品名称",des: 'name'},
     {name: "品类", des: 'cate'},
@@ -34,19 +42,22 @@ export default prosp => {
       //     <Input size='large' placeholder="placeholder" />
       //   </Form.Item>
       // </Col>
-      
-      i!==2 ? children.push(
+      if(i == 1) children.push(
         <Col span={8} key={i}>
           <Form.Item
-            name={`${inputInit[i].des}`}
-            label={`${inputInit[i].name}`}
-          >
-            <Input size='large' placeholder="placeholder" />
+              name='cate'
+              label='品类'
+            >
+              <Select style={{width: '200px'}}>
+                { good.cate.map(ele => {
+                    return(<Select.Option key={ele._id} value={ele.cate}>{ele.cate_zh}</Select.Option>)
+                })}
+              </Select>
           </Form.Item>
         </Col>
-      )
-      : children.push(
-        <Col span={8} key={i}>
+      ) 
+      else if(i == 2) children.push(
+        <Col span={6} key={i}>
           <Form.Item
               name='hot'
               label='是否热销'
@@ -58,12 +69,27 @@ export default prosp => {
               </Select>
           </Form.Item>
         </Col>
+      ) 
+      else  children.push(
+        <Col span={8} key={i}>
+          <Form.Item
+            name={`${inputInit[i].des}`}
+            label={`${inputInit[i].name}`}
+          >
+            <Input size='large' placeholder="placeholder" />
+          </Form.Item>
+        </Col>
       )
+      
     }
     return children;
   }
   const onFinish = values => {
-    if (!values.cate) values.cate = ''
+    for(var key in values) {
+      if (!values[key]) {
+        delete values[key]
+      } 
+    }
     setFillters(values)
     
   }
@@ -119,7 +145,7 @@ export default prosp => {
           </Form>
         </div>
         <div className='searchTab-main-table'>
-            <Table fillters={ fillters }/>
+            <TableS fillters={ fillters }/>
         </div>
       </div>
     </div>
