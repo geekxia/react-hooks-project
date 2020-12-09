@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import {message}from 'antd'
 // 浏览器同源策略，只是限制ajax跨域
 const baseURL = 'http://localhost:9000'
 
@@ -22,11 +22,15 @@ instance.interceptors.response.use(function (response) {
   if(response.status === 200) {
     if(response.data && response.data.code===0) {
       res = response.data.data
-    }
-  }
-  if(response.data&&response.data.err===0){
+    }else if(response.data&&response.data.err===0){
     res=response.data.data
+  }else if(response.data.err===-1){
+    window.localtion.href="/#/login"
+  }else{
+    message.error(response.data.msg)
   }
+}
+  console.log('-----------res',res)
   return res
 }, function (error) {
   return Promise.reject(error)
