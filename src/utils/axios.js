@@ -20,8 +20,13 @@ instance.interceptors.response.use(function (response) {
   // 数据过滤
   let res = null
   if(response.status === 200) {
+    //qq音乐服务器的数据过滤
     if(response.data && response.data.code===0) {
       res = response.data.data
+    }
+    //我们自己的node服务器
+    if(response.data && response.data.err===0){
+      res=response.data.data
     }
   }
   return res

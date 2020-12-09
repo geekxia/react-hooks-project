@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import {useDispatch,useSelector} from 'react-redux'
 import {
   Form,
   Input,
@@ -12,15 +13,18 @@ import {
   AutoComplete,
   InputNumber,
   Upload, message,
-  Switch 
+  Switch ,
 } from 'antd';
 
+import {fetchGoodList} from '@/utils/api'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 const { Option } = Select;
 const { TextArea } = Input
 const AutoCompleteOption = AutoComplete.Option;
 
+import GoodUpload from './components/comment/GoodUpload'
+import CateSelect from './components/comment/CateSelect'
 const formItemLayout = {
   labelCol: {
    
@@ -40,15 +44,16 @@ const tailFormItemLayout = {
   },
 };
 
-function onChange(value) {
-  // console.log('changed', value);
-}
 
 
 export default props=>{
+  const dispatch=useDispatch()
+  let [values]=useState({})
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
   //获取from的实例
   const [form] = Form.useForm();
+  
+  const goodInfo = useSelector(store=>store.good.goodInfo)
 
   //表单的提交
   const onFinish = values => {
@@ -73,63 +78,66 @@ export default props=>{
         }}
         scrollToFirstError
       >
+
+      <Form.Item
+          name="name"
+          label="商品名称"
+          rules={[
+            { required: true, message: '商品名称是必填!',},
+            { max: 10, message: '商品名称不能超过10个字' },
+            { min: 2, message: '商品名称不能少于两个字' }
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
         <Form.Item
-        name="name"
-        label="商品名称"
-        rules={[
-          { required: true,message:'商品名称必填！'},
-          {max:10,message:'商品名称不能超过10个字'},
-          {min:2,message:'商品名称不能少于两个字'}
-        ]}
-      >
-       <Input/>
-      </Form.Item>
+          name="desc"
+          label="商品描述"
+          rules={[
+            { required: true, message: '商品描述是必填!',},
+            { max: 30, message: '商品描述不能超过10个字' },
+            { min: 10, message: '商品描述不能少于两个字' }
+          ]}
+        >
+          <TextArea rows={4} />
+        </Form.Item>
 
-      <Form.Item
-        name="desc"
-        label="商品描述"
-        rules={[
-          { required: true,message:'商品描述必填！'},
-          {max:20,message:'商品描述不能超过20个字'},
-          {min:10,message:'商品名称不能少于10个字'}
-        ]}
-      >
-       <TextArea rows={4}/>
-      </Form.Item>
+        <Form.Item
+          name="price"
+          label="商品价格"
+          rules={[
+            { required: true, message: '商品描述是必填!',}
+          ]}
+        >
+          <InputNumber min={0} />
+        </Form.Item>
 
-      <Form.Item
-        name="cate"
-        label="选择品类"
-        rules={[
-          {required:true,message:'商品品类是必填！'}
-        ]}
-      >
+        <Form.Item
+          name="cate"
+          label="选择品类"
+          rules={[
+            { required: true, message: '商品描述是必填!' }
+          ]}
+        >
+          <CateSelect />
+        </Form.Item>
+        {/* 凡是被 Form.Item 包裹的表单组件，相当于都给表单传递了一个 onChange 事件 */}
+        <Form.Item
+          name='img'
+          label='商品图片'
+          rules={[
+            { required: true, message: '商品图片是必填!' }
+          ]}
+        >
+          <GoodUpload src={values.img||goodInfo.img} />
+        </Form.Item>
 
-        <Select  style={{ width: 120 }} allowClear>
-         <Option value="lucy">Lucy</Option>
-         <Option value="jack">jack</Option>
-         <Option value="lily">lily</Option>
-        </Select>
-      </Form.Item>
-
-      <Form.Item
-      name="price"
-      label="商品价格">
-        <InputNumber min={0}   onChange={onChange} />
-         
-      </Form.Item>
-
-      <Form.Item
-       
-      >
-
-      </Form.Item>
-      
-      <Form.Item
-       name="hot" 
-       label='是否热销'
-       valuePropName='checked'
-      >
+        <Form.Item
+          name='hot'
+          label='是否热销'
+          valuePropName='checked'
+        >
         <Switch  />
       </Form.Item>
 
