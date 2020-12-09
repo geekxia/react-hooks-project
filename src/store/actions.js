@@ -1,7 +1,8 @@
 import type from './actionTypes'
 import { fetchQqMusic,
          fetchGoodList,
-         fetchCates
+         fetchCates,
+         fetchGoodDetail
        } from '@/utils/api'
 
 // action 生成器
@@ -62,6 +63,15 @@ const getCatesAction=(params)=>{
   }
 }
 
+// 商品详情
+const getGoodDetail=(params)=>{
+  return dispatch=>{
+    fetchGoodDetail(params).then(res=>{
+      console.log("编辑商品详情",res)
+      dispatch({type:type.GET_GOOD_DETAIL,payload:res})
+    })
+  }
+}
 
 
 
@@ -70,5 +80,6 @@ export default {
   addFooCountAction,
   musicListAction,
   getGoodList,
-  getCatesAction
+  getCatesAction,
+  getGoodDetail
 }

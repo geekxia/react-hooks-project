@@ -29,3 +29,12 @@
     cursor: pointer;
   }
 }
+
+.qf-goodtime{
+  &>span:first-child{
+    color:skyblue
+  }
+  &>span:last-child{
+    color:#ccc
+  }
+}

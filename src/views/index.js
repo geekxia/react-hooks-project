@@ -29,7 +29,7 @@ export default [
       {
         id:1201,
         text:'表格新增呀',
-        path:'/find',
+        path:'/find/:id',
         component:Find
       },
       {

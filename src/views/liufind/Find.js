@@ -17,6 +17,9 @@ import {
   QfUploadIcon
 } from '@/components/'
 import CateSelects from './components/CateSelects'
+import action from '@/store/actions.js'
+import {useEffect} from 'react'
+import {useSelector,useDispatch} from 'react-redux'
 
 const { TextArea } = Input
 const { Option } = Select
@@ -40,6 +43,21 @@ const tailLayout = {
 
 
 const Find =(props)=>{
+  // 列表页面传递过来的id
+  const id=props.match.params.id==='0'
+  console.log("id",id)
+  console.log('props',props)
+  const goodInfo=useSelector(store=>{store.good.getGoodDetail})
+  
+  // 调取接口
+  const dispatch=useDispatch()
+  useEffect(()=>{
+    if(id!=='0'){
+      dispatch(action.getGoodDetail({id:props.match.params.id}))
+    }
+    
+    return undefined
+  },[])
 
   let [imageUrl, setImageUrl] = useState('')
   // 方法
@@ -47,7 +65,7 @@ const Find =(props)=>{
     values.img = imageUrl
     console.log("表单值",values);
     fetchGoodOrEdit(values).then(()=>{
-      props.history.replace('./goodlist')
+      props.history.replace('/goodlist')
     })
 
   };
@@ -58,10 +76,13 @@ const Find =(props)=>{
       setImageUrl(e.fileList[0].response.data.url)
     }
   }
+  // 获取form实例
+  
+
   return (
     <div>
-      <h1>测试find</h1>
-      <Form {...layout}  onFinish={onFinish}>
+      <h1>{id?'商品新增':'商品修改'}</h1>
+      <Form {...layout}  onFinish={onFinish} >
         {/* ======商品名称====== */}
         <Form.Item
           label="商品名称"
@@ -146,7 +167,7 @@ const Find =(props)=>{
         {/* =========提交============== */}
         <Form.Item {...tailLayout}>
           <Button  type="primary" htmlType="submit">
-          Submit
+          {id?"增加商品":'修改商品'}
           </Button>
         </Form.Item>
       </Form>

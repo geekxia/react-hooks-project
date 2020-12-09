@@ -11,6 +11,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(function (config) {
   // 加token
+  config.headers.Authoriztion=localStorage.getItem('token')
   return config;
 }, function (error) {
   return Promise.reject(error)

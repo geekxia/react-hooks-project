@@ -1,3 +1,4 @@
+import { locale } from 'moment'
 import React from 'react'
 
 import {
@@ -22,9 +23,14 @@ export default props => {
   const history = useHistory()
   console.log('---header props', props)
   console.log('---header history', history)
+  function clearToken(){
+    localStorage.removeItem('token')
+    location.reload()
+  }
+
   return (
     <div className='qf-header'>
-      header
+      <h1 onClick={()=>clearToken()}>退出登录</h1>
     </div>
   )
 }

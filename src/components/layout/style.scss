@@ -40,6 +40,10 @@
     left: 150px;
     right: 0;
     padding: 15px;
+    &>h1{
+      color:white;
+      cursor: pointer;
+    }
   }
   .qf-main {
     position: absolute;

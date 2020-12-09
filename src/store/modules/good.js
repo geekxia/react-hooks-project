@@ -2,7 +2,8 @@ import type from '../actionTypes.js'
 
 let initState={
   goodData:{},
-  cates:[]
+  cates:[],
+  goodDetail:[]
 }
 
 export default function reducer(state=initState,action) {
@@ -14,6 +15,8 @@ export default function reducer(state=initState,action) {
       case type.GET_CATE_LIST:
         newState.cates = action.payload
         break
+      case type.GET_GOOD_DETAIL:
+        newState.goodDetail=action.payload
       default:
   }
   return newState

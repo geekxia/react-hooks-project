@@ -12,7 +12,7 @@ const {Option} = Select
 const CateSelects=(props)=>{
   const dispatch =useDispatch()
   const cates = useSelector(store=>store.good.cates)
-  console.log("状态管理品类",cates)
+  // console.log("状态管理品类",cates)
   console.log("cateselects",props)
   // useEffect(()=>{
   //   fetchCates().then(res=>{
