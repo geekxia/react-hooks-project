@@ -2,7 +2,8 @@ import type from '../actionTypes'
 
 const initState = {
     goodList: {},
-    cateList: []
+    cateList: [],
+    goodInfo: {}
 }
 
 export default (state=initState, action) =>{
@@ -14,6 +15,11 @@ export default (state=initState, action) =>{
         case type.TT_CATE_LIST:
             newState.cateList = action.payload
             break
+        case type.TT_GOOD_DETAIL:
+            newState.goodInfo = action.payload
+            break
+        case type.CLEAR_GOOD_DETAIL:
+            newState.goodInfo = action.payload
         default:
             break;
     }

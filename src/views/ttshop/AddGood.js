@@ -8,11 +8,15 @@ import {
 
 import TtUpload from './ttcomponents/TtUpload'
 
-import { useState } from 'react'
-
 import { fetchGoodOrEdit } from '@/utils/api'
 
 import GoodCates from './ttcomponents/GoodCates'
+
+import { useState, useEffect } from 'react'
+
+import { useDispatch, useSelector } from 'react-redux'
+
+import action from '@/store/actions' 
 
 const formItemLayout = {
     labelCol: {
@@ -22,8 +26,6 @@ const formItemLayout = {
         sm:  { span: 10 }
     },
 };  
-
-
 
 const tailFormItemLayout = {
     wrapperCol: {
@@ -36,6 +38,7 @@ const tailFormItemLayout = {
 
 export default props=>{
 
+    const dispatch = useDispatch()
     const { TextArea } = Input;
 
     // 获取Form的实例
@@ -43,24 +46,49 @@ export default props=>{
 
     let [values, setValues] = useState({})
 
+    const id = props.match.params.id
+
+    const isAdd = id==='0'
+    // console.log('------isAdd', isAdd);
+
+    const goodInfo = useSelector(store=>store.ttGood.goodInfo)
+
     // 当Form表单值发生变化时，我们手动取值，赋值给声明式变量 values
     const formChange = values => {
         setValues(values)
     }
 
-    const onFinish = values => {
-        console.log('提交成功 ', values);
+    const [flag, setFlag] = useState(false) // 是否已经填充表单
+    useEffect(()=>{
+        if(!flag) form.setFieldsValue(goodInfo)  // 给表单赋初始值
+        if(goodInfo._id) setFlag(true)  // 解决当前useEffect反复运行的问题
+        return undefined
+    })
+
+
+    useEffect(()=>{
+        // 当是编辑时，触发action调接口获取商品详情
+        if(!isAdd) dispatch(action.getGoodDetailAction({id}))
+        return ()=>(
+            // 当前组件被销毁前，清空redux中的缓存数据
+            dispatch(action.clearGoodDetailAction())
+        )
+    },[])
+
+
+    // 表单提交
+    const onFinish = () => {
+        // console.log('提交成功 ', values);
+        if(!isAdd) values.id = goodInfo._id
         fetchGoodOrEdit(values).then(()=>{
             // 跳转到列表页
             props.history.replace('/ttgood')
         })
     };
-
-    
     
     return (
         <div>
-            <h1>商品新增</h1>
+            <h1>{isAdd?'商品新增':'商品编辑'} </h1>
             <Form
                 style={{margin: '25px 0'}}
                 name="validate_other"
@@ -68,8 +96,7 @@ export default props=>{
                 {...formItemLayout}
                 onFinish={onFinish}
                 initialValues={{
-                    ['input-number']: 1,
-                    ['price']: 1
+                    ['input-number']: 1
                 }}
                 onValuesChange={(val, values)=>formChange(values)}
             >
@@ -112,7 +139,7 @@ export default props=>{
                     label="商品数量" 
                     name="input-number"
                     rules={[
-                        { required: true, message: '商品价格是必填'}
+                        { required: true, message: '商品数量是必填'}
                     ]}
                 >
                     <InputNumber min={1} max={100000} />
@@ -138,12 +165,12 @@ export default props=>{
                         {required: true, message: '商品图片是必填!'}
                     ]}    
                 >
-                    <TtUpload src={values.img} />
+                    <TtUpload src={values.img || goodInfo.img } />
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">
-                        Submit
+                        {isAdd?'添加商品':'确定修改'}
                     </Button>
                 </Form.Item>
             </Form>

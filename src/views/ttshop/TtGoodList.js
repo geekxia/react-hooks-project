@@ -82,6 +82,10 @@ export default props => {
     })
   }
 
+  const skipToEdit = row => {
+    props.history.push('/ttgood/update/'+ (row?row._id:0))
+  }
+
   const filterChange = (key,value)=>{
     filter[key]=value
     if(key!=='page') filter.page = 1
@@ -167,7 +171,7 @@ export default props => {
         key: 'tags',
         render: (text,row) => (
           <Space size="middle">
-            <Button type='primary'>编辑</Button>
+            <Button type='primary'onClick={()=>skipToEdit(row)}>编辑</Button>
             <Button type='danger' onClick={()=>handleDel(row)}>删除</Button>
           </Space>
         ),
@@ -214,7 +218,7 @@ export default props => {
             </Select>
           </Col>
           <Col span={2} offset={4}>
-            <Button onClick={()=>props.history.replace('/ttgood/update/0')} type="primary">新增商品</Button>
+            <Button onClick={()=>skipToEdit()} type="primary">新增商品</Button>
           </Col>
         </Row>
       </div>

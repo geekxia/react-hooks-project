@@ -21,8 +21,9 @@ export default props => {
     return (
         <div className='tt-goodcate'>
             <Select 
-                placeholder="选择一个品类" 
                 style={{width: 200}} 
+                value={props.value }
+                placeholder="选择一个品类" 
                 onChange={val=>props.onChange && props.onChange(val)}
                 allowClear={props.allowClear}
             >

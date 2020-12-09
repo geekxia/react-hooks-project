@@ -3,7 +3,8 @@ import {
   fetchQqMusic,
   fetchFoodList,
   fetchGoodList,
-  fetchCates 
+  fetchCates,
+  fetchGoodDetail 
 } from '@/utils/api'
 
 // action 生成器
@@ -87,6 +88,25 @@ function cateListAction(params) {
   }
 }
 
+function getGoodDetailAction(params) {
+  return function(dispatch) {
+    fetchGoodDetail(params).then(res=>{
+      console.log('fetchGoodDetail',res);
+      dispatch({
+        type: type.TT_GOOD_DETAIL,
+        payload: res
+      })
+    })
+  }
+}
+
+function clearGoodDetailAction() {
+  return {
+    type: type.CLEAR_GOOD_DETAIL,
+    payload: {}
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
@@ -94,5 +114,7 @@ export default {
   foodListAction,
   foodNameAction,
   goodListAction,
-  cateListAction
+  cateListAction,
+  getGoodDetailAction,
+  clearGoodDetailAction
 }
