@@ -2,7 +2,8 @@ import type from '../actionTypes'
 
 const initState = {
   goodList: {},
-  cates:[]
+  cates:[],
+  goodInfo:{}
 }
 
 export default (state=initState, action) => {
@@ -14,6 +15,12 @@ export default (state=initState, action) => {
     case type.AJAX_GOOD_CATE:
       newState.cates = action.payload
       // console.log(action.payload)
+      break
+    case type.AJAX_GOOD_DATAIL:
+      newState.goodInfo = action.payload
+      break
+    case type.CLEAR_GOOD_DETAIL:
+      newState.goodInfo = action.payload
       break
     default:
   }

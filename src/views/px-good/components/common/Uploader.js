@@ -9,6 +9,7 @@ import UploadButton from "@/components/common/icon/uploadButton"
 
 
 export default props=>{
+    console.log('props',props);
     let [loading,setLoading] = useState(false)
     const handleChange = info => {
         console.log(info);
@@ -26,7 +27,7 @@ export default props=>{
             action={img.uploadUrl}
             onChange={(e)=>handleChange(e)}
         >
-            {props.src ? <img src={img.imgBase+props.src} alt="avatar" style={{ width: '100%' }} /> : <UploadButton loading={loading}/>}
+            {(props.src||props.value) ? <img src={img.imgBase+(props.src||props.value)} alt="avatar" style={{ width: '100%' }} /> : <UploadButton loading={loading}/>}
         </Upload>
     )
 }

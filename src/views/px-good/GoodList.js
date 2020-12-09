@@ -80,6 +80,13 @@ export default props=>{
             filterChange(filter)
         })
     }
+    // const id = props.match.params
+    // 跳转编辑页
+    const skipToEdit = row=>{
+        console.log(row);
+        props.history.push('/panxi/good/list/addoredit/'+row._id)
+    }
+
     const columns = [
         {
             title: '商品名称',
@@ -160,7 +167,11 @@ export default props=>{
                             style={{margin:"0 5px 0 0 "}}
                             onClick={()=>deleteHandel(row)}
                         >删除</Button>
-                        <Button size='small' type="primary">编辑</Button>
+                        <Button 
+                            size='small' 
+                            type="primary"
+                            onClick={()=>skipToEdit(row)}
+                        >编辑</Button>
                     </div>
                 )
             }
@@ -205,7 +216,7 @@ export default props=>{
         console.log('filter',filter);
         return undefined
     },[filter])
-      
+
     return (
         <div className='px-good'>
             <Breadcrumb>

@@ -13,6 +13,9 @@ import {fetchGoodAddOrEdit} from "@/utils/api"
 import Selector from "./components/common/selector"
 import Uploader from "./components/common/Uploader"
 
+import { useSelector,useDispatch } from "react-redux";
+
+import actions from "@/store/actions"
 
 const layout = {
     labelCol: { span: 8 },
@@ -23,13 +26,45 @@ const tailLayout = {
 };
 
 export default props=>{
+    let [imageUrl,setImageUrl] = useState('')
+    const [form] = Form.useForm();
+    const id = props.match.params.id
+    const isAdd = id==='0'
+
     const onFinish = values => {
-        values.img=imageUrl
+        console.log('第一次提交的values',values);
+        if(id==0){
+            values.img=imageUrl
+        }else{
+            values.id=id
+        }
+        console.log(values);
         fetchGoodAddOrEdit(values).then((res)=>{
             props.history.replace('/panxi/good/list')
         })
     };
-    let [imageUrl,setImageUrl] = useState('')
+    const goodInfo = useSelector(store=>store.good.goodInfo)
+    const dispatch = useDispatch()
+
+    // 此时派发一次goodinfo，无法获取到异步的goodinfo
+    useEffect(()=>{
+        if(!isAdd) dispatch(actions.getGoodDetail({id}))
+        return ()=>{
+            dispatch(actions.clearGoodDetail())
+        }
+    },[])
+    // 判断表单是否填充
+    let [flag,setFlag]=useState(false)
+    useEffect(()=>{
+        // console.log('goodinfo',goodInfo);
+        if(!flag){
+            form.setFieldsValue(goodInfo)
+        }
+        if(goodInfo._id){
+            setFlag(true)
+        }
+        return undefined
+    })
 
     return (
         <div className='px-goodAddOrEdit'>
@@ -38,6 +73,7 @@ export default props=>{
             <Form
                 {...layout}
                 name="basic"
+                form={form}
                 initialValues={{ remember: true }}
                 onFinish={onFinish}
             >

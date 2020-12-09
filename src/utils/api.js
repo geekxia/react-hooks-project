@@ -40,10 +40,28 @@ export function fetchDelete(params) {
   })
 }
 
+export function fetchGoodDetail(params){
+  return axios({
+    url: '/api/v1/good/detail',
+    method: 'GET',
+    params
+  })
+}
+
+export function fetchLogin(data){
+  return axios({
+    url: '/api/v1/user/login',
+    method: 'POST',
+    data
+  })
+}
+
 export default {
   fetchQqMusic,
   fetchGoodList,
   fetchGoodAddOrEdit,
   fetchCates,
-  fetchDelete
+  fetchDelete,
+  fetchGoodDetail,
+  fetchLogin
 }

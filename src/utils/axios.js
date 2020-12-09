@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { message } from 'antd';
+
 // 浏览器同源策略，只是限制ajax跨域
 const baseURL = 'http://localhost:9000'
 
@@ -11,6 +13,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(function (config) {
   // 加token
+  config.headers.Authorization = localStorage.getItem('token')
   return config;
 }, function (error) {
   return Promise.reject(error)
@@ -22,10 +25,14 @@ instance.interceptors.response.use(function (response) {
   if(response.status === 200) {
     if(response.data && response.data.code===0) {
       res = response.data.data
-    }
-    if(response.data && response.data.err===0) {
+    }else if(response.data && response.data.err===0) {
       res = response.data.data
+    }else if(response.data && response.data.err===-1){
+      window.location.href='/#/login'
+    }else{
+      message.error(response.data.msg);
     }
+    
   }
   return res
 }, function (error) {

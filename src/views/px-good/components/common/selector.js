@@ -12,6 +12,7 @@ const { Option } = Select;
 
 export default props=>{
     const dispatch = useDispatch()
+    // const [value,setValue]=useState('')
     const cates = useSelector(store=>store.good.cates)
     useEffect(()=>{
         dispatch(actions.catesAction())
@@ -23,6 +24,7 @@ export default props=>{
             allowClear
             onChange={(e)=>props.onChange(e)}
             defaultValue=""
+            value={props.value}
         >
             {
                 props.hasAll?<Option key='0' value=''>全部</Option>:''

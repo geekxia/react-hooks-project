@@ -1,5 +1,5 @@
 import type from './actionTypes'
-import { fetchQqMusic,fetchGoodList,fetchCates } from '@/utils/api'
+import { fetchQqMusic,fetchGoodList,fetchCates,fetchGoodDetail } from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -77,11 +77,32 @@ function catesAction(params) {
   }
 }
 
+function getGoodDetail(params) {
+  return function(dispatch) {
+    fetchGoodDetail(params).then(res=>{
+      // 这才是真正地把后端数据，发送到store中
+      dispatch({
+        type: type.AJAX_GOOD_DATAIL,
+        payload: res
+      })
+    })
+  }
+}
+
+function clearGoodDetail(params){
+  return {
+    type: type.CLEAR_GOOD_DETAIL,
+    payload:{}
+  }
+}
+
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   numberListAction,
   goodListAction,
-  catesAction
+  catesAction,
+  getGoodDetail,
+  clearGoodDetail
 }

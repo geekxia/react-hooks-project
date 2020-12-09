@@ -1,0 +1,19 @@
+.px-login{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #cccc;
+    &>div{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: -260px;
+        transform: translateY(-50%);
+        width: 520px;
+        background: #fff;
+        padding: 50px;
+        border-radius: 5px;
+    }
+}
