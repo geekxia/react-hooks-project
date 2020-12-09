@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import '@/assets/css/common.scss'
+import "@/assets/css/huhStyle.scss"
 import App from './App'
 
 import 'antd/dist/antd.less'
