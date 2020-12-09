@@ -4,9 +4,12 @@ import routes from '@/views'
 import { NavLink } from 'react-router-dom'
 
 import { Menu } from 'antd'
+// import imgLogo  from '@/utils/img.js'
+import imgLogo  from '@/assets/img/logo.jpg'
 const { SubMenu } = Menu
 
 console.log('routes', routes)
+console.log('imgLogo',imgLogo.imgLogo)
 
 export default props=>{
 
@@ -32,15 +35,23 @@ export default props=>{
     ))
   }
 
+  const logo = ()=>{
+    return (
+      <img src={imgLogo} alt=""/>
+    )
+  }
+
   return (
     <div className='qf-sider'>
-
-    <Menu
-      mode="inline"
-      theme="dark"
-    >
-      { createNavLink()}
-    </Menu>
+      <div className='qf-logo'>
+        {logo()}
+      </div>
+      <Menu
+        mode="inline"
+        theme="dark"
+      >
+        { createNavLink()}
+      </Menu>
     </div>
   )
 }

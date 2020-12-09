@@ -20,7 +20,6 @@
       text-align: center;
       line-height: 40px;
       cursor: pointer;
-      border-bottom: 1px solid #aaa;
       &>a {
         text-decoration: none;
         display: block;
@@ -63,5 +62,16 @@
       // height: 100%;
       min-width: 750px;
     }
+  }
+}
+.qf-logo{
+  width: 150px;
+  height: 100px;
+  padding-top: 20px;
+  box-sizing: border-box;
+  &>img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
   }
 }

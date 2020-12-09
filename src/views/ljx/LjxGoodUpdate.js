@@ -21,7 +21,7 @@ import {
 // import GoodUpload from './components/GoodUpload'
 import { LjxUploadIcon } from '@/components'
 import img from '@/utils/img'
-
+import { fetchGoodOrEdit } from '@/utils/api'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 
@@ -56,7 +56,11 @@ export default props => {
     // 表单提交
     const onFinish = values => {
         values.img = imageUrl
-        console.log('values', values);
+        console.log('values', values)
+        fetchGoodOrEdit(values).then(()=>{
+            // 跳转到列表页
+            props.history.replace('/ljxgood')
+        })
     };
         
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);

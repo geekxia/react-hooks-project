@@ -58,7 +58,7 @@ export default [
   },
   {
     id: 60,
-    text:"赖锦兴",
+    text:"不讲武德",
     icon:<AliwangwangOutlined />,
     children :[
       {

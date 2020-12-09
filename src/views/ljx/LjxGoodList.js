@@ -1,89 +1,142 @@
-import { Table, Tag, Space } from 'antd'
+
+
+
+
+
+import { 
+  Table,
+  Tag,
+  Space,
+  Row,
+  Col,
+  Input,
+  Button
+} from 'antd'
+import { useDispatch , useSelector} from 'react-redux'
+import { useEffect , useState} from 'react'
+import moment from 'moment'
+import img from '@/utils/img'
+import './style.scss'
+import action from '@/store/actions'
+import CateSelect from './components/CateSelect'
+
+
 
 export default props => {
 
+  const dispatch = useDispatch()
+  const goodData = useSelector(store=>store.good.goodData)
+
+  let [page, setPage] = useState(1)
+  let [size, setSize] = useState(2)
+
+  useEffect(()=>{
+    let params = {
+      size,
+      page
+    }
+    dispatch(action.getGoodList(params))
+    return undefined
+  },[])
+
   const columns = [
     {
-      title: 'Name',
+      title: '商品',
       dataIndex: 'name',
       key: 'name',
-      render: text => <a>{text}</a>,
+      align: 'center',
+      render: (text,row,idx) => {
+        return (
+          <div className='gl-good'>
+            <img src={img.imgBase+row.img} alt={row.name} />
+            <a>{text}</a>
+          </div>
+        )
+      },
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-      render: text=> <div>{text+'00'}</div>
+      title: '商品描述',
+      dataIndex: 'desc',
+      key: 'desc',
+      align:'center'
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: '价格',
+      dataIndex: 'price',
+      key: 'price',
+      align:'center',
+      render: text=> <div>{text}</div>
     },
     {
-      title: 'Tags',
+      title: '是否热销',
+      dataIndex: 'hot',
+      key: 'hot',
+      align: 'center',
+      render: text=> <div>{text?'是':'否'}</div>
+    },
+    {
+      title: '上架时间',
+      dataIndex: 'create_time',
+      key: 'create_time',
+      align: 'center',
+      render: text=> {
+        return(
+          <>
+            <div>{moment(text).format('YYYY年MM月DD日')}</div>
+            <div>{moment(text).format('hh:mm:ss')}</div>
+          </>
+        )
+      }
+    },
+    {
+      title: '操作',
       key: 'tags',
+      align:'center',
       dataIndex: 'tags',
-      render: tags => (
+      render: () => (
         <>
-          {tags.map(tag => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
+          <a href="">删除</a>
+          <a href="">编辑</a>
         </>
       ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (text, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
+    }
   ]
 
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ]
 
   return (
     <div className='qf-good-list'>
-      <h1>购物车</h1>
-      <div>
-        商品列表
+      <h1>商品列表</h1>
+      <div style={{margin: '25px 0'}}>
+        <Row align='middle'>
+          <Col span={2}>
+            <span className='filter-label'>名称搜索:</span>
+          </Col>
+          <Col span={6}>
+            <Input placeholder="搜索" />
+          </Col>
+          <Col span={2}>
+            <span className='filter-label'>品类:</span>
+          </Col>
+          {/* <Col span={6}>
+            <CateSelect hasAll />
+          </Col> */}
+          <Col offset={6} span={2} style={{textAlign: 'right'}}>
+            <Button
+              size='small'
+              type="primary"
+              onClick={()=>props.history.push('/ljxgood/update')}
+            >
+              新增
+            </Button>
+          </Col>
+        </Row>
       </div>
       <div style={{margin: '20px 0'}}>
-        <Table columns={columns} dataSource={data} />
+        <Table 
+        rowKey='_id' 
+        columns={columns} 
+        dataSource={goodData.list}
+        />
       </div>
     </div>
   )
