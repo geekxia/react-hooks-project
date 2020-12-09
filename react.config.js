@@ -5,7 +5,7 @@ module.exports = {
     publicPath: '',
     proxy: {
         '/api': {
-            target: 'http://10.20.158.113:9999',
+            target: 'http://10.20.158.29:9999',
             changeOrigin: true
         },
         '/soso': {

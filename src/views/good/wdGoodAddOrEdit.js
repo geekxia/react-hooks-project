@@ -18,8 +18,10 @@ import {
 import { QuestionCircleOutlined } from '@ant-design/icons';
 
 import {WdUpdate} from '@/components'
+import UpdateImg from './components/UpdateImg'
 import img from '@/utils/img'
 import {fetchGoodOrEdit} from '@/utils/api'
+import CatesSelect from './components/CatesSelect'
 const { Option } = Select;
 const {TextArea}=Input
 const AutoCompleteOption = AutoComplete.Option;
@@ -53,17 +55,14 @@ const tailFormItemLayout = {
 
 export default props => {
     let [imageUrl,setimageUrl]=useState('')
+    let [values,setValues]=useState({})
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-    const imgSuccess = e => {
-        console.log('图片上传成功', e)
-        if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
-            setimageUrl(e.fileList[0].response.data.url)
-        }
+    
+    const formChange=(val,values)=>{
+        console.log('val values',val,values)
     }
     //表单提交
     const onFinish = values => {
-        console.log('提交内容', values);
-        values.img=imageUrl
         fetchGoodOrEdit(values).then(()=>{
             props.history.replace('/good/list')
         })
@@ -73,6 +72,7 @@ export default props => {
     return(
         <div>
             <h1>增加商品</h1>
+            
             <Form
             style={{margin:'25px 0'}}
             {...formItemLayout}
@@ -84,6 +84,10 @@ export default props => {
                 prefix: '86',
             }}
             scrollToFirstError
+            onValuesChange={(val,values)=>{
+                formChange(val,values)
+                setValues(values)
+            }}
             >
             <Form.Item
                 name="name"
@@ -136,14 +140,7 @@ export default props => {
                 },
                 ]}
             >
-                <Select
-            style={{ width: 200 }}
-            placeholder="选择一个品类"
-            >
-                <Option key='1' value="jack">Jack</Option>
-                <Option key='2' value="lucy">Lucy</Option>
-                <Option key='3' value="tom">Tom</Option>
-            </Select>
+                <CatesSelect />
             </Form.Item>
             
             <Form.Item
@@ -167,30 +164,18 @@ export default props => {
             </Form.Item>
 
             <Form.Item
+            name='img'
             label='商品图片'
             rules={[
                 { required: true, message: '商品图片是必填!' }
             ]}
             >
-            <Upload
-                name="file"
-                action={img.uploadUrl}
-                listType="picture-card"
-                className="avatar-uploader"
-                showUploadList={false}
-                onChange={imgSuccess}
-            >
-                {
-                imageUrl ?
-                <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} />
-                : <WdUpdate />
-                }
-            </Upload>
+            <UpdateImg src={values.img} />
             </Form.Item>
             
             <Form.Item {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit">
-                Register
+                提交商品信息
                 </Button>
             </Form.Item>
             </Form>
