@@ -48,7 +48,7 @@ function getGoodList(params){
   return dispatch=>{
     //真的调接口
     fetchGoodList(params).then(res=>{
-      console.log("看看结果",res)
+      // console.log("看看结果",res)
       dispatch({type: type.GET_GOODLIST,payload:res})
     })
   }

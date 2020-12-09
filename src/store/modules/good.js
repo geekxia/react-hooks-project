@@ -15,6 +15,6 @@ export default function reducer(state=initState,action){
             newState.goodArr=action.payload
             break
     }
-    console.log("这有吗？",newState)
+    // console.log("这有吗？",newState)
     return newState
 }
