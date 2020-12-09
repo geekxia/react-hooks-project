@@ -4,11 +4,10 @@ import action from '@/store/actions'
 import img from "@/utils/img"
 import "@/assets/xxl/xxlgood.scss"
 import moment from 'moment'
-import { Image } from 'antd';
 import api from '@/utils/api'
-import { Modal,Row, Col,Input,Table, Radio, Divider } from 'antd';
+import { Modal,Row, Col,Input,Table, Radio, Divider,Image } from 'antd';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import CateSelect from './components/cateSelect'
+import CateSelect from '../components/cateSelect'
 const { confirm } = Modal;
 import { Select } from 'antd';
 const { Option } = Select;
@@ -42,7 +41,11 @@ export default props=>{
     }
     const filterChange = (key,val)=>{
         filter[key] = val
+        if(key!=='page') filter.page = 1
         setFilter(JSON.parse(JSON.stringify(filter)))
+    }
+    const onAddShop = ()=>{
+        props.history.push("/xxladd/0")
     }
     const shopChange = (e,val,record)=>{
         e.preventDefault();
@@ -84,10 +87,9 @@ export default props=>{
               return (
                   <div className="xxl-good">
                        <Image
-                        width={80}
-                        src={img.imgBase+record.img}
+                            width={80}
+                            src={img.imgBase+record.img}
                         />
-                      {/* <img src={img.imgBase+record.img} alt="0"/> */}
                       <a href="#">{text}</a>
                   </div>
               )
@@ -158,7 +160,7 @@ export default props=>{
             align:"center",
             render:(text,record,index)=>(
                 <>
-                    <a href="" onClick={(e)=>shopChange(e,"del",record)} >删除</a>
+                    <a href="" onClick={(e)=>shopChange(e,"del",record)} style={{color:"red",marginRight:10+"px"}}>删除</a>
                     <a href="" onClick={(e)=>shopChange(e,"editing",record)}>编辑</a>
                 </>
             )
@@ -209,7 +211,12 @@ export default props=>{
                     </Select>
                     </Col>
                     <Col span={2} push="4">
-                        <button onClick={()=>(props.history.push("/xxladd/0"))}>新增商品</button>
+                        {/* 新增商品 */}
+                        <button 
+                        onClick={()=>onAddShop()} 
+                        style={{backgroundColor:"green",color:"#fff",cursor:"pointer"}}>
+                            新增商品
+                        </button>
                     </Col>
                 </Row>
             </div>
@@ -222,6 +229,7 @@ export default props=>{
                     pagination={{
                         total:shopDate.total,
                         defaultPageSize:filter.size,
+                        showSizeChanger:true,
                         pageSizeOptions:[2,5,10,15,20],
                         onChange:page =>filterChange("page",page),
                         onShowSizeChange:(page,size) =>filterChange("size",size)
@@ -237,7 +245,12 @@ export default props=>{
                         type: 'checkbox',
                         onChange: keys=>setKeys(keys)
                     }}
-                    footer={()=><button onClick={()=>mulDelete()} type='danger'>批量删除</button>}
+                    footer={()=><button 
+                        onClick={()=>mulDelete()} 
+                        type='danger' 
+                        style={{backgroundColor:"red",color:"#fff",cursor:"pointer"}}>
+                            批量删除
+                        </button>}
                 />
             </div> 
         </div>

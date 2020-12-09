@@ -3,7 +3,8 @@ import type from '../../../actionTypes'
 
 let initState = {
     shopDate:{},
-    cates:[]
+    cates:[],
+    goodInfo:{}
 }
 
 export default (state=initState,action)=>{
@@ -14,6 +15,12 @@ export default (state=initState,action)=>{
             break;
         case type.XXL_GET_CATES:
             newState.cates = action.payload
+        break;
+        case type.XXL_GET_GOOD_INFO:
+            newState.goodInfo = action.payload
+        break;
+        case type.XXL_CLEAR_GOODINFO:
+            newState.goodInfo = {}
         break;
         default:
             return state

@@ -1,3 +1,4 @@
+import React ,{useState} from "react"
 import { HashRouter } from 'react-router-dom'
 import { Layout } from '@/components'
 
@@ -5,12 +6,17 @@ import { Layout } from '@/components'
 import { Provider } from 'react-redux'
 import store from '@/store'
 
+import Login from "@/views/xxl/login/login"
+
 function App() {
+  let [isLogin,setIsLogin] = useState(false)
   return (
     <HashRouter>
       <Provider store={store}>
         <div className="app">
-          <Layout />
+          {
+            isLogin ? <Layout /> : <Login onLogin ={()=>(setIsLogin(true))}/>
+          }  
         </div>
       </Provider>
     </HashRouter>

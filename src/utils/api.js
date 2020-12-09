@@ -45,6 +45,24 @@ export function fetchXxlDelShop(params){
   })
 }
 
+//获取商品goodinfo
+export function fetchXxlGetGoodinfo(params){
+  return axios({
+    url:'/api/v1/good/detail',
+    method:"GET",
+    params
+  })
+}
+
+//登录
+export function fetchXxlLogin(data){
+  return axios({
+    url:'/api/v1/user/login',
+    method:"POST",
+    data
+  })
+}
+
 
 
 
@@ -53,5 +71,7 @@ export default {
   pushshop,
   fetchXxlGetShop,
   fetchXxxGetCates,
-  fetchXxlDelShop
+  fetchXxlDelShop,
+  fetchXxlGetGoodinfo,
+  fetchXxlLogin
 }

@@ -4,10 +4,10 @@ import {
 } from '@ant-design/icons'
 
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
-const Xxl =loadable(()=>import('./xxl/Xxl'))
-const RenderXxl = loadable(()=>import("./xxl/renderXxl"))
-const xxlAddShop = loadable(()=>import("./xxl/xxlAddShop"))
-const xxlshopList = loadable(()=>import("./xxl/xxlshopList"))
+const Xxl =loadable(()=>import('./xxl/practice/Xxl'))
+const RenderXxl = loadable(()=>import("./xxl/practice/renderXxl"))
+const xxlAddShop = loadable(()=>import("./xxl/good/xxlAddShop"))
+const xxlshopList = loadable(()=>import("./xxl/good/xxlshopList"))
 
 export default [
   {

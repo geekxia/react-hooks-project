@@ -90,3 +90,10 @@ git add .
 git commit -m '分支合并完成'
 git push origin xia
 ```
+# 一、项目创建以及准备前工作
+```
+详见project-junjun项目的README.MD文件
+
+```
+# 二、后台项目中的增删改除
+

@@ -40,6 +40,21 @@ function xxlgetcates(params){
     })
   }
 }
+function xxlgetgoodinfo(params){
+  return dispatch =>{
+    api.fetchXxlGetGoodinfo(params).then(res=>{
+      // console.log("goodinfo",res)
+      dispatch({type:type.XXL_GET_GOOD_INFO,payload:res})
+    })
+  }
+}
+function xxlcleargoodinfo(payload){
+  return {
+    type:type.XXL_CLEAR_GOODINFO,
+    payload,
+  }
+}
+
 
 
 
@@ -72,5 +87,7 @@ export default {
   musicListAction,
   addPro,
   xxlGetShop,
-  xxlgetcates
+  xxlgetcates,
+  xxlgetgoodinfo,
+  xxlcleargoodinfo
 }

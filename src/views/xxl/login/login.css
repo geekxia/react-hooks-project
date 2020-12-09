@@ -1,0 +1,21 @@
+.app {
+  background: #ccc;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.app .xxl-login {
+  height: 250px;
+  width: 560px;
+  padding-top: 20px;
+  padding-left: 50px;
+  background: #fff;
+  position: absolute;
+  left: 50%;
+  margin-left: -280px;
+  margin-top: -125px;
+  top: 50%;
+}

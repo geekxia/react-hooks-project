@@ -5,8 +5,8 @@ import { useSelector,useDispatch } from "react-redux"
 import action from '@/store/actions'
 
 export default props=>{
-    let cates =  useSelector(store=>store.xxlgetshop.cates)
     const dispatch = useDispatch()
+    let cates =  useSelector(store=>store.xxlgetshop.cates)
     useEffect(()=>{
         dispatch(action.xxlgetcates({}))
         return undefined
@@ -19,6 +19,7 @@ export default props=>{
                 placeholder="选择一个品类"
                 onChange={val=>props.onChange && props.onChange(val)}
                 allowClear={props.allowClear}
+                value={props.value}
             >
                 {
                     props.hasAll && <Option key='0' value=''>全部</Option>
