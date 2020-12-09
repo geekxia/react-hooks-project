@@ -44,3 +44,6 @@ yarn eject
 # 登录实现
 分装login页面，与layout同级别
 添加登录接口
+在APP页面判断是否登录渲染layout还是login
+登录时，在请求拦截器加token，在响应拦截器验证token
+登陆页：点击登录按钮调登录接口，成功后把token存储本地，跳转到首页，调用父组件传递的方法刷新isLogin

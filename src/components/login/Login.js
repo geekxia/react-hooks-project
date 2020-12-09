@@ -26,7 +26,6 @@ export default props => {
         // 把登录状态（鉴权）存储起来
         localStorage.setItem('token', res.token)
         // 跳转到首页
-        // location.href='/#/'
         history.replace('/')
         // 调用App组件传递过来的onLogin方法，刷新 isLogin
         props.onLogin()
