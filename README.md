@@ -90,3 +90,22 @@ git add .
 git commit -m '分支合并完成'
 git push origin xia
 ```
+
+
+
+echats
+BootCDN  在index.html文件中
+
+
+H5是一门语言  一个规范  它可以构建一个网页
+
+sockect
+
+
+TypeScript
++ 数据类型
++ 更加强大的面向对象编程
++ cnpm install typescript  -g
++ let msg:string = 'hello'  严格的指定数据类型
++ 运行 tsc app.ts
++ node app.js

@@ -70,7 +70,7 @@ export default [
           {
             id:130101,
             text:'商品新增',
-            path:'/shop/addList',
+            path:'/shop/addList/:id',
             component:ShopAddOrEdit
           }
         ]

@@ -2,7 +2,8 @@ import type from './actionTypes'
 import { 
   fetchQqMusic ,
   fetchShopList,
-  fetchCates
+  fetchCates,
+  fetchShopDetail
 } from '@/utils/api'
 
 // action 生成器
@@ -47,7 +48,7 @@ function musicListAction(params) {
 function getShopList(params){
   return dispatch=>{
     fetchShopList(params).then(res=>{
-      // console.log('商品列表',res)
+      console.log('商品列表',res)
       dispatch({type:type.GET_SHOP_LIST,payload:res})
     })
   }
@@ -63,11 +64,30 @@ function getCateList(params){
   }
 }
 
+// 商品详情
+const getShopDetail = params=>{
+  return dispatch=>{
+    fetchShopDetail(params).then(res=>{
+      console.log('商品详情',res)
+      dispatch({type:type.GET_SHOP_DETAIL,payload:res})
+    })
+  }
+}
+
+
+const clearShopDetail = ()=>{
+  return{
+    type:type.CLEAR_SHOP_DETAIL,
+    payload:{}
+  }
+}
 
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   getShopList,
-  getCateList
+  getCateList,
+  getShopDetail,
+  clearShopDetail
 }

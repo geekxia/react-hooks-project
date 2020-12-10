@@ -11,6 +11,7 @@ const instance = axios.create({
 
 instance.interceptors.request.use(function (config) {
   // 加token
+  config.headers.Authorization = localStorage.getItem('token')
   return config;
 }, function (error) {
   return Promise.reject(error)
@@ -27,6 +28,8 @@ instance.interceptors.response.use(function (response) {
     // 我们自己的node服务器
     if(response.data && response.data.err===0){
       res = response.data.data
+    }else if(response.data.err === -1){
+      window.location.href='/'
     }
   }
   return res

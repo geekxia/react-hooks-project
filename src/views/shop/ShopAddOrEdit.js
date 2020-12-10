@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react'
+import { useDispatch,useSelector } from 'react-redux'
 import {
   Form,
   Input,
@@ -14,7 +15,11 @@ import{
     UploadIcon
 } from '@/components'
 
+import action from '@/store/actions'
+
 import CateSelect from './components/CateSelect'
+import ShopUpload from './components/ShopUpload'
+
 import img from '@/utils/img'
 import { fetchShopOrEdit } from '@/utils/api'
 
@@ -43,25 +48,47 @@ const tailFormItemLayout = {
 }
 
 export default props =>{
+    const dispatch = useDispatch()
+    let [values,setValues] = useState({})
     let [imageUrl,setImageUrl] = useState('')
         //获取Form的实例
-    const [form] = Form.useForm();
+    const [form] = Form.useForm()
+
+    // 用于判断是新增，还是编辑
+    const id = props.match.params.id
+    const isAdd = id === '0'
+    console.log('-----',isAdd)
+    const shopInfo = useSelector(store=>store.shop.shopInfo)
+
+    // 是否已经填充表单
+    const [flag,setFlag] = useState(false)
+    
+    useEffect(()=>{
+        //给表单赋初始值
+        if(!flag) form.setFieldsValue(shopInfo)
+        // 解决当前useEffect反复运行的问题
+        if(shopInfo._id) setFlag(true)
+        return undefined
+    })
+
+    useEffect(()=>{
+        // 当时编辑时，触发action调接口湖区商品详情
+        if(!isAdd) dispatch(action.getShopDetail({id}))
+        return ()=>{
+            //当前组件被销毁前，清空redux中的缓存数据
+            dispatch(action.clearShopDetail())
+        }
+    },[])
 
     // 表单提交的信息
-    const onFinish = values => {
+    const onFinish = (values) => {
         values.img = imageUrl
-        console.log('Received values of form: ', values)
+        console.log('values提交接口', values)
+        if(!isAdd) values.id = shopInfo._id
         fetchShopOrEdit(values).then(()=>{
             //跳转到列表页
             props.history.replace('/shop/list')
         })
-    }
-
-    const imgSuccess = e =>{
-        console.log('图片上传成功',e)
-        if(e && e.fileList && e.fileList[0] && e.fileList[0].response){
-            setImageUrl(e.fileList[0].response.data.url)
-        }
     }
 
     return( 
@@ -106,7 +133,7 @@ export default props =>{
                         name="cate"
                         label="选择品类"
                         rules={[
-                            { required: true, message: '请输入商品描述!' }
+                            { required: true, message: '请选择商品品类!' }
                         ]}
                         >
                         {/* 凡是被Form.Item包裹的表单组件，相当于都给表单传递了一个onChange事件 */}
@@ -124,25 +151,12 @@ export default props =>{
                     </Form.Item>
 
                     <Form.Item
-                        label="商品图片"
+                        label="img"
                         rules={[
                         { required: true,message: '请上传图片!' }
                         ]}
                     >
-                        <Upload
-                            name="file"
-                            listType="picture-card"
-                            className="avatar-uploader"
-                            showUploadList={false}
-                            action={img.uploadUrl}
-                            onChange={imgSuccess}
-                        >
-                            {
-                                imageUrl ? 
-                                <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} /> 
-                                : <UploadIcon />
-                            }
-                        </Upload>
+                        <ShopUpload src={values.img||shopInfo.img} />
                     </Form.Item>
 
                     <Form.Item
@@ -156,7 +170,9 @@ export default props =>{
 
                     <Form.Item {...tailFormItemLayout}>
                         <Button type="primary" htmlType="submit">
-                        提交
+                        {
+                            isAdd?'添加商品':'确认修改'
+                        }
                         </Button>
                     </Form.Item>
                 </Form>
