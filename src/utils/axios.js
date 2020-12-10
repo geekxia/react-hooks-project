@@ -2,7 +2,7 @@ import axios from 'axios'
 import { message } from 'antd'
 
 // 浏览器同源策略，只是限制ajax跨域
-const baseURL = 'http://localhost:9000'
+const baseURL = 'http://10.20.158.29:9000'
 
 const instance = axios.create({
   baseURL,

@@ -8,7 +8,7 @@ const TestRedux = loadable(()=>import('./home/TestRedux'))
 const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
 const TestEchart = loadable(()=>import('./home/TestEchart'))
 const TestBmap = loadable(()=>import('./home/TestBmap'))
-
+const TestSocket = loadable(()=>import('./home/TestSocket'))
 
 
 const GoodList = loadable(()=>import('./good/GoodList'))
@@ -57,6 +57,12 @@ export default [
         text: 'TestBmap',
         path: '/map',
         component: TestBmap
+      },
+      {
+        id: 1114,
+        text: 'TestSocket',
+        path: '/chat',
+        component: TestSocket
       }
     ]
   },
