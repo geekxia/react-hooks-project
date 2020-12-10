@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState,useEffect} from 'react';
 import {
     Form,
     Input,
@@ -22,6 +22,8 @@ import UpdateImg from './components/UpdateImg'
 import img from '@/utils/img'
 import {fetchGoodOrEdit} from '@/utils/api'
 import CatesSelect from './components/CatesSelect'
+import { useDispatch,useSelector } from 'react-redux';
+import {gooddetailAction,cleardetailAction} from '@/store/actions'
 const { Option } = Select;
 const {TextArea}=Input
 const AutoCompleteOption = AutoComplete.Option;
@@ -46,32 +48,45 @@ const tailFormItemLayout = {
 };
     
 
-
-
-    
-    
-
-
-
 export default props => {
+    const dispatch=useDispatch()
+    const goodInfo=useSelector(store=>store.good.goodInfo)
+    console.log('goodInfo',goodInfo)
     let [imageUrl,setimageUrl]=useState('')
     let [values,setValues]=useState({})
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-    
+    const id=props.match.params.id
+    const isAdd=id==='0'
+    const [flag,setFlag]=useState(false)
     const formChange=(val,values)=>{
         console.log('val values',val,values)
     }
     //表单提交
     const onFinish = values => {
+        console.log('values',values)
+        if(!isAdd)values.id=goodInfo._id
         fetchGoodOrEdit(values).then(()=>{
             props.history.replace('/good/list')
         })
-    };
+        dispatch(cleardetailAction())
+    }; 
+    //编辑
+    useEffect(()=>{
+
+        if(!isAdd) dispatch(gooddetailAction({id}))
+        return undefined
+    },[])
+    useEffect(()=>{
+        if(!flag)form.setFieldsValue(goodInfo)
+        if(goodInfo._id)setFlag(true)
+        return undefined
+    })
+    // console.log('props',props)
   // 获取Form的实例
     const [form] = Form.useForm();
     return(
         <div>
-            <h1>增加商品</h1>
+            <h1>{isAdd?'增加商品':'编辑商品'}</h1>
             
             <Form
             style={{margin:'25px 0'}}
@@ -79,14 +94,9 @@ export default props => {
             form={form}
             name="register"
             onFinish={onFinish}
-            initialValues={{
-                residence: ['zhejiang', 'hangzhou', 'xihu'],
-                prefix: '86',
-            }}
             scrollToFirstError
             onValuesChange={(val,values)=>{
-                formChange(val,values)
-                setValues(values)
+                formChange(values)
             }}
             >
             <Form.Item
@@ -156,12 +166,7 @@ export default props => {
                 <InputNumber min={0} />
             </Form.Item>
             
-            <Form.Item
-            name='hot'
-            label='是否热销'
-            >
-                <Switch />
-            </Form.Item>
+            
 
             <Form.Item
             name='img'
@@ -170,12 +175,19 @@ export default props => {
                 { required: true, message: '商品图片是必填!' }
             ]}
             >
-            <UpdateImg src={values.img} />
+            <UpdateImg src={values.img||goodInfo.img} />
             </Form.Item>
             
+            <Form.Item
+            name='hot'
+            label='是否热销'
+            valuePropName='checked'
+            >
+                <Switch />
+            </Form.Item>
             <Form.Item {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit">
-                提交商品信息
+                {isAdd?'提交商品信息':'修改商品信息'}
                 </Button>
             </Form.Item>
             </Form>

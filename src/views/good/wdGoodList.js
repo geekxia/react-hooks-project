@@ -16,7 +16,7 @@ import img from '@/utils/img'
 import moment from 'moment'
 import {useEffect,useState} from 'react'
 import {useDispatch,useSelector } from 'react-redux'
-import {goodlistAction} from '@/store/actions'
+import {goodlistAction,cleardetailAction} from '@/store/actions'
 import './style.scss'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import CatesSelect from './components/CatesSelect'
@@ -24,6 +24,7 @@ import {fetchDelGood} from '@/utils/api'
 export default props=>{
     const dispatch = useDispatch()
     const goodData = useSelector(store=>store.good.goodData)
+    console.log('goodData',goodData)
     const cates=useSelector(store=>store.good.cates)
     const { Option } = Select;
     const [selectionType, setSelectionType] = useState('checkbox');
@@ -82,10 +83,14 @@ export default props=>{
     keys.map(ele=>id+=(';'+ele))
     // 向后端传递由 id 组成的字符串，不能传数组
     fetchDelGood({id}).then(()=>{
-      setFilter(JSON.parse(JSON.stringify(filter)))
+        setFilter(JSON.parse(JSON.stringify(filter)))
     })
     }
     
+    const skipToEdit=row=>{
+        dispatch(cleardetailAction())
+        props.history.push('/good/update/'+row._id)
+    }
     
     
     // let [page, setPage] = useState(1)
@@ -119,8 +124,8 @@ export default props=>{
             align: 'center',
             render: cate=>{
                 const idx = cates.findIndex(ele=>ele.cate===cate)
-                console.log('idx',idx)
-                console.log('cate',cate)
+                // console.log('idx',idx)
+                // console.log('cate',cate)
                 return <span>{idx>=0?cates[idx].cate_zh:''}</span>
             }
         },
@@ -170,7 +175,8 @@ export default props=>{
                 <>
                     <Button type="primary"
                     size='small'
-                    shape='round'>编辑</Button>
+                    shape='round'
+                    onClick={()=>skipToEdit(row)}>编辑</Button>
                     <Button type="danger"
                     size='small'
                     shape='round'
@@ -222,7 +228,7 @@ export default props=>{
                     </Col>
                     <Col span={2} style={{textAlign:'right'}}>
                         <Button type="primary"  size='small'
-                        onClick={()=>props.history.push('/good/update')}>
+                        onClick={()=>props.history.push('/good/update/0')}>
                         新增
                         </Button>
                     </Col>

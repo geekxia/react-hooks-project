@@ -15,6 +15,7 @@ export default props=>{
             <Select 
             placeholder='选择品类'
             allowClear={props.allowClear}
+            value={props.value||''}
             style={{ width: 160 }}
             onChange={val=>props.onChange && props.onChange(val)}>
                 {

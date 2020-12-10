@@ -48,7 +48,7 @@ export default [ // eslint-disable-line
                 {
                     id:331111,
                     text:'编辑商品',
-                    path:'/good/update',
+                    path:'/good/update/:id',
                     component:GoodAddOrEdit
                 }
             ]

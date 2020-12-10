@@ -19,7 +19,7 @@ export default props =>{
             >
                 {
                 props.src ?
-                <img src={img.imgBase+props.src} alt="avatar" style={{ width: '100%' }} />
+                <img src={img.imgBase+props.src||props.src} alt="avatar" style={{ width: '100%' }} />
                 : <WdUpdate />
                 }
             </Upload>
