@@ -1,13 +1,14 @@
-import React,{useState} from 'react'
+import {useState,useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import action from '@/store/actions'
+
 import { 
     Form, 
     Input,
     Select, 
     InputNumber, 
     Button ,
-    AutoComplete,
     Upload, 
-    message,
     Switch 
 } from 'antd'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
@@ -18,40 +19,16 @@ const layout = {
     wrapperCol: { span: 16 },
   }
 const { TextArea } = Input;
-const {Option}=Select
-const validateMessages = {
-    required: '${label} is required!',
-    types: {
-      email: '${label} is not a valid email!',
-      number: '${label} is not a valid number!',
-    },
-    number: {
-      range: '${label} must be between ${min} and ${max}',
-    },
-  }
-function getBase64(img, callback) {
-const reader = new FileReader();
-reader.addEventListener('load', () => callback(reader.result));
-reader.readAsDataURL(img);
-}
-
-function beforeUpload(file) {
-const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!');
-}
-
-const isLt2M = file.size / 1024 / 1024 < 2;
-if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
-}
-return isJpgOrPng && isLt2M;
-}
+const { Option }=Select
 
 export default (props)=>{
+    let [values, setValues] = useState({})
     let [imageUrl, setImageUrl] = useState('')
     let { loading } = props
     const [form] = Form.useForm()
+    const dispatch=useDispatch()
+    const id=props.match.params.id//拿到id
+    const isAdd=id==0//判断是新增true还是编辑页edit
 
     const imgSuccess = e => {
         if(e && e.fileList && e.fileList[0] && e.fileList[0].response){
@@ -59,10 +36,29 @@ export default (props)=>{
         }
        }
 
+    const goodInfo=useSelector(store=>store.good.goodInfo)
+    
+    const formChange=(value)=>{
+        setValues(value)
+    }
+
+    useEffect(()=>{
+        form.setFieldsValue(goodInfo)
+        return undefined
+    })
+
+    useEffect(()=>{
+        if(!isAdd){
+            dispatch(action.getGoodDetail({id}))
+        }
+        return ()=> {
+            action.clearGoodCache()
+        }
+    },[])
+
     const onFinish = values => {
         values.img = imageUrl
         fetchGoodAddOrEdit(values).then(() => {
-            // 跳转到列表页
             props.history.replace('/good/list')
         })
         }
@@ -76,12 +72,13 @@ export default (props)=>{
 
     return (
         <div>
-            <h3>商品编辑</h3>
+            <h3>{isAdd?'商品新增':'商品编辑'}</h3>
             <Form 
             {...layout} 
             name="nest-messages" 
             onFinish={onFinish}
             form={form}
+            onValuesChange={(val, values) => formChange(values)}
             >
                 <Form.Item name='name' label="商品名称" rules={[{ required: true, min: 2, max: 10 }]}>
                     <Input />
@@ -106,6 +103,7 @@ export default (props)=>{
                 <Upload
                     name="file"
                     className="avatar-uploader"
+                    fileList=''
                     listType='picture-card'
                     showUploadList={false}
                     action={img.uploadUrl}
@@ -123,7 +121,7 @@ export default (props)=>{
                 </Form.Item>
                 <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
                     <Button type="primary" htmlType="submit">
-                    Submit
+                    {isAdd?'确认新增':'确认编辑'}
                     </Button>
                 </Form.Item>
             </Form>

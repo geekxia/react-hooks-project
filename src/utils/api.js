@@ -18,7 +18,7 @@ export function fetchGoodList(params){
 
 export function fetchCatesList(params){
   return axios({
-    url: '/api/v1/cart/list',
+    url: '/api/v1/good/cates',
     method:'get',
     params
   })
@@ -40,10 +40,19 @@ export function fetchGoodDel(params){
   })
 }
 
+export const fetchGoodInfo=(params)=>{
+  return axios({
+    url: '/api/v1/good/detail',
+    method:'get',
+    params
+  })
+}
+
 export default {
   fetchQqMusic,
   fetchGoodList,
   fetchGoodAddOrEdit,
   fetchCatesList,
-  fetchGoodDel
+  fetchGoodDel,
+  fetchGoodInfo
 }

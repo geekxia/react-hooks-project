@@ -2,7 +2,8 @@
 
  let initState={
 	goodData:{},
-	cates:[]
+	cates:[],
+	goodInfo:{}
  }
 
  export default function reducer(state=initState, action) {
@@ -13,6 +14,12 @@
 		break
 	  case type.AJAX_CATE_LIST:
 		newState.cates = action.payload
+		break
+	  case type.AJAX_GOOD_INFO:
+		newState.goodInfo=action.payload
+		break
+	case type.CLEAR_GOOD_CACHE:
+		newState.goodInfo={}
 		break
 	  default:
 		  return state

@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react'
-import { Table, Tag,  Select,Space,Button,Row, Col,Modal } from 'antd'
+import { Table, Select,Space,Button,Row, Col,Modal } from 'antd'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import {useDispatch,useSelector} from 'react-redux'
 import action from '@/store/actions'
@@ -10,9 +10,8 @@ const { Option } = Select
 const { confirm } = Modal
 
 export default props=>{
-  const disPath=useDispatch()
+  const dispatch=useDispatch()
   const goodData=useSelector(store=>store.good.goodData)
-  const cates=useSelector(store=>store.good.cates)
   let [keys,setKeys]=useState('')
   let [filter,setFilter]=useState({
     page:1,
@@ -21,6 +20,10 @@ export default props=>{
     hot:''
   })
 
+  const cateSelect=(key,v)=>{
+      console.log(key,v)
+  }
+
   const filterChange=(k,v)=>{
       filter[k]=v
       if(k!=='page'){
@@ -28,6 +31,7 @@ export default props=>{
       } 
       setFilter(JSON.parse(JSON.stringify(filter)))
   }
+
   const rowDelete=row=>{
   const elem=<div style={{color:"red"}}>{row.name}</div>
     confirm({
@@ -44,22 +48,34 @@ export default props=>{
     })
    
   }
+
   const mulDelete=()=>{
     let id=''
     keys.map(elem=>{
       id+=';'+elem
     })
-    console.log('id',id)
-    fetchGoodDel(id).then(()=>{
+    fetchGoodDel({id}).then(()=>{
       setFilter(JSON.parse(JSON.stringify(filter)))
     })
   }
+
+  const skipToEdit=row=>{
+    props.history.push('/good/update/'+row._id)
+  }
+
   useEffect(()=>{
     let params=filter
-    disPath(action.goodListAction(params))
+    dispatch(action.goodListAction(params))
     return undefined
   },[filter])
   
+  const cates=useSelector(store=>store.good.cates.list)
+  console.log('品类',cates,typeof cates,cates==true)
+  useEffect(()=>{
+    dispatch(action.cateListAction({}))
+    return undefined
+  },[])
+
   const columns = [
     {
       title: '商品',
@@ -72,7 +88,7 @@ export default props=>{
             <div style={{width:"80px",height:"80px"}}>
             <img src={img.imgBase+row.img} alt={row.name} style={{width:"100%",height:"100%"}} />
             </div>
-            <a>{text}</a>,
+            <a>{text}</a>
           </div>
         )
     }},
@@ -88,18 +104,19 @@ export default props=>{
       key: 'price',
       align:'center',
       sorter:(a,b)=>(a.price-b.price),
-      render:text=>(<div>
+      render:text=>{
+        return (<div>
         {"￥"+text}
-      </div>)
+      </div>)}
     },
     {
       title: '是否热销',
       key: 'hot',
       align:'center',
       dataIndex: 'hot',
-      render:row=>(
-      <div><h2 style={{fontSize:"14px"}}>{row.hot?'是':'否'}</h2></div>
-      )
+      render:(text)=>{
+      return (<div><h2 style={{fontSize:"14px"}}>{text?'是':'否'}</h2></div>)
+    }
     },
     {
       title: '上架时间',
@@ -121,7 +138,7 @@ export default props=>{
       render: (text, row) => (
         <Space size="middle">
           <a onClick={()=>rowDelete(row)}>Delete</a>
-          <a>Edit</a>
+          <a onClick={()=>skipToEdit(row)}>Edit</a>
         </Space>
       ),
     }
@@ -131,7 +148,7 @@ export default props=>{
         <div>
             <Row>
             <Col  span={19} offset={1} align="left">
-            <h2 >商品列表</h2>
+            <h2 style={{fontSize:"14px"}}>商品列表</h2>
             </Col>
             <Col  span={4} align="center">
             <Button 
@@ -146,6 +163,32 @@ export default props=>{
             <Col  span={19} offset={1} align="center">
             <h4>商品筛选</h4>
             </Col>
+            </Row>
+            <Row>
+              <Col span={8}>
+                <span>品名：</span>
+                <input type="text"/>
+              </Col>
+              <Col span={8}>
+                <span>品类：</span>
+                <Select style={{width:"160px"}} onChange={(text,v)=>cateSelect(text,v)}>
+                <option>全部</option>
+                  {cates &&　cates.map(elem=>(
+                    <option 
+                    key={elem._id} 
+                    value={elem.cate}
+                    >
+                      {elem.cate_zh}
+                    </option>
+                  ))}
+                </Select> 
+              </Col>
+              <Col span={8}>
+                <span>热销：</span>
+                <Select style={{width:"120px"}}>
+                  <option value=""></option>
+                </Select> 
+              </Col>
             </Row>
             <Table 
               rowKey='_id'
