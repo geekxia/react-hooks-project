@@ -19,7 +19,7 @@ export default props => {
 
 
     let [filter, setFilter] = useState({
-        size: 2,
+        size: 5,
         page: 1,
         text: "",
         hot: ""
@@ -51,14 +51,13 @@ export default props => {
             okText: "确定",
             cancelText: "取消",
             onOk() {
-                console.log('OK');
+
 
                 fetchGoodDel({ id: val._id }).then(() => {
                     setFilter(JSON.parse(JSON.stringify(filter)))
                 })
             },
             onCancel() {
-                console.log('Cancel');
             },
         });
 
@@ -72,6 +71,12 @@ export default props => {
             setFilter(JSON.parse(JSON.stringify(filter)))
 
         })
+    }
+
+    const skipDetail = (val) => {
+        dispatch(action.clearGoodDetal())
+        props.history.push('/qianggood/update/' + (val ? val : "0"))
+
     }
 
     useEffect(() => {
@@ -117,7 +122,7 @@ export default props => {
             align: 'center',
             render: cate => {
                 const idx = cates.findIndex(ele => ele.cate === cate)
-                return <span>{idx > 0 ? cates[idx].cate_zh : ""}</span>
+                return <span>{idx > -1 ? cates[idx].cate_zh : ""}</span>
             }
         },
         {
@@ -150,7 +155,7 @@ export default props => {
                 <>
                     <a onClick={() => handDel(row)}>删除</a>
                 &nbsp; &nbsp;
-                    <a onClick={() => console.log("编辑")}>编辑</a>
+                    <a onClick={() => skipDetail(row._id)}>编辑</a>
                 </>
             )
         }
@@ -197,7 +202,7 @@ export default props => {
                         </Select>
                     </Col>
                     <Col offset={3} span={2} >
-                        <Button onClick={() => props.history.replace('/qianggood/update')}>新增</Button>
+                        <Button onClick={() => skipDetail()}>新增</Button>
                     </Col>
                 </Row>
             </div>

@@ -1,5 +1,11 @@
 import type from './actionTypes'
-import { fetchQqMusic, fetchWeather, fetQiangGoodList, fetchCates } from '@/utils/api'
+import {
+  fetchQqMusic,
+  fetchWeather,
+  fetQiangGoodList,
+  fetchCates,
+  fetchGoodDetail
+} from '@/utils/api'
 
 // action 生成器
 function changeMsgAction(payload) {
@@ -47,6 +53,8 @@ function getQGoodListAction(params) {
 }
 
 
+
+
 // 页面中要使用 QQ 音乐列表？数据从后端来，要状态管理工具里来
 // 状态管理工具有这个QQ音乐列表？没有，我定义，怎么定义？
 // 在子reducer中定义完成，在根store中合并
@@ -61,7 +69,6 @@ function musicListAction(params) {
   return function (dispatch) {
     fetchQqMusic(params).then(res => {
 
-      console.log('-----', res)
       // 这才是真正地把后端数据，发送到store中
       dispatch({
         type: type.AJAX_MUSIC_LIST,
@@ -74,13 +81,30 @@ function musicListAction(params) {
 const getCatesAction = params => {
   return dispatch => {
     fetchCates(params || {}).then(res => {
-      console.log('品类列表', res)
       dispatch({
         type: type.GET_CATE_LIST,
         payload: res.list
       })
 
     })
+  }
+}
+
+const getGoodDetail = params => {
+  return dispatch => {
+    fetchGoodDetail({ id: params }).then(res => {
+      dispatch({
+        type: type.GET_GOOD_DETAIL,
+        payload: res
+      })
+    })
+  }
+}
+
+const clearGoodDetal = params => {
+  return {
+    type: type.CLEAR_GOOD_DETAIL,
+    payload: {}
   }
 }
 
@@ -91,5 +115,7 @@ export default {
   getWeatherAction,
   changeCityAction,
   getQGoodListAction,
-  getCatesAction
+  getCatesAction,
+  getGoodDetail,
+  clearGoodDetal
 }

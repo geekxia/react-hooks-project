@@ -42,7 +42,7 @@ export default [
           {
             id: 570201,
             text: "商品新增编辑",
-            path: '/qianggood/update',
+            path: '/qianggood/update/:id',
             component: QiangGoodsUpdate
           }
         ]

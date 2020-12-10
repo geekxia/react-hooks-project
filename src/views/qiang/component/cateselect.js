@@ -17,6 +17,7 @@ export default props => {
             showSearch
             style={{ width: 200 }}
             placeholder="你还有选择吗"
+            value={props.value}
             onChange={val => props.onChange && props.onChange(val)}
             allowClear={props.allowClear}
         >
@@ -25,7 +26,7 @@ export default props => {
             }
             {
                 cates.map(ele => (
-                    <Option key={ele._id} value={ele.cate}>{ele.cate_zh}</Option>
+                    <Option key={ele._id} value={ele.cate} >{ele.cate_zh}</Option>
                 ))
             }
         </Select>
