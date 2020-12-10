@@ -42,8 +42,19 @@ export default props =>{
     text: ''
   })
 
+
+  const textChange = val=>{
+    setText(val)
+    if(!val){
+      filter.text = ''
+      setFilter(JSON.parse(JSON.stringify(filter)))
+    }
+  }
+
   const filterChange = (key,val)=>{
     filter[key] = val
+    if(key!=='page')filter.page=1
+    setFilter(JSON.parse(JSON.stringify(filter)))
   }
 
   useEffect(()=>{
@@ -135,7 +146,7 @@ export default props =>{
                   <Col span={6}>
                     <Input placeholder="搜索" 
                     value={text}
-                    onChange={e=>setText(e.target.value)}    
+                    onChange={e=>textChange(e.target.value)}    
                     onPressEnter={e=>filterChange('text',e.target,value)}          
                     />
                   </Col>
@@ -169,10 +180,10 @@ export default props =>{
                   dataSource={goodData.list}
                   pagination={{
                   total: goodData.total,
-                  defaultPageSize: size,
+                  defaultPageSize: filter.size,
                   
-                  onChange: page=>setPage(page),
-                  onShowSizeChange: (page, size)=>setSize(size),
+                  onChange: page=>filterChange('page',page),
+                  onShowSizeChange: (page, size)=>filterChange('size',size),
                   pageSizeOptions:[2,5,10,20]
                   }}        
                    />
