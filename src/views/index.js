@@ -6,6 +6,10 @@ import {
 
 const TestRedux = loadable(()=>import('./home/TestRedux'))
 const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
+const TestEchart = loadable(()=>import('./home/TestEchart'))
+const TestBmap = loadable(()=>import('./home/TestBmap'))
+
+
 
 const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
@@ -41,6 +45,18 @@ export default [
         text: 'TestReduxHook',
         path: '/redux/hook',
         component: TestReduxHook
+      },
+      {
+        id: 1112,
+        text: 'TestEchart',
+        path: '/echarts',
+        component: TestEchart
+      },
+      {
+        id: 1113,
+        text: 'TestBmap',
+        path: '/map',
+        component: TestBmap
       }
     ]
   },
