@@ -17,7 +17,7 @@ const ListHome = loadable(()=>import("./list/ListHome"))
 const Ming = loadable(()=>import('./zhappy/Zregist'))
 const Yue = loadable(()=>import('./zhappy/ZRo'))
 const Song = loadable(()=>import('./zhappy/zgood/ZCreate'))
-const Zhao = loadable(()=>import('./zhappy/Zhao'))
+const Zhao = loadable(()=>import('./zhappy/ZChart'))
 const Zintel = loadable(()=>import('./zhappy/Internation'))
 const ZDisplay = loadable(()=>import('./zhappy/zgood/ZDisplay'))
 
@@ -94,7 +94,7 @@ export default [
       },
       {
         id: 2017202105,
-        text: '可编辑',
+        text: '图表',
         path: '/zhappy/zhao',
         component: Zhao
       },

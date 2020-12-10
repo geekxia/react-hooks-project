@@ -182,7 +182,9 @@ export default props => {
             <CateSelect
               hasAll
               onChange={cate=>filterChange('cate', cate)}
+              
               allowClear
+              
             />
           </Col>
           <Col span={2} className='justify-ri'>
