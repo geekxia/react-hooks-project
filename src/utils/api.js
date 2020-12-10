@@ -17,8 +17,11 @@ export function fetchGoodOrEdit(data) {
   })
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b6f326ddad322d4e09f3af0280dac43624f21ddb
 // 获取商品列表
 export function fetchGoodList(params) {
   return axios({
@@ -28,8 +31,11 @@ export function fetchGoodList(params) {
   })
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b6f326ddad322d4e09f3af0280dac43624f21ddb
 // 获取品类列表
 export function fetchCates(params) {
   return axios({
@@ -48,10 +54,36 @@ export function fetchGoodDel(params) {
   })
 }
 
+<<<<<<< HEAD
+=======
+// 获取商品详情
+export function fetchGoodDetail(params) {
+  return axios({
+    url: '/api/v1/good/detail',
+    method: 'GET',
+    params
+  })
+}
+
+export function fetchLogin(data) {
+  return axios({
+    url: '/api/v1/user/login',
+    method: 'POST',
+    data
+  })
+}
+
+>>>>>>> b6f326ddad322d4e09f3af0280dac43624f21ddb
 export default {
   fetchQqMusic,
   fetchGoodOrEdit,
   fetchGoodList,
   fetchCates,
+<<<<<<< HEAD
   fetchGoodDel
+=======
+  fetchGoodDel,
+  fetchGoodDetail,
+  fetchLogin
+>>>>>>> b6f326ddad322d4e09f3af0280dac43624f21ddb
 }
