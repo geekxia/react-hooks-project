@@ -15,6 +15,8 @@ const ErrorFive = loadable(()=>import('./error/ErrorFive'))
 const Basic = loadable(()=>import('./form/Basic'))
 const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAdd'))
+const Echarts = loadable(()=>import('./home/Echarts'))
+const Map = loadable(()=>import('./home/Map'))
 
 
 
@@ -29,6 +31,18 @@ export default [ // eslint-disable-line
         text: '学习Redux',
         path: '/',
         component: ReduxStudy
+      },
+      {
+        id: 1112,
+        text: '图表管理',
+        path: '/echarts',
+        component: Echarts
+      },
+      {
+        id: 1113,
+        text: '百度地图',
+        path: '/map',
+        component: Map
       }
     ]
   },

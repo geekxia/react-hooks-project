@@ -47,7 +47,7 @@ function musicListAction(params) {
 function goodListAction(params) {
   return dispatch=>{
     fetchGoodList(params).then(res=>{
-      console.log('商品列表', res)
+      // console.log('商品列表', res)
       dispatch({type: type.GET_GOOD_LIST, payload: res})
     })
   }
@@ -56,7 +56,7 @@ function goodListAction(params) {
 function cateListAction(params) {
   return dispatch=>{
     fetchCates(params||{}).then(res=>{
-      console.log('品类列表',res)
+      // console.log('品类列表',res)
       dispatch({type: type.GET_CATE_LIST, payload: res.list})
     })
   }
@@ -65,7 +65,7 @@ function cateListAction(params) {
 function goodDetailAction(params) {
   return dispatch=>{
     fetchGoodDetail(params||{}).then(res=>{
-      console.log('商品详情',res)
+      // console.log('商品详情',res)
       dispatch({type: type.GET_GOOD_DETAIL, payload: res})
     })
   }

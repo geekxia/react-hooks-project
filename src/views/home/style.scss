@@ -1,0 +1,13 @@
+.echarts {
+  position: relative;
+  .bar {
+    position: absolute;
+    top: 80px;
+    left: 40px;
+  }
+  .pie {
+    position: absolute;
+    top: 80px;
+    right: 40px;
+  }
+}
