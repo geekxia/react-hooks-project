@@ -1,9 +1,12 @@
 import type from './actionTypes'
-import { 
+import {
     fetchQqMusic,
-    fetchGoodList
+    fetchGoodList,
+    fetchCates,
+    fetchGoodDetail,
+    fetchUsersList
 } from '@/utils/api'
-import { fetchCates } from '../utils/api'
+
 
 
 // action 生成器
@@ -20,7 +23,9 @@ function addFooCountAction(payload) {
         payload
     }
 }
-function upW(payload){
+
+// 搜索音乐
+function upW(payload) {
     return {
         type: type.UP_LIST,
         payload
@@ -38,9 +43,9 @@ function upW(payload){
 
 // redux不支持异步数据
 function musicListAction(params) {
-    return function(dispatch) {
-        fetchQqMusic(params).then(res=>{
-            console.log('----',res)
+    return function (dispatch) {
+        fetchQqMusic(params).then(res => {
+            console.log('----', res)
             // 这才是真正地把后端数据，发送到store中
             dispatch({
                 type: type.AJAX_MUSIC_LIST,
@@ -52,20 +57,48 @@ function musicListAction(params) {
 
 // 商品列表
 function getGoodList(params) {
-    return dispatch=>{
-      fetchGoodList(params).then(res=>{
-        console.log('商品列表', res)
-        dispatch({type: type.GET_GOOD_LIST, payload: res})
-      })
+    return dispatch => {
+        fetchGoodList(params).then(res => {
+            // console.log('商品列表', res)
+            dispatch({ type: type.GET_GOOD_LIST, payload: res })
+        })
     }
-  }
+}
 
 //  品类
-function getGoodCates(params){
-    return dispatch=>{
-        fetchCates(params).then(res=>{
-            console.log('品类列表', res)
-            dispatch({type: type.GET_CATE_LIST, payload: res.list})
+function getGoodCates(params) {
+    return dispatch => {
+        fetchCates(params).then(res => {
+            // console.log('品类列表', res)
+            dispatch({ type: type.GET_CATE_LIST, payload: res.list })
+        })
+    }
+}
+
+// 商品详情
+const getGoodDetail = params => {
+    return dispatch => {
+        fetchGoodDetail(params).then(res => {
+            console.log('商品详情', res)
+            dispatch({ type: type.GET_GOOD_DETAIL, payload: res })
+        })
+    }
+}
+
+// 新增时，清空列表缓存
+const clearGoodDetail = () => {
+    return {
+        type: type.CLEAR_GOOD_DETAIL,
+        payload: {}
+    }
+}
+
+// 获取用户列表
+function getUserList(params) {
+    return dispatch => {
+        fetchUsersList(params).then(res => {
+            console.log('用户列表', res)
+            dispatch({ type: type.GET_USER_LIST, payload: res })
         })
     }
 }
@@ -75,5 +108,8 @@ export default {
     musicListAction,
     upW,
     getGoodList,
-    getGoodCates
+    getGoodCates,
+    getGoodDetail,
+    clearGoodDetail,
+    getUserList
 }

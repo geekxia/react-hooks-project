@@ -32,7 +32,7 @@ export default props => {
     let [keys, setKeys] = useState([])
 
     let [filter, setFilter] = useState({
-      size: 2,
+      size: 5,
       page: 1,
       text: '',
       hot: ''
@@ -50,7 +50,7 @@ export default props => {
       setText(val)
       if(!val) {
         filter.text = ''
-        serFilter(JSON.parse(JSON.stringify(filter)))
+        setFilter(JSON.parse(JSON.stringify(filter)))
       }
     }
 
@@ -81,6 +81,13 @@ export default props => {
       })
     }
 
+    // 跳转到新增、编辑页
+    const skipToEdit = row =>{
+      // 先清空状态管理中的goodInfo
+      // dispatch(action.clearGoodDetail())
+      // 再跳转到详情页
+      props.history.push('/good/update/'+(row?row._id:0))
+    }
 
     useEffect(()=>{
       dispatch(action.getGoodList(filter))
@@ -154,8 +161,13 @@ export default props => {
         align: 'center',
         dataIndex: 'tags',
         render: (text,row) => (
-          <>
-            <Button type="primary">编辑</Button>
+          <Space>
+            <Button 
+              type="primary"
+              onClick={()=>skipToEdit(row)}
+            >
+              编辑
+            </Button>
             <Button 
               type="primary" 
               danger
@@ -163,7 +175,7 @@ export default props => {
             >
               删除
             </Button>
-          </>
+          </Space>
         )
       }
     ]
@@ -220,16 +232,20 @@ export default props => {
         
         <div style={{margin: '20px 0'}}>
           <Table
+            scroll={{ y: 500 }}
             rowKey='_id'
             columns={columns}
             dataSource={goodData.list}
             pagination={{
+              // pageSize: 5,
               current: filter.page,
+              pageSizeOptions: [2,5,10],
               total: goodData.total,
-              defaultPageSize: 2,
+              defaultPageSize: filter.size,
+              showSizeChanger: true,
               onChange: page=>filterChange('page',page),
-              onShowSizeChange: (page, size)=>filterChange('size', size),
-              pageSizeOptions: [2,5,10,15,20]
+              onShowSizeChange: (page, size) => filterChange('size', size),
+              
             }}
             rowSelection={{
               type: 'checkbox',

@@ -78,7 +78,7 @@ export default props=>{
     const search = e=>{
         if(e.keyCode ===13 ){
             dispatch(action.upW(e.target.value))
-            console.log(list.name)
+            // console.log(list.name)
         }
         
     }

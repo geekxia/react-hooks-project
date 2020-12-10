@@ -1,0 +1,21 @@
+.qf-login {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: rgb(130, 194, 88);
+    &>div {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 520px;
+      margin-left: -260px;
+      background: white;
+      box-sizing: border-box;
+      padding: 25px;
+      height: 260px;
+      margin-top: -130px;
+      border-radius: 10px;
+    }
+  }

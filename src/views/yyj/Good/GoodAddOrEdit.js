@@ -1,32 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import {
   Form,
   Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
   Button,
   AutoComplete,
   InputNumber,
-  Upload,
   Switch
 } from 'antd'
 
-import {
-  QfUploadIcon
-} from '@/components'
 
-import img from '@/utils/img'
+
+
+
 import { fetchGoodOrEdit } from '@/utils/api'
 
 import CateSelect from './components/CateSelect'
+import GoodUpload from './components/GoodUpload'
 
-import { QuestionCircleOutlined } from '@ant-design/icons';
-const { Option } = Select
+import action from '@/store/actions'
+
+
 const { TextArea } = Input
 const AutoCompleteOption = AutoComplete.Option;
 
@@ -52,24 +47,45 @@ const tailFormItemLayout = {
 }
 
 export default props => {
-  const [autoCompleteResult, setAutoCompleteResult] = useState([])
-  let [imageUrl, setImageUrl] = useState('')
 
+  const dispatch = useDispatch()
+  let [values, setValues] = useState({})
+
+  // 用于判断是新增，还是编辑
+  const id = props.match.params.id
+  const isAdd = id==='0'
+  const goodInfo = useSelector(store=>store.good.goodInfo)
+
+  const [flag, setFlag] = useState(false)
   // 获取Form的实例
   const [form] = Form.useForm()
+  useEffect(()=>{
+    // 给表单赋初始值
+    if(!flag) form.setFieldsValue(goodInfo)
+    // 解决当前useEffect反复运行的问题
+    if(goodInfo._id) setFlag(true)
+    return undefined
+  })
 
-  // 图片上传成功
-  const imgSuccess = e => {
-    console.log('图片上传成功', e)
-    if(e && e.fileList && e.fileList[0] && e.fileList[0].response) {
-      setImageUrl(e.fileList[0].response.data.url)
+  useEffect(()=>{
+    // 当是编辑时，触发action调接口获取商品详情
+    if(!isAdd) dispatch(action.getGoodDetail({id}))
+    return ()=>{
+      // 当组件被销毁前，清空redux中缓存的数据
+      dispatch(action.clearGoodDetail())
     }
+  },[])
+
+
+  // 当Form表单值发生变化时，我们手动取值，赋值给声明式变量values
+  const formChange = values => {
+    setValues(values)
   }
+  
 
   // 表单提交
   const onFinish = values => {
-    values.img = imageUrl
-    console.log('values 提交接口', values)
+    if(!isAdd) values.id = goodInfo._id
     fetchGoodOrEdit(values).then(()=>{
       // 跳转到列表页
       props.history.replace('/good/list')
@@ -78,18 +94,15 @@ export default props => {
 
   return(
     <div>
-      <h1>商品新增</h1>
+      <h1>{isAdd ? '商品新增' : '商品编辑'}</h1>
       <Form
         style={{margin:'25px 0'}}
         {...formItemLayout}
         form={form}
         name="register"
         onFinish={onFinish}
-        initialValues={{
-          residence: ['zhejiang', 'hangzhou', 'xihu'],
-          prefix: '86',
-        }}
         scrollToFirstError
+        onValuesChange={(val, values)=>formChange(values)}
       >
         <Form.Item
           name="name"
@@ -134,27 +147,15 @@ export default props => {
         >
           <CateSelect />
         </Form.Item>
-
+        {/* 凡是被 Form.Item 包裹的表单组件，相当于都给表单传递了一个 onChange 事件 */}
         <Form.Item
+          name='img'
           label='商品图片'
           rules={[
             { required: true, message: '商品图片是必填!' }
           ]}
         >
-          <Upload
-            name="file"
-            action={img.uploadUrl}
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            onChange={imgSuccess}
-          >
-            {
-              imageUrl ?
-              <img src={img.imgBase+imageUrl} alt="avatar" style={{ width: '100%' }} />
-              : <QfUploadIcon />
-            }
-          </Upload>
+          <GoodUpload src={values.img||goodInfo.img}/>
         </Form.Item>
 
         <Form.Item
@@ -170,7 +171,7 @@ export default props => {
 
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            提交
+            {isAdd ? '添加商品' : '确定修改'}
           </Button>
         </Form.Item>
       </Form>

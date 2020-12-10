@@ -16,7 +16,9 @@ export default props => {
             <Select
                 style={{ width: 200 }}
                 placeholder="选择一个品类"
+                value={props.value || ''}
                 onChange={val=>props.onChange && props.onChange(val)}
+                allowClear={props.allowClear}
             >
                 {
                     props.hasAll && <Option key='0' value=''>全部</Option>
