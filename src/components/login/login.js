@@ -1,4 +1,4 @@
-import {useEffect} from "react"
+import {useEffect,useState} from "react"
 
 import { Form, Input, Button, Checkbox } from 'antd';
 import "./login.scss"
@@ -19,9 +19,21 @@ const tailLayout = {
         span: 16,
     },
 };
+let userInfo = {}
+let username = localStorage.getItem('username')
+let password = localStorage.getItem('password')
+if(username&&password) userInfo={username,password}
+
 export default props=>{
     const onFinish = (values) => {
         console.log('Success:', values);
+        if(values.remember){
+          localStorage.setItem('username',values.username)
+          localStorage.setItem('password',values.password)
+        }else{
+          localStorage.removeItem('username')
+          localStorage.removeItem('password')
+        }
         fetchLogin(values).then(res=>{
             console.log(res)
             localStorage.setItem('token',res.token)
@@ -29,9 +41,7 @@ export default props=>{
             props.onLogin(res.token)
         })
     };
-
     useEffect(()=>{
-        // props.history.push('/#/login')
         location.href="/#/login"
         return undefined
     },[])
@@ -41,9 +51,7 @@ export default props=>{
                 <Form
                     {...layout}
                     name="basic"
-                    initialValues={{
-                        remember: true,
-                    }}
+                    initialValues={{remember:true,...userInfo}}
                     onFinish={onFinish}
                 >
                     <Form.Item
@@ -73,7 +81,7 @@ export default props=>{
                     </Form.Item>
 
                     <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-                        <Checkbox>Remember me</Checkbox>
+                        <Checkbox>记住密码</Checkbox>
                     </Form.Item>
 
                     <Form.Item {...tailLayout}>

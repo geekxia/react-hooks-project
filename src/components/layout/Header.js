@@ -5,6 +5,12 @@ import {
   // withRouter
 } from 'react-router-dom'
 
+import {Modal} from "antd"
+import {
+  LogoutOutlined,
+  ExclamationCircleOutlined
+} from "@ant-design/icons"
+
 // 问题：没有被Route组件直接包裹的React组件中，是没有路由API的。
 // 那该怎么办？
 // 在类组件中，只能使用 withRouter 来解决问题。
@@ -17,14 +23,35 @@ import {
 
 // 一、使用Hooks写法，来解决React无状态组件中没有路由API的问题
 
+const { confirm } = Modal;
+
 
 export default props => {
   const history = useHistory()
-  console.log('---header props', props)
   console.log('---header history', history)
+  const LogoutHandel = ()=>{
+    confirm({
+      title: '你确定要退出登录嘛?',
+      icon: <ExclamationCircleOutlined />,
+      okText: '确认登出',
+      cancelText: '取消',
+      centered:true,
+      onOk() {
+        // console.log('OK');
+        localStorage.removeItem('token')
+        location.reload()
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
   return (
     <div className='qf-header'>
-      header
+      <LogoutOutlined 
+        style={{color:'#ccc', fontSize:'30px',cursor: 'pointer',padding:'0 5px'}} 
+        onClick={LogoutHandel}
+      />
     </div>
   )
 }
