@@ -17,8 +17,9 @@ import {useSelector} from 'react-redux'
 
 
 export default props=>{
-    const username=useSelector(store=>store.login.username)
-    console.log(username)
+    // let username=useSelector(store=>store.login.username)
+    const username=localStorage.getItem('username')
+    console.log('username',username)
   return(
       <div className='qf-header'>
           <Breadcrumb>
@@ -31,7 +32,7 @@ export default props=>{
               </Breadcrumb.Item>
               <Breadcrumb.Item>Application</Breadcrumb.Item>
           </Breadcrumb>
-          {/* <span>{username}</span> */}
+          <span>{username}</span>
       </div>
   )
 }

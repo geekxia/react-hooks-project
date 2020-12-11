@@ -33,6 +33,7 @@ export default props => {
   let [filter, setFilter] = useState({
     size: 2,
     page: 1,
+    cate:'',
     text: '',
     hot: ''
   })

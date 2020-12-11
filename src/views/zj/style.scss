@@ -83,6 +83,13 @@
                 }
             }
 
+            .songlist {
+                width: 180px;
+                text-align: left;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
 
         }
     }

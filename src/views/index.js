@@ -8,6 +8,7 @@ const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const PageOne = loadable(()=>import('./zj/Pageone'))
 const PageTwo = loadable(()=>import('./zj/Pagetwo'))
 const GoodList=loadable(()=>import('./zj/GoodList'))
+const TestEcahrts =loadable(()=>import('./home/TestEcahrts'))
 
 
 export default [ // eslint-disable-line
@@ -21,7 +22,13 @@ export default [ // eslint-disable-line
         text: '学习Redux',
         path: '/',
         component: ReduxStudy
-      }
+      },
+      // {
+      //   id: 1112,
+      //   text: 'Echart',
+      //   path: '/echart',
+      //   component: TestEcahrts
+      // }
     ]
   },
   {

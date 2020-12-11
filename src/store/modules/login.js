@@ -11,5 +11,6 @@ export default(state=initState,action)=>{
         default:
             return state
     }
+    console.log('newstate',newState)
     return newState
 }

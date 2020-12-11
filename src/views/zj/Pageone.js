@@ -25,25 +25,41 @@ export default props=>{
         // console.log(list[0].album.name)
         }
     }
+    const hotGoods= [
+        { id: 1, name: "没有相关数据哦~" },
+        { id: 2, name: "暂时没有信息哦~" },
+        { id: 3, name: "这栏暂时没有相关信息哦~" },
+        { id: 4, name: "正在更新词条中..." },
+        { id: 5, name: "已加急更新信息了~" },
+        { id: 6, name: "没得信息哦~" },
+      ]
+      const random=()=>{
+        return hotGoods[Math.floor(Math.random()*hotGoods.length)].name
+      }
     const columns = [
         {
             title: '歌曲',
             dataIndex: 'name',
             key: 'name',
-            render: text => <a>{text}</a>,
+            className:'songlist',
+            render: text => <a >{text}</a>,
         },
         {
             title: '相关信息',
-            dataIndex: 'lyric'?'lyric':keyword,
-            key:'lyric'?'lyric':keyword,
-            align: 'center',
-            // render: text => <a>{text}</a>,
+            dataIndex: 'lyric',
+            ellipsis:true,
+            key:'lyric',
+            align: 'left',
+            render: (
+                text => <a style={{color:'black'}}>{text?text:random()}</a>
+            ),
         },
         {
             title: '专辑',
-            dataIndex:'album[id]',
-            key: '',
-            align: 'center',
+            dataIndex:['album','title'],
+            key: ['album','title'],
+            ellipsis:true,
+            align: 'left',
         },
         {
             title: '上架时间',

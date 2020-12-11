@@ -17,6 +17,8 @@ export default props=>{
     const dispatch=useDispatch()
     // 登录提交
     const onFinish=(values)=>{
+        dispatch(action.getUsername(values.username)) 
+        localStorage.setItem('username',values.username)
         console.log('Success',values)
         api.fetchLogin(values).then(res=>{
             console.log('登录成功',res)
@@ -81,7 +83,7 @@ export default props=>{
               </Form.Item>
     
               <Form.Item {...tailLayout}>
-                <Button type="primary" htmlType="submit" onClick={()=>dispatch(action.getUsername(values.username))}>
+                <Button type="primary" htmlType="submit">
                   登录
                 </Button>
               </Form.Item>
