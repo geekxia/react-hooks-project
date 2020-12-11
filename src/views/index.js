@@ -8,6 +8,7 @@ const Xxl =loadable(()=>import('./xxl/practice/Xxl'))
 const RenderXxl = loadable(()=>import("./xxl/practice/renderXxl"))
 const xxlAddShop = loadable(()=>import("./xxl/good/xxlAddShop"))
 const xxlshopList = loadable(()=>import("./xxl/good/xxlshopList"))
+const xxlmyself = loadable(()=>import("./xxl/myself/Myself"))
 
 export default [
   {
@@ -48,6 +49,11 @@ export default [
         text: '商品列表',
         path: '/xxlshop',
         component: xxlshopList
+      },{
+        id: 2020120505,
+        text: '个人设置',
+        path: '/xxlmy',
+        component: xxlmyself
       }
       
     ]

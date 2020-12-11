@@ -1,9 +1,7 @@
 import React,{ useState,useEffect }  from 'react'
-import './login.scss'
 import { Form, Input, Button, Checkbox } from 'antd';
-import { useSelector,useDispatch} from 'react-redux'
-import action from "@/store/actions"
 import api from "@/utils/api"
+import './login.scss'
 
 const layout = {
     labelCol: { span: 4 },
@@ -13,27 +11,34 @@ const layout = {
     wrapperCol: { offset: 4, span: 16},
 };
 export default props=>{
-    let [username,setuSername] = useState("")
+    let [msgObj,setMsgObj] = useState({})
+    
     const onFinish = values => {
         console.log(values)
         api.fetchXxlLogin(values).then(res=>{
             if(res && res.token){
-                console.log(res)
+                // console.log(res)
+                setMsgObj(msgObj)
                 //设置token
                 localStorage.setItem("token",res.token) 
                 if(values.remember){
-                    localStorage.setItem("username",values.username)
+                    var valuesJson =JSON.stringify(values) 
+                    localStorage.setItem("msgObj",valuesJson)
+                }else{
+                    localStorage.removeItem("msgObj")
                 }
 
-                //改变app中isLogin的值,跳转页面
+                //触发父组件APP中的事件，改变app中isLogin的值,跳转页面
                 props.onLogin()
             }
             
             
         })
     };
+    const [form] =Form.useForm()
     useEffect(()=>{
-        
+        // console.log(JSON.parse(localStorage.getItem("msgObj")))
+        form.setFieldsValue(JSON.parse(localStorage.getItem("msgObj")))
         return undefined
     },[])
     useEffect(()=>{
@@ -47,13 +52,14 @@ export default props=>{
                 {...layout}
                 name="basic"
                 onFinish={onFinish}
+                form = {form}
                 >
                 <Form.Item
                     label="用户名"
                     name="username"
                     rules={[{ required: true, message: '请输入您的用户名' }]}
                 >
-                    <Input value={username} onChange={()=>(setuSername(localStorage.getItem("username") ))}/>
+                    <Input/>
                 </Form.Item>
 
                 <Form.Item

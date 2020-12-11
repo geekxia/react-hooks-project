@@ -1,0 +1,36 @@
+.xxl-myself{
+    .ant-tabs-nav{
+        width: 200px;
+        text-align: center;
+    }
+    .ant-tabs-content-holder{
+        min-width: 1000px;
+    }
+    background-color: red;
+    .left{
+        background-color: #fff;
+    }
+    .main{
+        background-color: #fff;
+    }
+    .xxl-basic{
+        position: relative;
+        .upImg{
+            position: absolute;
+            top: 150;
+            right: 500;
+            text-align: center;
+            &>img{
+                display: block;
+                width: 100px;
+                margin-bottom: 10px;
+            }
+        }
+        .ant-row{
+            margin: 10px 0;
+            .ant-col{
+                margin-bottom: 10px;
+            }
+        }
+    }
+}
