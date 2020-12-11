@@ -24,6 +24,7 @@ const { Option } = Select;
 const { confirm } = Modal
 
 export default props => {
+  let [all, setAll] = useState(true)
   let [text, setText] = useState('')
   let [page, setPage] = useState(1)
   let [size, setSize] = useState(2)
@@ -32,10 +33,12 @@ export default props => {
     page,
     size,
     text:'',
-    hot:''
+    hot:'',
+    all:true
   })
   const dispatch = useDispatch()
   const goodData = useSelector(store=>store.list.goodData)
+
 
   const textChange = val => {
     setText(val)
@@ -73,8 +76,12 @@ export default props => {
     })
   }
 
+  const skipToEdit=row=>{
+    console.log(row)
+    props.history.push('/shawngoodlist/detail/'+(row?row._id:0))
+  }
+
   useEffect(()=>{
-    
     dispatch(action.goodListAction(filter))
     return undefined
   },[filter])
@@ -138,7 +145,7 @@ export default props => {
             <Button type="primary" onClick={()=>ShawngoodlistDel(row)}>删除</Button>&nbsp;
             <Button 
               type="primary" 
-              onClick={()=>props.history.replace('/shawngoodlist/detail/'+(row?row._id:0))}
+              onClick={()=>skipToEdit(row)}
             >编辑</Button>
         </>
       ),
@@ -169,7 +176,8 @@ export default props => {
           </Col>
           <Col span={4}>
             <ShawnCateSelect  
-              hasAll
+              hasAll={filter.all}
+              allowClear
               onChange={cate=>filterChange('cate', cate)}
             />
           </Col>

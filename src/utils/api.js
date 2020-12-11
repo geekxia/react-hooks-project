@@ -21,6 +21,13 @@ export function fetchGoodList(params) {
     params
   })
 }
+export function fetchGoodDetail(params) {
+  return axios({
+    url: '/api/v1/good/detail',
+    method: 'GET',
+    params
+  })
+}
 export function fetchGoodCate(params) {
   return axios({
     url: '/api/v1/good/cates',
@@ -41,5 +48,6 @@ export default {
   fetchShawnGood,
   fetchGoodList,
   fetchGoodCate,
-  fetchGoodDel
+  fetchGoodDel,
+  fetchGoodDetail
 }

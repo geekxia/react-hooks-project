@@ -5,7 +5,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
     "@loadable/component": "^5.14.1",
-    "antd": "^4.9.1",
+    "antd": "^4.9.2",
     "axios": "^0.21.0",
     "moment": "^2.29.1",
     "react": "^17.0.1",

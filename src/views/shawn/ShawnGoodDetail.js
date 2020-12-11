@@ -4,12 +4,16 @@ import {
   Input, 
   Button, 
   InputNumber,
-  Switch
+  Switch,
+  Modal
 } from 'antd';
+import { fetchShawnGood } from '@/utils/api'
 import ShawnUpdate from './components/ShawnUpdate'
 import ShawnCateSelect from './components/ShawnCateSelect'
-import { useState } from 'react'
-import { fetchShawnGood } from '@/utils/api'
+import { useState,useEffect } from 'react'
+import {useSelector,useDispatch} from 'react-redux'
+import action from '@/store/actions'
+
 
 const layout = {
   labelCol: {
@@ -28,17 +32,37 @@ const tailLayout = {
 
 
 export default props => {
-  let [values, setValues] = useState({})
-  
-  const [form] = Form.useForm()
 
+  const dispatch = useDispatch()
+  let [values, setValues] = useState({})
+  const id=props.match.params.id
+  const isAdd=id==='0'
+  const goodInfo = useSelector(store=>store.list.goodInfo)
+  const [flag, setFlag] = useState(false)
   const formChange = values => {
     setValues(values)
   }
+  const [form] = Form.useForm();
+  
+
+  useEffect(()=>{
+    if(!flag) form.setFieldsValue(goodInfo)
+    if(goodInfo._id) setFlag(true)
+    return undefined
+  })
+
+  useEffect(()=>{
+    if(!isAdd) dispatch(action.goodDetailAction({id}))
+    return ()=>{
+      dispatch(action.clearGoodDetailAction())
+    }
+  }, [])
+
 
   const onFinish = (values) => {
     // console.log('values 提交接口', values)
-    fetchShawnGood(values).then((res)=>{
+    if(!isAdd) values.id = goodData._id
+    fetchShawnGood(values).then(()=>{
       // console.log(res)
       props.history.replace('/shawngoodlist')
     })
@@ -51,13 +75,15 @@ export default props => {
 
   return (
     <div>
-      <h1>gooddetail</h1>
+      <h1>{isAdd ? '商品新增' : '商品编辑'}</h1>
       <hr/>
       <Form
+      form={form}
       {...layout}
       name="basic"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
+      scrollToFirstError
       onValuesChange={(val,values)=>formChange(values)}
     >
 
@@ -115,7 +141,7 @@ export default props => {
           },
         ]}
       >
-       <InputNumber min={0} initialValues={0}  />
+       <InputNumber min={0} />
       </Form.Item>
 
 
@@ -126,7 +152,7 @@ export default props => {
         //   { required: true, message: '商品描述是必填!' }
         // ]}
       >
-        <ShawnCateSelect />
+        <ShawnCateSelect/>
       </Form.Item>
 
 
@@ -141,7 +167,7 @@ export default props => {
           },
         ]}
       >
-        <ShawnUpdate src={values.img}/>
+        <ShawnUpdate src={values.img||goodInfo.img}/>
       </Form.Item>
 
       <Form.Item 
@@ -155,7 +181,7 @@ export default props => {
 
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
-          提交
+        { isAdd ? '添加商品' : '确定修改' }
         </Button>
       </Form.Item>
     </Form>

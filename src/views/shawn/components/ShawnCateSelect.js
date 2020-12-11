@@ -20,9 +20,13 @@ export default props=>{
       <Select 
         placeholder='请选择一个品类' 
         style={{ width: 150 }} 
+        value={props.value || ''}
         onChange={val=>props.onChange && props.onChange(val)}
-        allowClear
+        allowClear={props.allowClear}
       >
+        {
+          props.hasAll && <Option key='0' value=''>全部</Option>
+        }
         {
           list.map(ele=>(
             <Option key={ele._id} value={ele.cate}>{ele.cate_zh}</Option>
