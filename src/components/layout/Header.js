@@ -23,7 +23,7 @@ export default props=>{
   return(
       <div className='qf-header'>
           <Breadcrumb>
-              <Breadcrumb.Item href="">
+              <Breadcrumb.Item href="/#/echart">
                   <HomeOutlined />
               </Breadcrumb.Item>
               <Breadcrumb.Item href="">

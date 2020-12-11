@@ -66,6 +66,7 @@ export default props=>{
             dataIndex: 'time_public',
             key: 'time_public',
             align: 'center',
+            sorter: (a, b) => a.time_public - b.time_public,
 
         },
         
