@@ -1,12 +1,34 @@
 import React from 'react'
-import { Button } from 'antd'
-import { PoweroffOutlined } from '@ant-design/icons'
+import { 
+  Button,
+  Modal
+} from 'antd'
+import { 
+  PoweroffOutlined,
+  ExclamationCircleOutlined
+} from '@ant-design/icons'
+
+const { confirm } = Modal
 
 export default props => {
+
   const logOut=()=>{
-    localStorage.removeItem("token")
-    location.reload()
+    confirm({
+      title: '您确定要退出吗?',
+      icon: <ExclamationCircleOutlined />,
+      onOk() {
+        localStorage.removeItem("token")
+        location.reload()
+      },
+      onCancel() {
+        // console.log('Cancel');
+      },
+      centered:true,
+      okText:"确定",
+      cancelText:"取消"
+    })
   }
+
   return (
     <div className='qf-header' style={{textAlign:"right"}} >
         <Button

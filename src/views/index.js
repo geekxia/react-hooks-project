@@ -14,6 +14,8 @@ const ListHome = loadable(()=>import("./huhui/ListHome"))
 const FormHome = loadable(()=>import("./huhui/FormHome"))
 const HuhClass = loadable(()=>import("./huhui/HuhClass"))
 const HuhAddorEdit = loadable(()=>import("./huhui/HuhAddorEdit"))
+const HuhECharts = loadable(()=>import("./huhui/ECharts"))
+const HuhEBmap = loadable(()=>import("./huhui/Huhmap"))
 
 // [
 //   { id: 1, pid: -1, path: '/', component: 'Home', icon: 'home', text: '首页' },
@@ -98,7 +100,19 @@ export default [
             component:HuhAddorEdit
           }
         ]
-      }
+      },
+      {
+        id:1314,
+        text:"ECharts",
+        path:"/echarts",
+        component:HuhECharts
+      },
+      {
+        id:1315,
+        text:"BaiduMap",
+        path:"/bmap",
+        component:HuhEBmap
+      },
     ]
   }
 ]

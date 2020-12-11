@@ -18,7 +18,7 @@ const HHlogin =(props)=>{
     const onFinish = values => {
         console.log('Success:', values)
         Api.fetchLogin(values).then(res=>{
-            console.log("登录成功",res);
+            // console.log("登录成功",res);
             if( res && res.token){
                 localStorage.setItem("token",res.token)
                 //跳转至首页
