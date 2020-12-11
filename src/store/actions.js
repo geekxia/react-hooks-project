@@ -82,7 +82,7 @@ function getCateList(params){
 function getGoodDetail(params){
   return function(dispatch){
     fetchGoodDetail(params).then(res=>{
-      console.log('action---商品详情',res)
+      // console.log('action---商品详情',res)
       dispatch({
         type:type.GET_GOOD_DETAIL, payload: res
       })
@@ -90,11 +90,18 @@ function getGoodDetail(params){
   }
 }
 
+const clearGoodDetail = () => {
+  return {
+    type: type.CLEAR_GOOD_DETAIL,
+    payload: {}
+  }
+}
 export default {
   changeMsgAction,
   addFooCountAction,
   musicListAction,
   getGoodList,
   getCateList,
-  getGoodDetail
+  getGoodDetail,
+  clearGoodDetail
 }

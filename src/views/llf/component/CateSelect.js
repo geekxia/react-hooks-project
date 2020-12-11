@@ -19,6 +19,7 @@ export default props=>{
         <div className='llf-cateSelect'>
            <Select
             showSearch
+            value={props.value || ''}
             style={{ width: 200 }}
             placeholder="选择品类"
             onChange={(value)=>props.onChange && props.onChange(value)}

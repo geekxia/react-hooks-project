@@ -35,9 +35,12 @@ export default(state=initState,action)=>{
     case type.GET_GOOD_DETAIL:
         newState.goodInfo = action.payload
         break
+    case type.CLEAR_GOOD_DETAIL:
+      newState.goodInfo = {}
+      break
     default:
 
   }
-  console.log('......cateList',newState)
+
   return newState
 }
