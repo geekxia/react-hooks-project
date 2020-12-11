@@ -112,6 +112,7 @@ export default props => {
         name="register"
         onFinish={onFinish}
         scrollToFirstError
+        colon
       >
         <Form.Item
           name="name"

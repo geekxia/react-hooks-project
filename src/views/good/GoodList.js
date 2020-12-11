@@ -134,7 +134,7 @@ const edit=row=>{
         let carr=catelist.filter(res=>res.cate==text)
         let ii=1
         catelist.map((res,i)=>{
-          if(res.cate==carr[0].cate){
+          if(res.cate?res.cate==carr[0].cate:""){
             return ii=i
           }
         })

@@ -8,6 +8,8 @@ const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const jiChuBiaoDan = loadable(()=>import('./pages/BiaoDanYe/jiChuBiaoDan'))
+const TestEchart = loadable(()=>import('./home/TestEchart'))
+const TestBmap = loadable(()=>import('./home/TestBmap')) 
 
 
 export default [ // eslint-disable-line
@@ -34,7 +36,20 @@ export default [ // eslint-disable-line
         text: '基础表单',
         path: '/basic-form',
         component: jiChuBiaoDan
+      },
+      {
+        id: 1112,
+        text: 'TestEchart',
+        path: '/echarts',
+        component: TestEchart
+      },
+      {
+        id: 1113,
+        text: 'TestBmap',
+        path: '/map',
+        component: TestBmap
       }
+
     ]
   },
   {
