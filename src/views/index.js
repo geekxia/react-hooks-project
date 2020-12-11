@@ -15,6 +15,8 @@ const ListHome = loadable(()=>import("./list/ListHome"))
 
 const GoodAdd = loadable(()=>import('./wyk/GoodAdd'))
 const AllGoodList = loadable(()=>import('./wyk/AllGoodList'))
+const Echarts = loadable(()=>import('./wyk/Echarts'))
+const Seckot = loadable(()=>import('./wyk/Socket'))
 
 
 export default [
@@ -85,8 +87,20 @@ export default [
       {
         id:3402,
         text:'商品列表',
-        path:'/wyk/AllGoodList',
-        component:AllGoodList
+        path:'/wyk/allGoodList',
+        component:AllGoodList,
+      },
+      {
+        id:3403,
+        text:'图表',
+        path:'/wyk/echarts',
+        component:Echarts,
+      },
+      {
+        id:3404,
+        text:'长连接',
+        path:'/wyk/seckot',
+        component:Seckot,
       }
     ]
   }
