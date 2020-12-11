@@ -33,12 +33,12 @@ const formItemLayout = {
   labelCol: {
     sm: {
       span: 4,
-    },
+    }
   },
   wrapperCol: {
     sm: {
-      span: 16,
-    },
+      span: 16
+    }
   },
 }
 const tailFormItemLayout = {
