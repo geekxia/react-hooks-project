@@ -33,3 +33,16 @@ code {
     }
   }
 }
+.chat-box {
+  width: 500px;
+  padding: 30px;
+  border: 1px solid #ccc;
+  .row {
+    line-height: 35px;
+    img {
+      display: inline-block;
+      width: 100px;
+      height: 20px;
+    }
+  }
+}

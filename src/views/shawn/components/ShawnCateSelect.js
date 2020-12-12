@@ -21,7 +21,7 @@ export default props=>{
         placeholder='请选择一个品类' 
         style={{ width: 150 }} 
         value={props.value || ''}
-        onChange={val=>props.onChange && props.onChange(val)}
+        onChange={val=>props.onChange(val)}
         allowClear={props.allowClear}
       >
         {

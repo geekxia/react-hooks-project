@@ -8,6 +8,9 @@ const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const ShawnTestRedux = loadable(()=>import('./shawn/ShawnTestRedux'))
 const ShawnGoodList = loadable(()=>import('./shawn/ShawnGoodList'))
 const ShawnGoodDetail = loadable(()=>import('./shawn/ShawnGoodDetail'))
+const ShawnEchart = loadable(()=>import('./shawn/ShawnEchart'))
+const ShawnMap = loadable(()=>import('./shawn/ShawnMap'))
+const ShawnSocket = loadable(()=>import('./shawn/ShawnSocket'))
 
 
 export default [
@@ -42,12 +45,30 @@ export default [
         component: ShawnGoodList,
         children: [
           {
-            id: 4443,
+            id: 44423,
             text: '详情',
             path: '/shawngoodlist/detail/:id',
             component: ShawnGoodDetail
           }
         ]
+      },
+      {
+        id: 4443,
+        text: '可视图表',
+        path: '/shawnechart',
+        component: ShawnEchart
+      },
+      {
+        id: 4444,
+        text: '百度地图',
+        path: '/shawnmap',
+        component: ShawnMap
+      },
+      {
+        id: 4445,
+        text: '聊天连接',
+        path: '/shawnsocket',
+        component: ShawnSocket
       }
     ]
   }

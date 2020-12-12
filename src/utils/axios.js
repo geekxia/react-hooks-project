@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // 浏览器同源策略，只是限制ajax跨域
-const baseURL = 'http://localhost:4000'
+const baseURL = 'http://10.20.158.171:4000'
 
 const instance = axios.create({
   baseURL,

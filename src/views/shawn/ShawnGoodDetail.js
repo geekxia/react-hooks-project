@@ -61,7 +61,7 @@ export default props => {
 
   const onFinish = (values) => {
     // console.log('values 提交接口', values)
-    if(!isAdd) values.id = goodData._id
+    if(!isAdd) values.id = goodInfo._id
     fetchShawnGood(values).then(()=>{
       // console.log(res)
       props.history.replace('/shawngoodlist')
