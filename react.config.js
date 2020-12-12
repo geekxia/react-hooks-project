@@ -5,9 +5,10 @@ module.exports = {
     publicPath: 'qfabc/efg',
     proxy: {
         '/api': {
-            //   target: 'http://10.20.158.42:9999',
-            target: 'http://10.20.158.29:9999',
-            // target: 'http://192.168.0.106:9999',
+            // target: 'http://10.20.158.42:9999',
+            // target: 'http://10.20.158.29:9000',
+            target: 'http://192.168.0.106:9999',
+
             changeOrigin: true
         },
         '/soso': {

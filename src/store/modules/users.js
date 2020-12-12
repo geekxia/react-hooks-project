@@ -12,6 +12,6 @@ export default function reducer(state = initState, action) {
             break
         default:
     }
-    console.log('user模块', newState)
+    // console.log('user模块', newState)
     return newState
 }

@@ -74,6 +74,31 @@ export default [ // eslint-disable-line
       ]
     }, */
     {
+        id: 10,
+        text: 'Dashboard',
+        icon: <DashboardOutlined />,
+        children: [
+            {
+                id: 1010,
+                text: '首页',
+                path: '/',
+                component: AnalysePage
+            },
+            {
+                id: 1011,
+                text: '监控页',
+                path: '/monitorPage',
+                component: MonitorPage
+            },
+            {
+                id: 1012,
+                text: '工作台',
+                path: '/workPage',
+                component: WorkPage
+            }
+        ]
+    },
+    {
         id: 12,
         text: '商品管理',
         icon: <ShoppingOutlined />,
@@ -81,13 +106,13 @@ export default [ // eslint-disable-line
             {
                 id: 1210,
                 text: '商品列表',
-                path: '/good/list',
+                path: '/goodlist',
                 component: GoodList,
                 children: [
                     {
                         id: 121010,
                         text: '商品新增与编辑',
-                        path: '/good/update/:id',
+                        path: '/goodlist/update/:id',
                         component: GoodAddOrEdit
                     }
                 ]
@@ -102,7 +127,7 @@ export default [ // eslint-disable-line
             {
                 id: 1310,
                 text: '用户列表',
-                path: '/user/list',
+                path: '/userlist',
                 component: UserList
             }
         ]
@@ -148,31 +173,6 @@ export default [ // eslint-disable-line
                 text: '500',
                 path: '/a500',
                 component: A500
-            }
-        ]
-    },
-    {
-        id: 10,
-        text: 'Dashboard',
-        icon: <DashboardOutlined />,
-        children: [
-            {
-                id: 1010,
-                text: '分析页',
-                path: '/',
-                component: AnalysePage
-            },
-            {
-                id: 1011,
-                text: '监控页',
-                path: '/monitorPage',
-                component: MonitorPage
-            },
-            {
-                id: 1012,
-                text: '工作台',
-                path: '/workPage',
-                component: WorkPage
             }
         ]
     },
