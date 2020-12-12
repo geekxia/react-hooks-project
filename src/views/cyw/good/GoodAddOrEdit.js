@@ -14,14 +14,14 @@ import GoodUpdate from '../components/GoodUpdate'
 import { useDispatch, useSelector } from 'react-redux'
 
 const formItemLayout = {
-    labelCol: { sm: { span: 8 } },
-    wrapperCol: { sm: { span: 16 } }
+    labelCol: { sm: { span: 4 } },
+    wrapperCol: { sm: { span: 10 } }
 }
 const tailFormItemLayout = {
     wrapperCol: {
         sm: {
             span: 16,
-            offset: 8
+            offset: 4
         }
     }
 }
@@ -61,6 +61,7 @@ export default props => {
     }
 
     const onFinish = values => {
+        if(!isAdd) values.id = goodInfo._id
         fetchGoodOrEdit(values).then(()=>{
             // 跳转到列表页
             props.history.replace('/good/list')
@@ -107,11 +108,9 @@ export default props => {
                         name="desc"
                         label="商品描述"
                         rules={[
-                            {
-                                required: true,
-                                max: 30, message: '商品描述不能超过30个字',
-                                min: 10, message: '商品描述不能小于10个字'
-                            }
+                            { required: true, message: '商品描述是必填项' },
+                            { max: 60, message: '商品描述不能超过60个字' },
+                            { min: 10, message: '商品描述不能小于10个字' }                           
                         ]}
                         hasFeedback
                     >
@@ -135,7 +134,7 @@ export default props => {
                             {required:true, message:'商品图片是必填项！'}
                         ]}
                     >
-                        <GoodUpdate src={ values.img}/>
+                        <GoodUpdate src={ values.img || goodInfo.img}/>
                     </Form.Item>
 
                     <Form.Item
