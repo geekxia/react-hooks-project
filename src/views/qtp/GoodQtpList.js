@@ -146,8 +146,9 @@ export default props =>{
                   <Col span={6}>
                     <Input placeholder="搜索" 
                     value={text}
-                    onChange={e=>textChange(e.target.value)}    
-                    onPressEnter={e=>filterChange('text',e.target,value)}          
+                    onChange={e=>textChange(e.target.value)}
+                    allowClear   
+                    onPressEnter={e=>filterChange('text',e.target.value)}          
                     />
                   </Col>
 
@@ -157,7 +158,10 @@ export default props =>{
                   </Col>
 
                   <Col span={6}>
-                  <CateSelect hasAll />
+                  <CateSelect hasAll 
+                  allowClear
+                  onChange={cate=>filterChange('cate',cate)}
+                  />
                   </Col>
 
                   <Col offset={5} span={2} style={{textAlign: 'right'}}>
@@ -179,13 +183,15 @@ export default props =>{
                   columns={columns} 
                   dataSource={goodData.list}
                   pagination={{
+                  current:filter.list,
                   total: goodData.total,
                   defaultPageSize: filter.size,
                   
                   onChange: page=>filterChange('page',page),
                   onShowSizeChange: (page, size)=>filterChange('size',size),
                   pageSizeOptions:[2,5,10,20]
-                  }}        
+                  }}  
+                        
                    />
 
 

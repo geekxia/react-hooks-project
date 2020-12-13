@@ -74,7 +74,7 @@ export default [
   },
   {
     id: 14,
-    text:"鹏鹏小店",
+    text:"滴滴小店",
     icon: <GiftOutlined />,
     children: [
       {

@@ -24,6 +24,7 @@ export default props=>{
             defaultValue="选择品类" 
             style={{ width: 120 }}
             onChange={val=>props.onChange && props.onChange(val)}
+            allowClear={props.allowClear}
             >
                 {
                    props.hasAll && <Option key='0'>全部</Option> 

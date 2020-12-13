@@ -64,9 +64,9 @@ export default props =>{
     // 获取From的实例
     const [form] = Form.useForm();
 
-    // const formChange = values => {
-    //     setValues(values)
-    //   }
+    const formChange = values => {
+        setValues(values)
+      }
 
     // 表单提交
     const onFinish = values => {
@@ -98,7 +98,7 @@ export default props =>{
             // prefix: '86',
             // }}
             // scrollToFirstError
-            // onValuesChange={(val, values)=>formChange(values)}
+            onValuesChange={(val, values)=>formChange(values)}
             >
             <Form.Item
                 name="name"
@@ -162,7 +162,7 @@ export default props =>{
             </Form.Item>
 
             <Form.Item
-                name="pages"
+                name="img"
                 label="商品图片"
                 rules={[
                 {
