@@ -10,12 +10,11 @@ const TestReduxHook = loadable(()=>import('./home/TestReduxHook'))
 const GoodList = loadable(()=>import('./good/GoodList'))
 const GoodAddOrEdit = loadable(()=>import('./good/GoodAddOrEdit'))
 
-const ListHome = loadable(()=>import("./huhui/ListHome"))
-const FormHome = loadable(()=>import("./huhui/FormHome"))
+
 const HuhClass = loadable(()=>import("./huhui/HuhClass"))
 const HuhAddorEdit = loadable(()=>import("./huhui/HuhAddorEdit"))
 const HuhECharts = loadable(()=>import("./huhui/ECharts"))
-const HuhEBmap = loadable(()=>import("./huhui/Huhmap"))
+const HuhMap = loadable(()=>import("./huhui/HuhMap"))
 
 // [
 //   { id: 1, pid: -1, path: '/', component: 'Home', icon: 'home', text: '首页' },
@@ -76,18 +75,6 @@ export default [
     icon:<DribbbleOutlined />,
     children :[
       {
-        id:1311,
-        text:"查询表格",
-        path:"/hulist",
-        component:ListHome
-      },
-      {
-        id:1312,
-        text:"分步表单",
-        path:"/huform",
-        component:FormHome
-      },
-      {
         id:1313,
         text:"课堂练习",
         path:"/hucontact",
@@ -109,10 +96,10 @@ export default [
       },
       {
         id:1315,
-        text:"BaiduMap",
-        path:"/bmap",
-        component:HuhEBmap
-      },
+        text:"HuhEMap",
+        path:"/map",
+        component:HuhMap
+      }
     ]
   }
 ]
