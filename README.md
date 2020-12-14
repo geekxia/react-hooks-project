@@ -288,7 +288,7 @@ dispatch({type:'change',payload:'2011'})  // 这里接收的是对像
 #### 2、actions生成器封装
 + 分模块、分写法：modules
 + 把学习模块单独拿出来到studyReducer.js模块里
-+ 那就需要早根stroe中合并 , combineReducers({ }),
++ 那就需要在根stroe中合并 , combineReducers({ }),
   * 那index.js需要把层级修改
   ```js
     import study from './mudules/studyReducer'
@@ -430,10 +430,13 @@ react.config.js文件配置代理
 ```
 ---
 ### 4、商品列表
++ 新增跳到详情用动态路由
 + Table  表格   
    * rowKey='_id' : 用于当初key
    * sorter: (a,b )=> a.price - b.price,  ：用于排序
-+ Form   表单   ： 用于商品名称   ；  valuePropName 进行双向数据绑定，取值
++ Form   表单   ： 用于商品名称   
+  * valuePropName 进行双向数据绑定，取值
+  * onValuesChange	字段值更新时触发回调事件
 + Input  输入框  ： 用于商品描述
 + Sele ct选择器
 + InputNumber数字输入框
@@ -444,7 +447,20 @@ react.config.js文件配置代理
 + 查询：
   * Grid栅格
   * Button按钮
-+ 新增跳到详情用动态路由
+  * Select开关 / 用于做热销开关 / const { Option } = Select  // 用于热销布尔值的切换
+
++ 删除:
+  * Modal对话框 : 确认对话框 confirm
+    * Table  用于多删 ' / rowSelection
+    * content:
+    ```js
+         content:<div>       //这个是react元素，可换行
+                <div>你确定要删除 {ele} 吗？</div>
+                <div>是吗？</div>
+            </div>
+    ```
+
+
 
 
 #### moment时间框架

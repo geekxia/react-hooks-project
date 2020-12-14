@@ -15,13 +15,10 @@ import {
     Switch
 } from 'antd';
 
-import {
-    QfUploadIcon
-} from '@/components'
-
-import img from '@/utils/img'
 import { fetchGoodOrEdit } from '@/utils/api'
+
 import CateSelect from './components/CoogSelect'
+import GoodUpload from './components/GoodUpload'
 
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import FormItem from 'antd/lib/form/FormItem';
@@ -53,21 +50,24 @@ const formItemLayout = {  //框的
 export default props=>{
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);
     let [imageUrl,setImageUrl] = useState('');
+    let [values,setValues] = useState({})
 
     const [form] = Form.useForm();  // 获取Form实例
-    // 图片上传成功
-    const imgSuccess = e =>{
-        console.log('图片上传成功', e);
-        if(e && e.fileList && e.fileList[0] && e.fileList[0].response){
-            setImageUrl(e.fileList[0].response.data.url)
-        }
+   
+
+
+    // 当Form表单值发生变化时，我们手动取值，赋值给声明式变量 values
+    const formChange = values =>{
+        setValues(values)
     }
+
+
     const onFinish = values => {  //表单提交
-        values.img=imageUrl
-        console.log('values 提交接口', values);
+        // values.img=imageUrl
+        // console.log('values 提交接口', values);
         // 图片发送的接口 ， 不需要走redux
         fetchGoodOrEdit(values).then(()=>{
-            // 跳的列表列
+            // 跳的列表列  
             props.history.replace('/list')
         })
     }
@@ -86,6 +86,7 @@ export default props=>{
                     prefix: '86',
                 }}
                 scrollToFirstError
+                onValuesChange={(val,values)=>formChange(values)}
             >
 
                 <Form.Item
@@ -117,7 +118,7 @@ export default props=>{
                     label="商品价格"
                     rules={[
                        { required: true, message: '商品价格必填!'},
-                    ]}
+                    ]} 
                 >
                  <InputNumber min={0}/>
                 </Form.Item>
@@ -132,28 +133,17 @@ export default props=>{
                     <CateSelect />
                 </Form.Item>
                     
+                 {/* 凡是被 Form.Item 包裹的表单组件，相当于都给表单传递了一个 onChange 事件 */}
                 <Form.Item
-                    name='imgArr'
+                    name='img'
                     label='商品图片'
                     rules={[ 
                         { required: true, message: '商品图片必填!'},
                      ]}
                 >
-                    <Upload
-                        name="file"    // 这个是给后端取值的key
-                        action={img.uploadUrl}
-                        listType="picture-card"
-                        className="avatar-uploader"
-                        showUploadList={false}
-                    >
-                        {
-                            imageUrl ? 
-                            <img src={img.imgBase + imageUrl} alt="avatar" style={{ width: '100%' }} /> 
-                            : <QfUploadIcon />
-                        } 
-                    </Upload>
+                    <GoodUpload src={values.img}/>
                 </Form.Item>
-            
+                    
                 <Form.Item
                     name='hot'
                     label='是否热销'

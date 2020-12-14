@@ -1,3 +1,5 @@
+// 封装品类选择组件
+
 import { Select } from 'antd'
 import action from '@/store/actions'  // 需要在生命周期触发
 import { useEffect } from 'react'
@@ -17,6 +19,8 @@ export default props=>{
                 style={{ width: 200 }}
                 placeholder="选择一个品类"
                 onChange={(val)=>props.onChange && props.onChange(val)} 
+                // 封装品类删除x按钮，父组件传了就有，没传就没有
+                allowClear={props.allowClear}
             >
                 {
                     props.hasAll && <Option key='0' value=''>全部</Option>

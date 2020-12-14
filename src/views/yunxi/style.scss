@@ -1,16 +1,24 @@
-.gl-good{
-    &>img{
-        display:block;
-        width: 80px;
-        height: 80px;
-        text-align: center;
-        margin: 0 auto;
+.qf-good-list {
+    .gl-good{
+        &>img{
+            display:block;
+            width: 80px;
+            height: 80px;
+            text-align: center;
+            margin: 0 auto;
+        }
     }
-}
-.qf-filter{
-    .qf-label{
-        display: block;
-        text-align: right;
-        padding-right: 15px;
+    .qf-filter{
+        .qf-label{
+            display: block;
+            text-align: right;
+            padding-right: 15px;
+        }
+    }
+    .table-btn {
+        &>a:last-child {
+          color: rgb(114, 114, 231);
+          margin-left: 10px;
+        }
     }
 }

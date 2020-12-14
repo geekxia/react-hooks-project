@@ -14,6 +14,7 @@ export default function reducer(state=initState,action){
             newState.cates=action.payload
         default:
     }
+    console.log('new state goodData',newState);
     return newState
 }
 
