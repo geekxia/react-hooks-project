@@ -7,6 +7,9 @@ const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const FoodList = loadable(()=>import('./ttfood/FoodList'))
 const AddGoods = loadable(()=>import('./ttshop/AddGood'))
 const TtGoodList = loadable(()=>import('./ttshop/TtGoodList'))
+const TestEchart = loadable(()=>import('./home/TestEchart'))
+const TestMap = loadable(()=>import('./home/TestMap'))
+const TestSocket = loadable(()=>import('./home/TestSocket'))
 
 export default [
   {
@@ -19,6 +22,21 @@ export default [
         text: '学习Redux哟',
         path: '/',
         component: ReduxStudy
+      },{
+        id: 1112,
+        text: '测试图表',
+        path:'/echart',
+        component: TestEchart
+      },{
+        id: 1113,
+        text: '测试地图',
+        path: '/map',
+        component: TestMap
+      },{
+        id: 1114,
+        text: '测试socket',
+        path: '/socket',
+        component: TestSocket
       }
     ]
   },

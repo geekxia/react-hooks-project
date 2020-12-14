@@ -32,6 +32,12 @@ export default props => {
             if(res&&res.token) {
                 // 把登录状态（鉴权）存储起来
                 localStorage.setItem('token',res.token)
+                localStorage.setItem('username',values.username)
+                if(values.remember) {
+                    localStorage.setItem('password',values.password)
+                } else{
+                    localStorage.removeItem('password')
+                }
                 // 跳转到首页
                 history.replace('/')
                 // 调用App组件传递过来的onLogin方法，刷新 isLogin
@@ -57,6 +63,8 @@ export default props => {
                     name="basic"
                     initialValues={{
                         remember: true,
+                        username: localStorage.getItem('username'),
+                        password: localStorage.getItem('password')
                     }}
                     onFinish={onFinish}
                     onFinishFailed={onFinishFailed}
@@ -67,8 +75,12 @@ export default props => {
                         rules={[
                         {
                             required: true,
-                            message: '请输入用户名!',
+                            message: '请输入用户名!'
                         },
+                        {
+                            pattern: /^[a-zA-Z][a-zA-Z]{2,15}$/,
+                            message: '用户名格式不正确'
+                        }
                         ]}
                     >
                         <Input />

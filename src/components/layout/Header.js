@@ -1,4 +1,6 @@
 import React from 'react'
+import { Modal } from 'antd'
+import { ExportOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 
 import {
   useHistory,
@@ -19,12 +21,39 @@ import {
 
 
 export default props => {
+  const { confirm } = Modal;
   const history = useHistory()
   // console.log('---header props', props)
   // console.log('---header history', history)
+
+  function showConfirm() {
+    confirm({
+      title: '警告',
+      icon: <ExclamationCircleOutlined />,
+      content: '你确定要退出当前账户吗？',
+      okType: 'danger',
+      okText: '退出',
+      cancelText: '取消',
+      onOk() {
+        localStorage.removeItem('token')
+        location.reload()
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
+  }
+
+  // const onLogout = ()=>{
+  //   localStorage.removeItem('token')
+  //   location.reload()
+  // }
   return (
-    <div className='qf-header'>
-      header
+    <div className='qf-header' style={{textAlign: 'right'}}>
+      <ExportOutlined 
+        style={{color: 'white',fontSize: '25px', cursor: 'pointer'}} 
+        onClick={()=>showConfirm()}
+      />
     </div>
   )
 }
