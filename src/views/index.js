@@ -10,6 +10,7 @@ const ReduxStudy = loadable(()=>import('./home/ReduxStudy'))
 const jiChuBiaoDan = loadable(()=>import('./pages/BiaoDanYe/jiChuBiaoDan'))
 const TestEchart = loadable(()=>import('./home/TestEchart'))
 const TestBmap = loadable(()=>import('./home/TestBmap')) 
+const TestSocket = loadable(()=>import('./home/TestSocket'))
 
 
 export default [ // eslint-disable-line
@@ -48,6 +49,12 @@ export default [ // eslint-disable-line
         text: 'TestBmap',
         path: '/map',
         component: TestBmap
+      },
+      {
+        id: 1114,
+        text: 'TestSocket',
+        path: '/chat',
+        component: TestSocket
       }
 
     ]
