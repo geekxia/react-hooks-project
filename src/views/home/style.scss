@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .chat-box {
   width: 500px;
   padding: 30px;
@@ -11,3 +12,28 @@
     }
   }
 }
+=======
+.qf-good-list {
+    .gl-good {
+      text-align: center;
+      &>img {
+        display: block;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+      }
+    }
+    .filter-label {
+      display: block;
+      text-align: right;
+      padding-right: 10px;
+    }
+    .table-btn {
+      &>a:last-child {
+        color: blue;
+        margin-left: 10px;
+      }
+    }
+  }
+  
+>>>>>>> aayoupann
