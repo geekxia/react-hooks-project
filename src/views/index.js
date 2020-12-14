@@ -86,7 +86,7 @@ export default [
           {
             id: 112222,
             text: '商品添加与编辑',
-            path: '/qtp/update',
+            path: '/qtp/update/:id',
             component: GoodQtpUpdate
           }
         ]
