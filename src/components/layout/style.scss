@@ -13,11 +13,22 @@
     top: 0;
     bottom: 0;
     left: 0;
-    width: 150px;
+    width: 200px;
     background: #001529;
     overflow: auto;
+    .qf-img{
+      padding: 7px;
+      &>img{
+        width: 32px;
+        height: 32px;
+      }
+      &>h1{
+        display: inline-block;
+        color: white;
+        font-size: 18px;
+      }
+    }
     &>div {
-      text-align: center;
       line-height: 40px;
       cursor: pointer;
       border-bottom: 1px solid #aaa;
@@ -37,31 +48,41 @@
     position: absolute;
     top: 0;
     height: 60px;
-    left: 150px;
+    left: 200px;
     right: 0;
     padding: 15px;
+    background-color: #fff;
   }
   .qf-main {
     position: absolute;
     top: 60px;
     bottom: 0;
-    left: 150px;
+    left: 200px;
     right: 0;
     background-color: #eee;
-    padding: 15px;
-    &>div {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      right: 15px;
-      bottom: 15px;
-      overflow: auto;
-      background: white;
-      padding: 15px;
-      border-radius: 5px;
-      padding-bottom: 100px;
-      // height: 100%;
-      min-width: 750px;
+    &>div{
+      &>div:nth-child(1) {
+        width: 100%;
+        position: absolute;
+        top: 4px;
+        padding: 15px;
+        background: white;
+        min-width: 750px;
+      }
+      &>div:nth-child(2) {
+        position: absolute;
+        top: 110px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        overflow: auto;
+        background: white;
+        padding: 15px;
+        border-radius: 5px;
+        padding-bottom: 100px;
+        // height: 100%;
+        min-width: 750px;
+      }
     }
   }
 }

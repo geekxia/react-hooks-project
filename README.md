@@ -31,6 +31,10 @@ function 方法名语义化(params){
 ## react-router-dom 
 在slider布局上通过引入Navlink
 
-
-
-
+TypeScript
++ 数据类型
++ 更加强大的面向对象编程
++ cnpm install typescript  -g
++ let msg:string = 'hello'  严格的指定数据类型
++ 运行 tsc app.ts
++ node app.js
